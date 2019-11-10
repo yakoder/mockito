@@ -13,18 +13,28 @@ import org.mockito.quality.Strictness;
 /**
  * Mockito supports JUnit via:
  * <li>
- *     <ul>JUnit Rules - see {@link MockitoRule}</ul>
- *     <ul>JUnit runners - see {@link MockitoJUnitRunner}</ul>
- *     <ul><a href="http://javadoc.io/doc/org.mockito/mockito-junit-jupiter/latest/org/mockito/junit/jupiter/MockitoExtension.html">JUnit Jupiter extension</a></ul>
- * </li>
+ *
+ *     <ul>
+ *       JUnit Rules - see {@link MockitoRule}
+ * </ul>
+ *
+ * <ul>
+ *   JUnit runners - see {@link MockitoJUnitRunner}
+ * </ul>
+ *
+ * <ul>
+ *   <a
+ *   href="http://javadoc.io/doc/org.mockito/mockito-junit-jupiter/latest/org/mockito/junit/jupiter/MockitoExtension.html">JUnit
+ *   Jupiter extension</a>
+ * </ul>
  *
  * @since 1.10.17
  */
 public class MockitoJUnit {
 
     /**
-     * Creates rule instance that initiates &#064;Mocks
-     * For more details and examples see {@link MockitoRule}.
+     * Creates rule instance that initiates &#064;Mocks For more details and examples see {@link
+     * MockitoRule}.
      *
      * @return the rule instance
      * @since 1.10.17

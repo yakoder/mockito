@@ -8,7 +8,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.mockito.internal.util.Checks;
 import org.mockito.internal.util.collections.ListUtil;
 import org.mockito.internal.util.collections.ListUtil.Filter;
@@ -16,7 +15,7 @@ import org.mockito.internal.util.collections.ListUtil.Filter;
 /**
  * Small fluent reflection tools to work with fields.
  *
- * Code is very new and might need rework.
+ * <p>Code is very new and might need rework.
  */
 public abstract class Fields {
 
@@ -28,7 +27,9 @@ public abstract class Fields {
      */
     public static InstanceFields allDeclaredFieldsOf(Object instance) {
         List<InstanceField> instanceFields = new ArrayList<InstanceField>();
-        for (Class<?> clazz = instance.getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
+        for (Class<?> clazz = instance.getClass();
+                clazz != Object.class;
+                clazz = clazz.getSuperclass()) {
             instanceFields.addAll(instanceFieldsIn(instance, clazz.getDeclaredFields()));
         }
         return new InstanceFields(instance, instanceFields);
@@ -62,13 +63,14 @@ public abstract class Fields {
      * @return The filter.
      */
     @SuppressWarnings({"unchecked", "vararg"})
-    public static Filter<InstanceField> annotatedBy(final Class<? extends Annotation>... annotations) {
+    public static Filter<InstanceField> annotatedBy(
+            final Class<? extends Annotation>... annotations) {
         return new Filter<InstanceField>() {
             public boolean isOut(InstanceField instanceField) {
                 Checks.checkNotNull(annotations, "Provide at least one annotation class");
 
                 for (Class<? extends Annotation> annotation : annotations) {
-                    if(instanceField.isAnnotatedBy(annotation)) {
+                    if (instanceField.isAnnotatedBy(annotation)) {
                         return false;
                     }
                 }

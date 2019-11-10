@@ -9,18 +9,15 @@ import org.mockito.internal.util.MockUtil;
 /**
  * hashCode and equals safe mock wrapper.
  *
- * <p>
- *     It doesn't use the actual mock {@link Object#hashCode} and {@link Object#equals} method as they might
- *     throw an NPE if those method cannot be stubbed <em>even internally</em>.
- * </p>
+ * <p>It doesn't use the actual mock {@link Object#hashCode} and {@link Object#equals} method as
+ * they might throw an NPE if those method cannot be stubbed <em>even internally</em>.
  *
- * <p>
- *     Instead the strategy is :
- *     <ul>
- *         <li>For hashCode : <strong>use {@link System#identityHashCode}</strong></li>
- *         <li>For equals : <strong>use the object reference equality</strong></li>
- *     </ul>
- * </p>
+ * <p>Instead the strategy is :
+ *
+ * <ul>
+ *   <li>For hashCode : <strong>use {@link System#identityHashCode}</strong>
+ *   <li>For equals : <strong>use the object reference equality</strong>
+ * </ul>
  *
  * @see HashCodeAndEqualsSafeSet
  */
@@ -55,13 +52,20 @@ public class HashCodeAndEqualsMockWrapper {
         return new HashCodeAndEqualsMockWrapper(mock);
     }
 
-    @Override public String toString() {
-        return "HashCodeAndEqualsMockWrapper{" +
-                "mockInstance=" + (MockUtil.isMock(mockInstance) ? MockUtil.getMockName(mockInstance) : typeInstanceString()) +
-                '}';
+    @Override
+    public String toString() {
+        return "HashCodeAndEqualsMockWrapper{"
+                + "mockInstance="
+                + (MockUtil.isMock(mockInstance)
+                        ? MockUtil.getMockName(mockInstance)
+                        : typeInstanceString())
+                + '}';
     }
 
     private String typeInstanceString() {
-        return mockInstance.getClass().getSimpleName() + "(" + System.identityHashCode(mockInstance) + ")";
+        return mockInstance.getClass().getSimpleName()
+                + "("
+                + System.identityHashCode(mockInstance)
+                + ")";
     }
 }

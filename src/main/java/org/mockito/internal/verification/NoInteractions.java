@@ -7,7 +7,6 @@ package org.mockito.internal.verification;
 import static org.mockito.internal.exceptions.Reporter.noInteractionsWanted;
 
 import java.util.List;
-
 import org.mockito.internal.verification.api.VerificationData;
 import org.mockito.invocation.Invocation;
 import org.mockito.verification.VerificationMode;
@@ -21,5 +20,4 @@ public class NoInteractions implements VerificationMode {
             throw noInteractionsWanted(invocations.get(0).getMock(), (List) invocations);
         }
     }
-
 }

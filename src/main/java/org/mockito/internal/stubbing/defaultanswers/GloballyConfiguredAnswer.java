@@ -5,7 +5,6 @@
 package org.mockito.internal.stubbing.defaultanswers;
 
 import java.io.Serializable;
-
 import org.mockito.configuration.IMockitoConfiguration;
 import org.mockito.internal.configuration.GlobalConfiguration;
 import org.mockito.invocation.InvocationOnMock;
@@ -13,8 +12,8 @@ import org.mockito.stubbing.Answer;
 
 /**
  * Globally configured Answer.
- * <p>
- * See javadoc for {@link IMockitoConfiguration}
+ *
+ * <p>See javadoc for {@link IMockitoConfiguration}
  */
 public class GloballyConfiguredAnswer implements Answer<Object>, Serializable {
 

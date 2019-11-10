@@ -4,9 +4,9 @@
  */
 package org.mockito.invocation;
 
-
 /**
- * Provides information about the invocation, specifically a human readable description and the location.
+ * Provides information about the invocation, specifically a human readable description and the
+ * location.
  */
 public interface DescribedInvocation {
 

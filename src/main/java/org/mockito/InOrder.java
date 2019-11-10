@@ -16,18 +16,19 @@ import org.mockito.verification.VerificationMode;
  * inOrder.verify(secondMock).add("was called second");
  * </code></pre>
  *
- * As of Mockito 1.8.4 you can verifyNoMoreInteractions() in order-sensitive way. Read more: {@link InOrder#verifyNoMoreInteractions()}
- * <p>
+ * As of Mockito 1.8.4 you can verifyNoMoreInteractions() in order-sensitive way. Read more: {@link
+ * InOrder#verifyNoMoreInteractions()}
  *
- * See examples in javadoc for {@link Mockito} class
+ * <p>See examples in javadoc for {@link Mockito} class
  */
 public interface InOrder {
     /**
      * Verifies interaction <b>happened once</b> in order.
-     * <p>
-     * Alias to <code>inOrder.verify(mock, times(1))</code>
-     * <p>
-     * Example:
+     *
+     * <p>Alias to <code>inOrder.verify(mock, times(1))</code>
+     *
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      * InOrder inOrder = inOrder(firstMock, secondMock);
      *
@@ -38,7 +39,6 @@ public interface InOrder {
      * See examples in javadoc for {@link Mockito} class
      *
      * @param mock to be verified
-     *
      * @return mock object itself
      */
     <T> T verify(T mock);
@@ -57,17 +57,16 @@ public interface InOrder {
      *
      * @param mock to be verified
      * @param mode for example times(x) or atLeastOnce()
-     *
      * @return mock object itself
      */
     <T> T verify(T mock, VerificationMode mode);
 
-
     /**
-     * Verifies that no more interactions happened <b>in order</b>.
-     * Different from {@link Mockito#verifyNoMoreInteractions(Object...)} because the order of verification matters.
-     * <p>
-     * Example:
+     * Verifies that no more interactions happened <b>in order</b>. Different from {@link
+     * Mockito#verifyNoMoreInteractions(Object...)} because the order of verification matters.
+     *
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      * mock.foo(); //1st
      * mock.bar(); //2nd

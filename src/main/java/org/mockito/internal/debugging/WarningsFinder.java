@@ -7,7 +7,6 @@ package org.mockito.internal.debugging;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.mockito.internal.invocation.InvocationMatcher;
 import org.mockito.invocation.Invocation;
 
@@ -22,15 +21,16 @@ public class WarningsFinder {
 
     public void find(FindingsListener findingsListener) {
         List<Invocation> unusedStubs = new LinkedList<Invocation>(this.baseUnusedStubs);
-        List<InvocationMatcher> allInvocations = new LinkedList<InvocationMatcher>(this.baseAllInvocations);
+        List<InvocationMatcher> allInvocations =
+                new LinkedList<InvocationMatcher>(this.baseAllInvocations);
 
         Iterator<Invocation> unusedIterator = unusedStubs.iterator();
-        while(unusedIterator.hasNext()) {
+        while (unusedIterator.hasNext()) {
             Invocation unused = unusedIterator.next();
             Iterator<InvocationMatcher> unstubbedIterator = allInvocations.iterator();
-            while(unstubbedIterator.hasNext()) {
+            while (unstubbedIterator.hasNext()) {
                 InvocationMatcher unstubbed = unstubbedIterator.next();
-                if(unstubbed.hasSimilarMethod(unused)) {
+                if (unstubbed.hasSimilarMethod(unused)) {
                     findingsListener.foundStubCalledWithDifferentArgs(unused, unstubbed);
                     unusedIterator.remove();
                     unstubbedIterator.remove();

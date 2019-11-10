@@ -5,12 +5,11 @@
 package org.mockito.internal.util;
 
 import java.lang.reflect.Method;
-
 import org.mockito.internal.creation.instance.InstantiationException;
 
 /**
- * Helper class to work with features that were introduced in Java versions after 1.5.
- * This class uses reflection in most places to avoid coupling with a newer JDK.
+ * Helper class to work with features that were introduced in Java versions after 1.5. This class
+ * uses reflection in most places to avoid coupling with a newer JDK.
  */
 public final class JavaEightUtil {
 
@@ -38,9 +37,9 @@ public final class JavaEightUtil {
         return emptyOptional = invokeNullaryFactoryMethod("java.util.Optional", "empty");
     }
 
-
     /**
-     * Creates an empty OptionalDouble using reflection to stay backwards-compatible with older JDKs.
+     * Creates an empty OptionalDouble using reflection to stay backwards-compatible with older
+     * JDKs.
      *
      * @return an empty OptionalDouble.
      */
@@ -50,7 +49,8 @@ public final class JavaEightUtil {
             return emptyOptionalDouble;
         }
 
-        return emptyOptionalDouble = invokeNullaryFactoryMethod("java.util.OptionalDouble", "empty");
+        return emptyOptionalDouble =
+                invokeNullaryFactoryMethod("java.util.OptionalDouble", "empty");
     }
 
     /**
@@ -122,7 +122,8 @@ public final class JavaEightUtil {
     }
 
     /**
-     * Invokes a nullary static factory method using reflection to stay backwards-compatible with older JDKs.
+     * Invokes a nullary static factory method using reflection to stay backwards-compatible with
+     * older JDKs.
      *
      * @param fqcn The fully qualified class name of the type to be produced.
      * @param methodName The name of the factory method.

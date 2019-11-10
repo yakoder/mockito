@@ -10,22 +10,23 @@ import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 import java.nio.charset.CharacterCodingException;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.mockito.exceptions.base.MockitoException;
 import org.mockito.internal.invocation.InvocationBuilder;
 import org.mockito.invocation.Invocation;
 
-
 public class ThrowsExceptionTest {
     @Test
     public void should_raise_wanted_throwable() throws Throwable {
         try {
-            new ThrowsException(new IllegalStateException("my dear throwable")).answer(createMethodInvocation());
+            new ThrowsException(new IllegalStateException("my dear throwable"))
+                    .answer(createMethodInvocation());
             Assertions.fail("should have raised wanted exception");
         } catch (Throwable throwable) {
-            assertThat(throwable).isInstanceOf(IllegalStateException.class).hasMessage("my dear throwable");
+            assertThat(throwable)
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("my dear throwable");
         }
     }
 
@@ -44,8 +45,10 @@ public class ThrowsExceptionTest {
         // given
         Exception throwableToRaise = new Exception();
         throwableToRaise.fillInStackTrace();
-        assertThat(throwableToRaise.getStackTrace()[0].getClassName()).isEqualTo(this.getClass().getName());
-        assertThat(throwableToRaise.getStackTrace()[0].getMethodName()).isEqualTo("should_fill_in_exception_stacktrace");
+        assertThat(throwableToRaise.getStackTrace()[0].getClassName())
+                .isEqualTo(this.getClass().getName());
+        assertThat(throwableToRaise.getStackTrace()[0].getMethodName())
+                .isEqualTo("should_fill_in_exception_stacktrace");
         try {
 
             // when
@@ -54,7 +57,8 @@ public class ThrowsExceptionTest {
         } catch (Throwable throwable) {
             // then
             throwable.printStackTrace();
-            assertThat(throwableToRaise.getStackTrace()[0].getClassName()).isEqualTo(ThrowsException.class.getName());
+            assertThat(throwableToRaise.getStackTrace()[0].getClassName())
+                    .isEqualTo(ThrowsException.class.getName());
             assertThat(throwableToRaise.getStackTrace()[0].getMethodName()).isEqualTo("answer");
         }
     }
@@ -65,7 +69,8 @@ public class ThrowsExceptionTest {
             Invocation invocation = createMethodInvocation();
             new ThrowsException(null).validateFor(invocation);
             Assertions.fail("should have raised a MockitoException");
-        } catch (MockitoException expected) {}
+        } catch (MockitoException expected) {
+        }
     }
 
     @Test
@@ -96,8 +101,6 @@ public class ThrowsExceptionTest {
 
     /** Creates Invocation of a "canThrowException" method call. */
     private static Invocation createMethodInvocation() {
-        return new InvocationBuilder()
-            .method("canThrowException")
-            .toInvocation();
+        return new InvocationBuilder().method("canThrowException").toInvocation();
     }
 }

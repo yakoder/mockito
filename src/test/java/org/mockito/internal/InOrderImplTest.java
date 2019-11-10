@@ -5,7 +5,6 @@
 package org.mockito.internal;
 
 import static java.util.Collections.singletonList;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -23,15 +22,15 @@ public class InOrderImplTest extends TestBase {
 
     @Test
     public void shouldMarkVerifiedInOrder() throws Exception {
-        //given
+        // given
         InOrderImpl impl = new InOrderImpl(singletonList(mock));
         Invocation i = new InvocationBuilder().toInvocation();
         assertFalse(impl.isVerified(i));
 
-        //when
+        // when
         impl.markVerified(i);
 
-        //then
+        // then
         assertTrue(impl.isVerified(i));
     }
 }

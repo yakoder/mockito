@@ -8,7 +8,6 @@ import static java.util.Collections.emptyList;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.mockito.MockitoSession;
 import org.mockito.internal.configuration.plugins.Plugins;
 import org.mockito.internal.framework.DefaultMockitoSession;
@@ -62,7 +61,7 @@ public class DefaultMockitoSessionBuilder implements MockitoSessionBuilder {
 
     @Override
     public MockitoSession startMocking() {
-        //Configure default values
+        // Configure default values
         List<Object> effectiveTestClassInstances;
         String effectiveName;
         if (testClassInstances.isEmpty()) {
@@ -71,10 +70,16 @@ public class DefaultMockitoSessionBuilder implements MockitoSessionBuilder {
         } else {
             effectiveTestClassInstances = new ArrayList<Object>(testClassInstances);
             Object lastTestClassInstance = testClassInstances.get(testClassInstances.size() - 1);
-            effectiveName = this.name == null ? lastTestClassInstance.getClass().getName() : this.name;
+            effectiveName =
+                    this.name == null ? lastTestClassInstance.getClass().getName() : this.name;
         }
-        Strictness effectiveStrictness = this.strictness == null ? Strictness.STRICT_STUBS : this.strictness;
-        MockitoLogger logger = this.logger == null ? Plugins.getMockitoLogger() : new MockitoLoggerAdapter(this.logger);
-        return new DefaultMockitoSession(effectiveTestClassInstances, effectiveName, effectiveStrictness, logger);
+        Strictness effectiveStrictness =
+                this.strictness == null ? Strictness.STRICT_STUBS : this.strictness;
+        MockitoLogger logger =
+                this.logger == null
+                        ? Plugins.getMockitoLogger()
+                        : new MockitoLoggerAdapter(this.logger);
+        return new DefaultMockitoSession(
+                effectiveTestClassInstances, effectiveName, effectiveStrictness, logger);
     }
 }

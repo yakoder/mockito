@@ -11,11 +11,11 @@ import org.mockito.mock.MockCreationSettings;
 /**
  * ByteBuddy MockMaker.
  *
- * This class will serve as the programmatic entry point to all mockito internal MockMakers.
- * Currently the default and only mock maker is the subclassing engine, but with enough feedback we can later
- * promote the inlining engine for features like final class/methods mocks.
+ * <p>This class will serve as the programmatic entry point to all mockito internal MockMakers.
+ * Currently the default and only mock maker is the subclassing engine, but with enough feedback we
+ * can later promote the inlining engine for features like final class/methods mocks.
  *
- * The programmatic API could look like {@code mock(Final.class, withSettings().finalClasses())}.
+ * <p>The programmatic API could look like {@code mock(Final.class, withSettings().finalClasses())}.
  */
 public class ByteBuddyMockMaker implements ClassCreatingMockMaker {
     private ClassCreatingMockMaker defaultByteBuddyMockMaker = new SubclassByteBuddyMockMaker();

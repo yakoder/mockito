@@ -5,7 +5,6 @@
 package org.mockito.internal.util.reflection;
 
 import java.lang.reflect.Field;
-
 import org.mockito.exceptions.base.MockitoException;
 
 public class FieldReader {
@@ -21,14 +20,15 @@ public class FieldReader {
     }
 
     public boolean isNull() {
-            return read() == null;
+        return read() == null;
     }
 
     public Object read() {
         try {
             return field.get(target);
         } catch (Exception e) {
-            throw new MockitoException("Cannot read state from field: " + field + ", on instance: " + target);
+            throw new MockitoException(
+                    "Cannot read state from field: " + field + ", on instance: " + target);
         }
     }
 }

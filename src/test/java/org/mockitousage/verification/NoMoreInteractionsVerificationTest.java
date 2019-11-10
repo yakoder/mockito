@@ -11,7 +11,6 @@ import static org.mockito.Mockito.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.exceptions.base.MockitoException;
@@ -69,7 +68,8 @@ public class NoMoreInteractionsVerificationTest extends TestBase {
         try {
             verifyZeroInteractions(mock);
             fail();
-        } catch (NoInteractionsWanted e) {}
+        } catch (NoInteractionsWanted e) {
+        }
     }
 
     @Test
@@ -79,7 +79,8 @@ public class NoMoreInteractionsVerificationTest extends TestBase {
         try {
             verifyNoMoreInteractions(mock);
             fail();
-        } catch (NoInteractionsWanted e) {}
+        } catch (NoInteractionsWanted e) {
+        }
     }
 
     @Test
@@ -89,7 +90,8 @@ public class NoMoreInteractionsVerificationTest extends TestBase {
         try {
             verifyNoInteractions(mock);
             fail();
-        } catch (NoInteractionsWanted e) {}
+        } catch (NoInteractionsWanted e) {
+        }
     }
 
     @Test
@@ -135,7 +137,8 @@ public class NoMoreInteractionsVerificationTest extends TestBase {
         try {
             verifyZeroInteractions(map);
             fail();
-        } catch (NoInteractionsWanted e) {}
+        } catch (NoInteractionsWanted e) {
+        }
     }
 
     @Test
@@ -154,12 +157,13 @@ public class NoMoreInteractionsVerificationTest extends TestBase {
         try {
             verifyNoInteractions(map);
             fail();
-        } catch (NoInteractionsWanted e) {}
+        } catch (NoInteractionsWanted e) {
+        }
     }
 
     @SuppressWarnings("all")
-    @Test(expected=MockitoException.class)
+    @Test(expected = MockitoException.class)
     public void verifyNoMoreInteractionsShouldScreamWhenNullPassed() throws Exception {
-        verifyNoMoreInteractions((Object[])null);
+        verifyNoMoreInteractions((Object[]) null);
     }
 }

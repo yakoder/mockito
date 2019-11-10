@@ -5,9 +5,7 @@
 package org.mockito.internal.matchers;
 
 import java.io.Serializable;
-
 import org.mockito.ArgumentMatcher;
-
 
 public class Contains implements ArgumentMatcher<String>, Serializable {
 

@@ -7,7 +7,6 @@ package org.mockito.internal.verification;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
 import org.mockito.invocation.Invocation;
 
 public class SingleRegisteredInvocation implements RegisteredInvocations, Serializable {

@@ -17,7 +17,6 @@ import static org.mockito.internal.verification.VerificationModeFactory.noMoreIn
 
 import java.util.Arrays;
 import java.util.List;
-
 import org.mockito.InOrder;
 import org.mockito.MockSettings;
 import org.mockito.MockingDetails;
@@ -46,7 +45,6 @@ import org.mockito.stubbing.OngoingStubbing;
 import org.mockito.stubbing.Stubber;
 import org.mockito.verification.VerificationMode;
 
-
 @SuppressWarnings("unchecked")
 public class MockitoCore {
 
@@ -56,7 +54,11 @@ public class MockitoCore {
 
     public <T> T mock(Class<T> typeToMock, MockSettings settings) {
         if (!MockSettingsImpl.class.isInstance(settings)) {
-            throw new IllegalArgumentException("Unexpected implementation of '" + settings.getClass().getCanonicalName() + "'\n" + "At the moment, you cannot provide your own implementations of that class.");
+            throw new IllegalArgumentException(
+                    "Unexpected implementation of '"
+                            + settings.getClass().getCanonicalName()
+                            + "'\n"
+                            + "At the moment, you cannot provide your own implementations of that class.");
         }
         MockSettingsImpl impl = MockSettingsImpl.class.cast(settings);
         MockCreationSettings<T> creationSettings = impl.build(typeToMock);
@@ -87,12 +89,17 @@ public class MockitoCore {
         }
         assertNotStubOnlyMock(mock);
         MockHandler handler = mockingDetails.getMockHandler();
-        mock = (T) VerificationStartedNotifier.notifyVerificationStarted(
-            handler.getMockSettings().getVerificationStartedListeners(), mockingDetails);
+        mock =
+                (T)
+                        VerificationStartedNotifier.notifyVerificationStarted(
+                                handler.getMockSettings().getVerificationStartedListeners(),
+                                mockingDetails);
 
         MockingProgress mockingProgress = mockingProgress();
         VerificationMode actualMode = mockingProgress.maybeVerifyLazily(mode);
-        mockingProgress.verificationStarted(new MockAwareVerificationMode(mock, actualMode, mockingProgress.verificationListeners()));
+        mockingProgress.verificationStarted(
+                new MockAwareVerificationMode(
+                        mock, actualMode, mockingProgress.verificationListeners()));
         return mock;
     }
 
@@ -156,7 +163,9 @@ public class MockitoCore {
 
     public void verifyNoMoreInteractionsInOrder(List<Object> mocks, InOrderContext inOrderContext) {
         mockingProgress().validateState();
-        VerificationDataInOrder data = new VerificationDataInOrderImpl(inOrderContext, VerifiableInvocationsFinder.find(mocks), null);
+        VerificationDataInOrder data =
+                new VerificationDataInOrderImpl(
+                        inOrderContext, VerifiableInvocationsFinder.find(mocks), null);
         VerificationModeFactory.noMoreInteractions().verifyInOrder(data);
     }
 
@@ -209,7 +218,8 @@ public class MockitoCore {
      * @return last invocation
      */
     public Invocation getLastInvocation() {
-        OngoingStubbingImpl ongoingStubbing = ((OngoingStubbingImpl) mockingProgress().pullOngoingStubbing());
+        OngoingStubbingImpl ongoingStubbing =
+                ((OngoingStubbingImpl) mockingProgress().pullOngoingStubbing());
         List<Invocation> allInvocations = ongoingStubbing.getRegisteredInvocations();
         return allInvocations.get(allInvocations.size() - 1);
     }

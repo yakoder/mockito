@@ -5,9 +5,7 @@
 package org.mockito.internal.verification;
 
 import java.util.List;
-
 import org.mockito.invocation.Invocation;
-
 
 public interface RegisteredInvocations {
 
@@ -20,5 +18,4 @@ public interface RegisteredInvocations {
     void clear();
 
     boolean isEmpty();
-
 }

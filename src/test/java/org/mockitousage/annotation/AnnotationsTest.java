@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Answers;
@@ -58,7 +57,8 @@ public class AnnotationsTest extends TestBase {
             MockitoAnnotations.initMocks(null);
             fail();
         } catch (MockitoException e) {
-            assertEquals("testClass cannot be null. For info how to use @Mock annotations see examples in javadoc for MockitoAnnotations class",
+            assertEquals(
+                    "testClass cannot be null. For info how to use @Mock annotations see examples in javadoc for MockitoAnnotations class",
                     e.getMessage());
         }
     }
@@ -73,11 +73,19 @@ public class AnnotationsTest extends TestBase {
         assertNotNull(sub.getSuperBaseMock());
     }
 
-    @Mock(answer = Answers.RETURNS_MOCKS, name = "i have a name") IMethods namedAndReturningMocks;
-    @Mock(answer = Answers.RETURNS_DEFAULTS) IMethods returningDefaults;
-    @Mock(extraInterfaces = {List.class}) IMethods hasExtraInterfaces;
+    @Mock(answer = Answers.RETURNS_MOCKS, name = "i have a name")
+    IMethods namedAndReturningMocks;
+
+    @Mock(answer = Answers.RETURNS_DEFAULTS)
+    IMethods returningDefaults;
+
+    @Mock(extraInterfaces = {List.class})
+    IMethods hasExtraInterfaces;
+
     @Mock() IMethods noExtraConfig;
-    @Mock(stubOnly=true) IMethods stubOnly;
+
+    @Mock(stubOnly = true)
+    IMethods stubOnly;
 
     @Test
     public void shouldInitMocksWithGivenSettings() throws Exception {

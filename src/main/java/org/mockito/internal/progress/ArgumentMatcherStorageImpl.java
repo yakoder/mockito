@@ -5,13 +5,11 @@
 package org.mockito.internal.progress;
 
 import static java.util.Collections.emptyList;
-
 import static org.mockito.internal.exceptions.Reporter.incorrectUseOfAdditionalMatchers;
 import static org.mockito.internal.exceptions.Reporter.misplacedArgumentMatcher;
 import static org.mockito.internal.exceptions.Reporter.reportNoSubMatchersFound;
 
 import java.util.*;
-
 import org.mockito.ArgumentMatcher;
 import org.mockito.internal.matchers.And;
 import org.mockito.internal.matchers.LocalizedMatcher;
@@ -80,7 +78,8 @@ public class ArgumentMatcherStorageImpl implements ArgumentMatcherStorage {
         }
         if (matcherStack.size() < subMatchersCount) {
             List<LocalizedMatcher> lastMatchers = resetStack();
-            throw incorrectUseOfAdditionalMatchers(additionalMatcherName, subMatchersCount, lastMatchers);
+            throw incorrectUseOfAdditionalMatchers(
+                    additionalMatcherName, subMatchersCount, lastMatchers);
         }
     }
 
@@ -93,5 +92,4 @@ public class ArgumentMatcherStorageImpl implements ArgumentMatcherStorage {
         reset();
         return lastMatchers;
     }
-
 }

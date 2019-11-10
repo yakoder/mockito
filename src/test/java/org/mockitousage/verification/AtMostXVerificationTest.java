@@ -15,7 +15,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.util.List;
-
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mock;
@@ -39,7 +38,8 @@ public class AtMostXVerificationTest extends TestBase {
         try {
             verify(mock, atMostOnce()).clear();
             fail();
-        } catch (MoreThanAllowedActualInvocations e) {}
+        } catch (MoreThanAllowedActualInvocations e) {
+        }
     }
 
     @Test
@@ -50,7 +50,8 @@ public class AtMostXVerificationTest extends TestBase {
         try {
             verify(mock, atMost(0)).add(anyString());
             fail();
-        } catch (MoreThanAllowedActualInvocations e) {}
+        } catch (MoreThanAllowedActualInvocations e) {
+        }
     }
 
     @Test
@@ -108,7 +109,7 @@ public class AtMostXVerificationTest extends TestBase {
         try {
             verifyNoMoreInteractions(mock);
             fail();
-        } catch(NoInteractionsWanted e) {
+        } catch (NoInteractionsWanted e) {
             assertThat(e).hasMessageContaining("undesiredInteraction(");
         }
     }

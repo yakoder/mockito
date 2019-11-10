@@ -9,7 +9,6 @@ import static org.mockito.Mockito.withSettings;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -27,12 +26,12 @@ public class MockUtilTest extends TestBase {
         assertNotNull(MockUtil.getMockHandler(mock));
     }
 
-    @Test (expected=NotAMockException.class)
+    @Test(expected = NotAMockException.class)
     public void should_scream_when_not_a_mock_passed() {
         MockUtil.getMockHandler("");
     }
 
-    @Test (expected=MockitoException.class)
+    @Test(expected = MockitoException.class)
     public void should_scream_when_null_passed() {
         MockUtil.getMockHandler(null);
     }
@@ -57,7 +56,11 @@ public class MockUtilTest extends TestBase {
 
         assertTrue(MockUtil.isSpy(Mockito.spy(new ArrayList())));
         assertTrue(MockUtil.isSpy(Mockito.spy(ArrayList.class)));
-        assertTrue(MockUtil.isSpy(Mockito.mock(ArrayList.class, withSettings().defaultAnswer(Mockito.CALLS_REAL_METHODS))));
+        assertTrue(
+                MockUtil.isSpy(
+                        Mockito.mock(
+                                ArrayList.class,
+                                withSettings().defaultAnswer(Mockito.CALLS_REAL_METHODS))));
     }
 
     @Test
@@ -77,7 +80,9 @@ public class MockUtilTest extends TestBase {
     }
 
     final class FinalClass {}
+
     class SomeClass {}
+
     interface SomeInterface {}
 
     @Test

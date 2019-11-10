@@ -112,6 +112,8 @@ spotless {
         indentWithSpaces(4)
 
         importOrder 'static java', 'static javax', 'static ', 'java', 'javax', ''
+
+        googleJavaFormat().aosp()
     }
 }
 

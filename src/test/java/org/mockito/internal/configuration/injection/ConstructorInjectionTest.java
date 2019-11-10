@@ -11,7 +11,6 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Observer;
 import java.util.Set;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

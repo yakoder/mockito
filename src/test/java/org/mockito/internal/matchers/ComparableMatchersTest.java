@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-
 import org.junit.Test;
 import org.mockitoutil.TestBase;
 
@@ -43,8 +42,12 @@ public class ComparableMatchersTest extends TestBase {
         assertTrue(cmpEq.matches(new BigDecimal("5")));
     }
 
-    private void test(CompareTo<String> compareTo, boolean lower, boolean higher,
-            boolean equals, String name) {
+    private void test(
+            CompareTo<String> compareTo,
+            boolean lower,
+            boolean higher,
+            boolean equals,
+            String name) {
 
         assertEquals(lower, compareTo.matches("a"));
         assertEquals(equals, compareTo.matches("b"));

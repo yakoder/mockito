@@ -10,7 +10,6 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
-
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.Argument;
 import net.bytebuddy.implementation.bind.annotation.BindingPriority;
@@ -42,23 +41,26 @@ public class MockMethodInterceptor implements Serializable {
         serializationSupport = new ByteBuddyCrossClassLoaderSerializationSupport();
     }
 
-    Object doIntercept(Object mock,
-                       Method invokedMethod,
-                       Object[] arguments,
-                       RealMethod realMethod) throws Throwable {
-        return doIntercept(mock,
-                           invokedMethod,
-                           arguments,
-                           realMethod,
-                           new LocationImpl());
+    Object doIntercept(Object mock, Method invokedMethod, Object[] arguments, RealMethod realMethod)
+            throws Throwable {
+        return doIntercept(mock, invokedMethod, arguments, realMethod, new LocationImpl());
     }
 
-    Object doIntercept(Object mock,
-                       Method invokedMethod,
-                       Object[] arguments,
-                       RealMethod realMethod,
-                       Location location) throws Throwable {
-        return handler.handle(createInvocation(mock, invokedMethod, arguments, realMethod, mockCreationSettings, location));
+    Object doIntercept(
+            Object mock,
+            Method invokedMethod,
+            Object[] arguments,
+            RealMethod realMethod,
+            Location location)
+            throws Throwable {
+        return handler.handle(
+                createInvocation(
+                        mock,
+                        invokedMethod,
+                        arguments,
+                        realMethod,
+                        mockCreationSettings,
+                        location));
     }
 
     public MockHandler getMockHandler() {
@@ -97,38 +99,34 @@ public class MockMethodInterceptor implements Serializable {
         @SuppressWarnings("unused")
         @RuntimeType
         @BindingPriority(BindingPriority.DEFAULT * 2)
-        public static Object interceptSuperCallable(@This Object mock,
-                                                    @FieldValue("mockitoInterceptor") MockMethodInterceptor interceptor,
-                                                    @Origin Method invokedMethod,
-                                                    @AllArguments Object[] arguments,
-                                                    @SuperCall(serializableProxy = true) Callable<?> superCall) throws Throwable {
+        public static Object interceptSuperCallable(
+                @This Object mock,
+                @FieldValue("mockitoInterceptor") MockMethodInterceptor interceptor,
+                @Origin Method invokedMethod,
+                @AllArguments Object[] arguments,
+                @SuperCall(serializableProxy = true) Callable<?> superCall)
+                throws Throwable {
             if (interceptor == null) {
                 return superCall.call();
             }
             return interceptor.doIntercept(
-                mock,
-                invokedMethod,
-                arguments,
-                new RealMethod.FromCallable(superCall)
-                                          );
+                    mock, invokedMethod, arguments, new RealMethod.FromCallable(superCall));
         }
 
         @SuppressWarnings("unused")
         @RuntimeType
-        public static Object interceptAbstract(@This Object mock,
-                                               @FieldValue("mockitoInterceptor") MockMethodInterceptor interceptor,
-                                               @StubValue Object stubValue,
-                                               @Origin Method invokedMethod,
-                                               @AllArguments Object[] arguments) throws Throwable {
+        public static Object interceptAbstract(
+                @This Object mock,
+                @FieldValue("mockitoInterceptor") MockMethodInterceptor interceptor,
+                @StubValue Object stubValue,
+                @Origin Method invokedMethod,
+                @AllArguments Object[] arguments)
+                throws Throwable {
             if (interceptor == null) {
                 return stubValue;
             }
             return interceptor.doIntercept(
-                mock,
-                invokedMethod,
-                arguments,
-                RealMethod.IsIllegal.INSTANCE
-                                          );
+                    mock, invokedMethod, arguments, RealMethod.IsIllegal.INSTANCE);
         }
     }
 }

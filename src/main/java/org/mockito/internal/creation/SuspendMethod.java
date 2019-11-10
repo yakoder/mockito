@@ -7,11 +7,14 @@ package org.mockito.internal.creation;
 import java.util.Arrays;
 
 /**
- * Utilities for Kotlin Continuation-Passing-Style suspending function, detecting and trimming last hidden parameter.
- * See <a href="https://github.com/Kotlin/kotlin-coroutines/blob/master/kotlin-coroutines-informal.md#continuation-passing-style">Design docs for details</a>.
+ * Utilities for Kotlin Continuation-Passing-Style suspending function, detecting and trimming last
+ * hidden parameter. See <a
+ * href="https://github.com/Kotlin/kotlin-coroutines/blob/master/kotlin-coroutines-informal.md#continuation-passing-style">Design
+ * docs for details</a>.
  */
 public class SuspendMethod {
-    private static final String KOTLIN_EXPERIMENTAL_CONTINUATION = "kotlin.coroutines.experimental.Continuation";
+    private static final String KOTLIN_EXPERIMENTAL_CONTINUATION =
+            "kotlin.coroutines.experimental.Continuation";
     private static final String KOTLIN_CONTINUATION = "kotlin.coroutines.Continuation";
 
     public static Class<?>[] trimSuspendParameterTypes(Class<?>[] parameterTypes) {

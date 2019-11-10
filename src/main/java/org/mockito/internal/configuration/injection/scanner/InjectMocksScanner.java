@@ -10,31 +10,27 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-/**
- * Scan field for injection.
- */
+/** Scan field for injection. */
 public class InjectMocksScanner {
     private final Class<?> clazz;
 
     /**
      * Create a new InjectMocksScanner for the given clazz on the given instance
      *
-     * @param clazz    Current class in the hierarchy of the test
+     * @param clazz Current class in the hierarchy of the test
      */
     public InjectMocksScanner(Class<?> clazz) {
         this.clazz = clazz;
     }
 
-
     /**
      * Add the fields annotated by @{@link InjectMocks}
      *
-     * @param mockDependentFields Set of fields annotated by  @{@link InjectMocks}
+     * @param mockDependentFields Set of fields annotated by @{@link InjectMocks}
      */
     public void addTo(Set<Field> mockDependentFields) {
         mockDependentFields.addAll(scan());
@@ -59,10 +55,12 @@ public class InjectMocksScanner {
         return mockDependentFields;
     }
 
-    private static void assertNoAnnotations(Field field, Class<? extends Annotation>... annotations) {
+    private static void assertNoAnnotations(
+            Field field, Class<? extends Annotation>... annotations) {
         for (Class<? extends Annotation> annotation : annotations) {
             if (field.isAnnotationPresent(annotation)) {
-                throw unsupportedCombinationOfAnnotations(annotation.getSimpleName(), InjectMocks.class.getSimpleName());
+                throw unsupportedCombinationOfAnnotations(
+                        annotation.getSimpleName(), InjectMocks.class.getSimpleName());
             }
         }
     }

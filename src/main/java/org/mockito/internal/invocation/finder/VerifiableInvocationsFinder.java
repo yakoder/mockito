@@ -5,14 +5,11 @@
 package org.mockito.internal.invocation.finder;
 
 import java.util.List;
-
 import org.mockito.internal.util.collections.ListUtil;
 import org.mockito.internal.util.collections.ListUtil.Filter;
 import org.mockito.invocation.Invocation;
 
-/**
- * Author: Szczepan Faber, created at: 4/3/11
- */
+/** Author: Szczepan Faber, created at: 4/3/11 */
 public class VerifiableInvocationsFinder {
 
     private VerifiableInvocationsFinder() {}
@@ -22,7 +19,7 @@ public class VerifiableInvocationsFinder {
         return ListUtil.filter(invocations, new RemoveIgnoredForVerification());
     }
 
-    private static class RemoveIgnoredForVerification implements Filter<Invocation>{
+    private static class RemoveIgnoredForVerification implements Filter<Invocation> {
         public boolean isOut(Invocation invocation) {
             return invocation.isIgnoredForVerification();
         }

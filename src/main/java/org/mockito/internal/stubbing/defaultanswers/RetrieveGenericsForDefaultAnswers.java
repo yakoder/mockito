@@ -7,7 +7,6 @@ package org.mockito.internal.stubbing.defaultanswers;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-
 import org.mockito.internal.MockitoCore;
 import org.mockito.internal.util.MockUtil;
 import org.mockito.internal.util.reflection.GenericMetadataSupport;
@@ -19,7 +18,7 @@ class RetrieveGenericsForDefaultAnswers {
     private static final MockitoCore MOCKITO_CORE = new MockitoCore();
 
     static Object returnTypeForMockWithCorrectGenerics(
-        InvocationOnMock invocation, AnswerCallback answerCallback) {
+            InvocationOnMock invocation, AnswerCallback answerCallback) {
         Class<?> type = invocation.getMethod().getReturnType();
 
         final Type returnType = invocation.getMethod().getGenericReturnType();
@@ -49,9 +48,10 @@ class RetrieveGenericsForDefaultAnswers {
     }
 
     /**
-     * Try to resolve the result value using {@link ReturnsEmptyValues} and {@link ReturnsMoreEmptyValues}.
+     * Try to resolve the result value using {@link ReturnsEmptyValues} and {@link
+     * ReturnsMoreEmptyValues}.
      *
-     * This will try to use all parent class (superclass & interfaces) to retrieve the value..
+     * <p>This will try to use all parent class (superclass & interfaces) to retrieve the value..
      *
      * @param type the return type of the method
      * @return a non-null instance if the type has been resolve. Null otherwise.
@@ -82,18 +82,21 @@ class RetrieveGenericsForDefaultAnswers {
     }
 
     /**
-     * Retrieve the expected type when it came from a primitive. If the type cannot be retrieve, return null.
+     * Retrieve the expected type when it came from a primitive. If the type cannot be retrieve,
+     * return null.
      *
      * @param invocation the current invocation
      * @param returnType the expected return type
      * @return the type or null if not found
      */
-    private static Class<?> findTypeFromGeneric(final InvocationOnMock invocation, final TypeVariable returnType) {
+    private static Class<?> findTypeFromGeneric(
+            final InvocationOnMock invocation, final TypeVariable returnType) {
         // Class level
-        final MockCreationSettings mockSettings = MockUtil.getMockHandler(invocation.getMock()).getMockSettings();
-        final GenericMetadataSupport returnTypeSupport = GenericMetadataSupport
-            .inferFrom(mockSettings.getTypeToMock())
-            .resolveGenericReturnType(invocation.getMethod());
+        final MockCreationSettings mockSettings =
+                MockUtil.getMockHandler(invocation.getMock()).getMockSettings();
+        final GenericMetadataSupport returnTypeSupport =
+                GenericMetadataSupport.inferFrom(mockSettings.getTypeToMock())
+                        .resolveGenericReturnType(invocation.getMethod());
         final Class<?> rawType = returnTypeSupport.rawType();
 
         // Method level
@@ -110,7 +113,8 @@ class RetrieveGenericsForDefaultAnswers {
      * @param returnType the expected return type
      * @return the return type or null if the return type cannot be found
      */
-    private static Class<?> findTypeFromGenericInArguments(final InvocationOnMock invocation, final TypeVariable returnType) {
+    private static Class<?> findTypeFromGenericInArguments(
+            final InvocationOnMock invocation, final TypeVariable returnType) {
         final Type[] parameterTypes = invocation.getMethod().getGenericParameterTypes();
         for (int i = 0; i < parameterTypes.length; i++) {
             Type argType = parameterTypes[i];

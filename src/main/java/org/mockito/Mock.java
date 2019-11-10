@@ -11,7 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
@@ -19,10 +18,11 @@ import org.mockito.stubbing.Answer;
  * Mark a field as a mock.
  *
  * <ul>
- * <li>Allows shorthand mock creation.</li>
- * <li>Minimizes repetitive mock creation code.</li>
- * <li>Makes the test class more readable.</li>
- * <li>Makes the verification error easier to read because the <b>field name</b> is used to identify the mock.</li>
+ *   <li>Allows shorthand mock creation.
+ *   <li>Minimizes repetitive mock creation code.
+ *   <li>Makes the test class more readable.
+ *   <li>Makes the verification error easier to read because the <b>field name</b> is used to
+ *       identify the mock.
  * </ul>
  *
  * <pre class="code"><code class="java">
@@ -49,13 +49,11 @@ import org.mockito.stubbing.Answer;
  *   }
  * </code></pre>
  *
- * <p>
- * <strong><code>MockitoAnnotations.initMocks(this)</code></strong> method has to be called to initialize annotated objects.
- * In above example, <code>initMocks()</code> is called in &#064;Before (JUnit4) method of test's base class.
- * For JUnit3 <code>initMocks()</code> can go to <code>setup()</code> method of a base class.
- * <strong>Instead</strong> you can also put initMocks() in your JUnit runner (&#064;RunWith) or use the built-in
- * {@link MockitoJUnitRunner}.
- * </p>
+ * <p><strong><code>MockitoAnnotations.initMocks(this)</code></strong> method has to be called to
+ * initialize annotated objects. In above example, <code>initMocks()</code> is called in
+ * &#064;Before (JUnit4) method of test's base class. For JUnit3 <code>initMocks()</code> can go to
+ * <code>setup()</code> method of a base class. <strong>Instead</strong> you can also put
+ * initMocks() in your JUnit runner (&#064;RunWith) or use the built-in {@link MockitoJUnitRunner}.
  *
  * @see Mockito#mock(Class)
  * @see Spy
@@ -69,38 +67,39 @@ import org.mockito.stubbing.Answer;
 public @interface Mock {
 
     /**
-     * Mock will have custom answer, see {@link MockSettings#defaultAnswer(Answer)}.
-     * For examples how to use 'Mock' annotation and parameters see {@link Mock}.
+     * Mock will have custom answer, see {@link MockSettings#defaultAnswer(Answer)}. For examples
+     * how to use 'Mock' annotation and parameters see {@link Mock}.
      */
     Answers answer() default Answers.RETURNS_DEFAULTS;
 
     /**
-     * Mock will be 'stubOnly', see {@link MockSettings#stubOnly()}.
-     * For examples how to use 'Mock' annotation and parameters see {@link Mock}.
+     * Mock will be 'stubOnly', see {@link MockSettings#stubOnly()}. For examples how to use 'Mock'
+     * annotation and parameters see {@link Mock}.
      */
     boolean stubOnly() default false;
 
     /**
-     * Mock will have custom name (shown in verification errors), see {@link MockSettings#name(String)}.
-     * For examples how to use 'Mock' annotation and parameters see {@link Mock}.
+     * Mock will have custom name (shown in verification errors), see {@link
+     * MockSettings#name(String)}. For examples how to use 'Mock' annotation and parameters see
+     * {@link Mock}.
      */
     String name() default "";
 
     /**
-     * Mock will have extra interfaces, see {@link MockSettings#extraInterfaces(Class[])}.
-     * For examples how to use 'Mock' annotation and parameters see {@link Mock}.
+     * Mock will have extra interfaces, see {@link MockSettings#extraInterfaces(Class[])}. For
+     * examples how to use 'Mock' annotation and parameters see {@link Mock}.
      */
     Class<?>[] extraInterfaces() default {};
 
     /**
-     * Mock will be serializable, see {@link MockSettings#serializable()}.
-     * For examples how to use 'Mock' annotation and parameters see {@link Mock}.
+     * Mock will be serializable, see {@link MockSettings#serializable()}. For examples how to use
+     * 'Mock' annotation and parameters see {@link Mock}.
      */
     boolean serializable() default false;
 
     /**
-     * Mock will be lenient, see {@link MockSettings#lenient()}.
-     * For examples how to use 'Mock' annotation and parameters see {@link Mock}.
+     * Mock will be lenient, see {@link MockSettings#lenient()}. For examples how to use 'Mock'
+     * annotation and parameters see {@link Mock}.
      *
      * @since 2.23.3
      */

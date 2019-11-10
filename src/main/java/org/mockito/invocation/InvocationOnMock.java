@@ -6,14 +6,12 @@ package org.mockito.invocation;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
-
 import org.mockito.NotExtensible;
 
 /**
  * An invocation on a mock.
  *
- * <p>
- * A placeholder for mock, the method that was called and the arguments that were passed.
+ * <p>A placeholder for mock, the method that was called and the arguments that were passed.
  */
 @NotExtensible
 public interface InvocationOnMock extends Serializable {
@@ -35,7 +33,7 @@ public interface InvocationOnMock extends Serializable {
     /**
      * Returns arguments passed to the method.
      *
-     * Vararg are expanded in this array.
+     * <p>Vararg are expanded in this array.
      *
      * @return arguments
      */
@@ -44,10 +42,10 @@ public interface InvocationOnMock extends Serializable {
     /**
      * Returns casted argument at the given index.
      *
-     * Can lookup in expanded arguments form {@link #getArguments()}.
+     * <p>Can lookup in expanded arguments form {@link #getArguments()}.
      *
-     * This method is preferred over {@link #getArgument(int, Class)} for readability. Please read
-     * the documentation of {@link #getArgument(int, Class)} for an overview of situations when
+     * <p>This method is preferred over {@link #getArgument(int, Class)} for readability. Please
+     * read the documentation of {@link #getArgument(int, Class)} for an overview of situations when
      * that method is preferred over this one.
      *
      * @param index argument index
@@ -57,15 +55,16 @@ public interface InvocationOnMock extends Serializable {
     <T> T getArgument(int index);
 
     /**
-     * Returns casted argument at the given index. This method is analogous to
-     * {@link #getArgument(int)}, but is necessary to circumvent issues when dealing with generics.
+     * Returns casted argument at the given index. This method is analogous to {@link
+     * #getArgument(int)}, but is necessary to circumvent issues when dealing with generics.
      *
-     * In general, {@link #getArgument(int)} is the appropriate function to use. This particular
+     * <p>In general, {@link #getArgument(int)} is the appropriate function to use. This particular
      * function is only necessary if you are doing one of the following things:
      *
      * <ol>
-     *  <li>You want to directly invoke a method on the result of {@link #getArgument(int)}.</li>
-     *  <li>You want to directly pass the result of the invocation into a function that accepts a generic parameter.</li>
+     *   <li>You want to directly invoke a method on the result of {@link #getArgument(int)}.
+     *   <li>You want to directly pass the result of the invocation into a function that accepts a
+     *       generic parameter.
      * </ol>
      *
      * If you prefer to use {@link #getArgument(int)} instead, you can circumvent the compilation
@@ -79,8 +78,8 @@ public interface InvocationOnMock extends Serializable {
 
     /**
      * calls real method
-     * <p>
-     * <b>Warning:</b> depending on the real implementation it might throw exceptions
+     *
+     * <p><b>Warning:</b> depending on the real implementation it might throw exceptions
      *
      * @return whatever the real method returns / throws
      * @throws Throwable in case real method throws

@@ -7,7 +7,6 @@ package org.mockito.internal.matchers.text;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.mockito.ArgumentMatcher;
 import org.mockito.internal.matchers.ContainsExtraTypeInfo;
 import org.mockito.internal.reporting.PrintSettings;
@@ -25,7 +24,8 @@ public class MatchersPrinter {
         return ValuePrinter.printValues("(\n    ", ",\n    ", "\n);", args);
     }
 
-    private Iterator<FormattedText> applyPrintSettings(List<ArgumentMatcher> matchers, PrintSettings printSettings) {
+    private Iterator<FormattedText> applyPrintSettings(
+            List<ArgumentMatcher> matchers, PrintSettings printSettings) {
         List<FormattedText> out = new LinkedList<FormattedText>();
         int i = 0;
         for (final ArgumentMatcher matcher : matchers) {

@@ -5,14 +5,11 @@
 package org.mockito.internal.configuration;
 
 import java.lang.reflect.Field;
-
 import org.mockito.Mock;
 import org.mockito.MockSettings;
 import org.mockito.Mockito;
 
-/**
- * Instantiates a mock on a field annotated by {@link Mock}
- */
+/** Instantiates a mock on a field annotated by {@link Mock} */
 public class MockAnnotationProcessor implements FieldAnnotationProcessor<Mock> {
     @Override
     public Object process(Mock annotation, Field field) {
@@ -29,13 +26,13 @@ public class MockAnnotationProcessor implements FieldAnnotationProcessor<Mock> {
         } else {
             mockSettings.name(annotation.name());
         }
-        if(annotation.serializable()){
+        if (annotation.serializable()) {
             mockSettings.serializable();
         }
-        if(annotation.stubOnly()){
+        if (annotation.stubOnly()) {
             mockSettings.stubOnly();
         }
-        if(annotation.lenient()){
+        if (annotation.lenient()) {
             mockSettings.lenient();
         }
 

@@ -7,13 +7,10 @@ package org.mockito.internal.stubbing;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.mockito.quality.Strictness;
 import org.mockito.stubbing.Answer;
 
-/**
- * Holds answers declared using 'doAnswer' stubbing style.
- */
+/** Holds answers declared using 'doAnswer' stubbing style. */
 class DoAnswerStyleStubbing implements Serializable {
 
     private final List<Answer<?>> answers = new ArrayList<Answer<?>>();

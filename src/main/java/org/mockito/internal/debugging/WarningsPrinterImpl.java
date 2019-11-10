@@ -5,7 +5,6 @@
 package org.mockito.internal.debugging;
 
 import java.util.List;
-
 import org.mockito.internal.invocation.InvocationMatcher;
 import org.mockito.invocation.Invocation;
 
@@ -14,7 +13,10 @@ public class WarningsPrinterImpl {
     private final boolean warnAboutUnstubbed;
     private final WarningsFinder finder;
 
-    public WarningsPrinterImpl(List<Invocation> unusedStubs, List<InvocationMatcher> allInvocations, boolean warnAboutUnstubbed) {
+    public WarningsPrinterImpl(
+            List<Invocation> unusedStubs,
+            List<InvocationMatcher> allInvocations,
+            boolean warnAboutUnstubbed) {
         this(warnAboutUnstubbed, new WarningsFinder(unusedStubs, allInvocations));
     }
 

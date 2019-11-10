@@ -19,18 +19,14 @@ public class Timer {
         this.duration = duration;
     }
 
-    /**
-     * Informs whether the timer is still counting down.
-     */
+    /** Informs whether the timer is still counting down. */
     public boolean isCounting() {
         assert startTime != null;
         Duration elapsed = Duration.between(startTime, Instant.now());
         return elapsed.compareTo(duration) <= 0;
     }
 
-    /**
-     * Starts the timer count down.
-     */
+    /** Starts the timer count down. */
     public void start() {
         startTime = Instant.now();
     }

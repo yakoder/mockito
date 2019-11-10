@@ -5,7 +5,6 @@
 package org.mockito.internal.creation;
 
 import static java.util.Arrays.asList;
-
 import static org.mockito.internal.exceptions.Reporter.defaultAnswerDoesNotAcceptNullParameter;
 import static org.mockito.internal.exceptions.Reporter.extraInterfacesAcceptsOnlyInterfaces;
 import static org.mockito.internal.exceptions.Reporter.extraInterfacesDoesNotAcceptNullParameters;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.mockito.MockSettings;
 import org.mockito.internal.creation.settings.CreationSettings;
 import org.mockito.internal.debugging.VerboseMockInvocationLogger;
@@ -35,7 +33,8 @@ import org.mockito.mock.SerializableMode;
 import org.mockito.stubbing.Answer;
 
 @SuppressWarnings("unchecked")
-public class MockSettingsImpl<T> extends CreationSettings<T> implements MockSettings, MockCreationSettings<T> {
+public class MockSettingsImpl<T> extends CreationSettings<T>
+        implements MockSettings, MockCreationSettings<T> {
 
     private static final long serialVersionUID = 4475297236197939569L;
     private boolean useConstructor;
@@ -119,9 +118,10 @@ public class MockSettingsImpl<T> extends CreationSettings<T> implements MockSett
 
     @Override
     public MockSettings useConstructor(Object... constructorArgs) {
-        Checks.checkNotNull(constructorArgs,
-            "constructorArgs",
-            "If you need to pass null, please cast it to the right type, e.g.: useConstructor((String) null)");
+        Checks.checkNotNull(
+                constructorArgs,
+                "constructorArgs",
+                "If you need to pass null, please cast it to the right type, e.g.: useConstructor((String) null)");
         this.useConstructor = true;
         this.constructorArgs = constructorArgs;
         return this;
@@ -235,20 +235,22 @@ public class MockSettingsImpl<T> extends CreationSettings<T> implements MockSett
         return this;
     }
 
-    private static <T> CreationSettings<T> validatedSettings(Class<T> typeToMock, CreationSettings<T> source) {
+    private static <T> CreationSettings<T> validatedSettings(
+            Class<T> typeToMock, CreationSettings<T> source) {
         MockCreationValidator validator = new MockCreationValidator();
 
         validator.validateType(typeToMock);
         validator.validateExtraInterfaces(typeToMock, source.getExtraInterfaces());
         validator.validateMockedType(typeToMock, source.getSpiedInstance());
 
-        //TODO SF - add this validation and also add missing coverage
-//        validator.validateDelegatedInstance(classToMock, settings.getDelegatedInstance());
+        // TODO SF - add this validation and also add missing coverage
+        //        validator.validateDelegatedInstance(classToMock, settings.getDelegatedInstance());
 
         validator.validateConstructorUse(source.isUsingConstructor(), source.getSerializableMode());
 
-        //TODO SF - I don't think we really need CreationSettings type
-        //TODO do we really need to copy the entire settings every time we create mock object? it does not seem necessary.
+        // TODO SF - I don't think we really need CreationSettings type
+        // TODO do we really need to copy the entire settings every time we create mock object? it
+        // does not seem necessary.
         CreationSettings<T> settings = new CreationSettings<T>(source);
         settings.setMockName(new MockNameImpl(source.getName(), typeToMock));
         settings.setTypeToMock(typeToMock);
@@ -258,10 +260,9 @@ public class MockSettingsImpl<T> extends CreationSettings<T> implements MockSett
 
     private static Set<Class<?>> prepareExtraInterfaces(CreationSettings settings) {
         Set<Class<?>> interfaces = new HashSet<Class<?>>(settings.getExtraInterfaces());
-        if(settings.isSerializable()) {
+        if (settings.isSerializable()) {
             interfaces.add(Serializable.class);
         }
         return interfaces;
     }
-
 }

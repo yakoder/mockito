@@ -10,18 +10,14 @@ import org.mockito.invocation.DescribedInvocation;
 import org.mockito.invocation.Invocation;
 import org.mockito.listeners.MethodInvocationReport;
 
-/**
- * Report on a method call
- */
+/** Report on a method call */
 public class NotifiedMethodInvocationReport implements MethodInvocationReport {
     private final Invocation invocation;
     private final Object returnedValue;
     private final Throwable throwable;
 
-
     /**
      * Build a new {@link org.mockito.listeners.MethodInvocationReport} with a return value.
-     *
      *
      * @param invocation Information on the method call
      * @param returnedValue The value returned by the method invocation
@@ -34,7 +30,6 @@ public class NotifiedMethodInvocationReport implements MethodInvocationReport {
 
     /**
      * Build a new {@link org.mockito.listeners.MethodInvocationReport} with a return value.
-     *
      *
      * @param invocation Information on the method call
      * @param throwable Tha throwable raised by the method invocation
@@ -62,9 +57,10 @@ public class NotifiedMethodInvocationReport implements MethodInvocationReport {
     }
 
     public String getLocationOfStubbing() {
-        return (invocation.stubInfo() == null) ? null : invocation.stubInfo().stubbedAt().toString();
+        return (invocation.stubInfo() == null)
+                ? null
+                : invocation.stubInfo().stubbedAt().toString();
     }
-
 
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,9 +68,9 @@ public class NotifiedMethodInvocationReport implements MethodInvocationReport {
 
         NotifiedMethodInvocationReport that = (NotifiedMethodInvocationReport) o;
 
-        return areEqual(invocation, that.invocation) &&
-               areEqual(returnedValue, that.returnedValue) &&
-               areEqual(throwable, that.throwable);
+        return areEqual(invocation, that.invocation)
+                && areEqual(returnedValue, that.returnedValue)
+                && areEqual(throwable, that.throwable);
     }
 
     public int hashCode() {

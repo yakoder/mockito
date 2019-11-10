@@ -9,7 +9,6 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
-
 import org.junit.Test;
 import org.mockito.InOrder;
 
@@ -17,8 +16,8 @@ import org.mockito.InOrder;
 public class MultipleInOrdersTest {
 
     @Test
-    public void inOrderTest(){
-        List<String> list= mock(List.class);
+    public void inOrderTest() {
+        List<String> list = mock(List.class);
 
         list.add("a");
         list.add("x");

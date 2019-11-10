@@ -10,15 +10,18 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.plugins.AnnotationEngine;
 
 /**
- * MockitoAnnotations.initMocks(this); initializes fields annotated with Mockito annotations.
- * See also {@link MockitoSession} which not only initializes mocks
- * but also adds extra validation for cleaner tests!
+ * MockitoAnnotations.initMocks(this); initializes fields annotated with Mockito annotations. See
+ * also {@link MockitoSession} which not only initializes mocks but also adds extra validation for
+ * cleaner tests!
+ *
  * <p>
+ *
  * <ul>
- * <li>Allows shorthand creation of objects required for testing.</li>
- * <li>Minimizes repetitive mock creation code.</li>
- * <li>Makes the test class more readable.</li>
- * <li>Makes the verification error easier to read because <b>field name</b> is used to identify the mock.</li>
+ *   <li>Allows shorthand creation of objects required for testing.
+ *   <li>Minimizes repetitive mock creation code.
+ *   <li>Makes the test class more readable.
+ *   <li>Makes the verification error easier to read because <b>field name</b> is used to identify
+ *       the mock.
  * </ul>
  *
  * <pre class="code"><code class="java">
@@ -42,29 +45,34 @@ import org.mockito.plugins.AnnotationEngine;
  *       }
  *   }
  * </code></pre>
- * <p>
- * Read also about other annotations &#064;{@link Spy}, &#064;{@link Captor}, &#064;{@link InjectMocks}
- * <p>
- * <b><code>MockitoAnnotations.initMocks(this)</code></b> method has to be called to initialize annotated fields.
- * <p>
- * In above example, <code>initMocks()</code> is called in &#064;Before (JUnit4) method of test's base class.
- * For JUnit3 <code>initMocks()</code> can go to <code>setup()</code> method of a base class.
- * You can also put initMocks() in your JUnit runner (&#064;RunWith) or use built-in runner: {@link MockitoJUnitRunner}
+ *
+ * <p>Read also about other annotations &#064;{@link Spy}, &#064;{@link Captor}, &#064;{@link
+ * InjectMocks}
+ *
+ * <p><b><code>MockitoAnnotations.initMocks(this)</code></b> method has to be called to initialize
+ * annotated fields.
+ *
+ * <p>In above example, <code>initMocks()</code> is called in &#064;Before (JUnit4) method of test's
+ * base class. For JUnit3 <code>initMocks()</code> can go to <code>setup()</code> method of a base
+ * class. You can also put initMocks() in your JUnit runner (&#064;RunWith) or use built-in runner:
+ * {@link MockitoJUnitRunner}
  */
 public class MockitoAnnotations {
 
     /**
-     * Initializes objects annotated with Mockito annotations for given testClass:
-     *  &#064;{@link org.mockito.Mock}, &#064;{@link Spy}, &#064;{@link Captor}, &#064;{@link InjectMocks}
-     * <p>
-     * See examples in javadoc for {@link MockitoAnnotations} class.
+     * Initializes objects annotated with Mockito annotations for given testClass: &#064;{@link
+     * org.mockito.Mock}, &#064;{@link Spy}, &#064;{@link Captor}, &#064;{@link InjectMocks}
+     *
+     * <p>See examples in javadoc for {@link MockitoAnnotations} class.
      */
     public static void initMocks(Object testClass) {
         if (testClass == null) {
-            throw new MockitoException("testClass cannot be null. For info how to use @Mock annotations see examples in javadoc for MockitoAnnotations class");
+            throw new MockitoException(
+                    "testClass cannot be null. For info how to use @Mock annotations see examples in javadoc for MockitoAnnotations class");
         }
 
-        AnnotationEngine annotationEngine = new GlobalConfiguration().tryGetPluginAnnotationEngine();
+        AnnotationEngine annotationEngine =
+                new GlobalConfiguration().tryGetPluginAnnotationEngine();
         annotationEngine.process(testClass.getClass(), testClass);
     }
 }

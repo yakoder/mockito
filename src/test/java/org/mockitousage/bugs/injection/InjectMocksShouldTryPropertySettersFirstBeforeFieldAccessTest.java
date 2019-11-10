@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,7 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 /**
- * Issue 211 : @InjectMocks should carry out their work by the method (and not by field) if available
+ * Issue 211 : @InjectMocks should carry out their work by the method (and not by field) if
+ * available
  */
 @RunWith(MockitoJUnitRunner.class)
 public class InjectMocksShouldTryPropertySettersFirstBeforeFieldAccessTest {
@@ -44,5 +44,4 @@ public class InjectMocksShouldTryPropertySettersFirstBeforeFieldAccessTest {
             propertySetterUsed = true;
         }
     }
-
 }

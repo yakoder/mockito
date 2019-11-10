@@ -5,7 +5,6 @@
 package org.mockito.internal.matchers;
 
 import java.io.Serializable;
-
 import org.mockito.ArgumentMatcher;
 import org.mockito.internal.matchers.text.ValuePrinter;
 

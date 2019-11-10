@@ -9,7 +9,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 import java.util.List;
-
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -19,6 +18,7 @@ public class GenericMatchersTest extends TestBase {
 
     private interface Foo {
         List<String> sort(List<String> otherList);
+
         String convertDate(Date date);
     }
 
@@ -30,7 +30,7 @@ public class GenericMatchersTest extends TestBase {
         when(sorter.convertDate(new Date())).thenReturn("one");
         when(sorter.convertDate((Date) anyObject())).thenReturn("two");
 
-        //following requires warning suppression but allows setting anyList()
+        // following requires warning suppression but allows setting anyList()
         when(sorter.sort(ArgumentMatchers.<String>anyList())).thenReturn(null);
     }
 }

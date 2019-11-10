@@ -9,11 +9,11 @@ import org.mockito.MockitoSession;
 import org.mockito.NotExtensible;
 
 /**
- * Logger for {@linkplain org.mockito.quality.MockitoHint hints} emitted when
- * finishing mocking for a {@link MockitoSession}.
- * <p>
- * This class is intended to be used by framework integrations, e.g. JUnit. When using
- * {@link MockitoSession} directly, you'll probably not need it.
+ * Logger for {@linkplain org.mockito.quality.MockitoHint hints} emitted when finishing mocking for
+ * a {@link MockitoSession}.
+ *
+ * <p>This class is intended to be used by framework integrations, e.g. JUnit. When using {@link
+ * MockitoSession} directly, you'll probably not need it.
  *
  * @since 2.15.0
  */
@@ -28,5 +28,4 @@ public interface MockitoSessionLogger {
      */
     @Incubating
     void log(String hint);
-
 }

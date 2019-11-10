@@ -4,7 +4,6 @@
  */
 package org.mockito.internal.util.reflection;
 
-
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -22,34 +21,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-
 import org.mockito.exceptions.base.MockitoException;
 import org.mockito.internal.util.Checks;
 
-
 /**
- * This class can retrieve generic meta-data that the compiler stores on classes
- * and accessible members.
+ * This class can retrieve generic meta-data that the compiler stores on classes and accessible
+ * members.
  *
- * <p>
- * The main idea of this code is to create a Map that will help to resolve return types.
- * In order to actually work with nested generics, this map will have to be passed along new instances
- * as a type context.
- * </p>
+ * <p>The main idea of this code is to create a Map that will help to resolve return types. In order
+ * to actually work with nested generics, this map will have to be passed along new instances as a
+ * type context.
  *
- * <p>
- * Hence :
+ * <p>Hence :
+ *
  * <ul>
- * <li>A new instance representing the metadata is created using the {@link #inferFrom(Type)} method from a real
- * <code>Class</code> or from a <code>ParameterizedType</code>, other types are not yet supported.</li>
- *
- * <li>Then from this metadata, we can extract meta-data for a generic return type of a method, using
- * {@link #resolveGenericReturnType(Method)}.</li>
+ *   <li>A new instance representing the metadata is created using the {@link #inferFrom(Type)}
+ *       method from a real <code>Class</code> or from a <code>ParameterizedType</code>, other types
+ *       are not yet supported.
+ *   <li>Then from this metadata, we can extract meta-data for a generic return type of a method,
+ *       using {@link #resolveGenericReturnType(Method)}.
  * </ul>
- * </p>
  *
- * <p>
- * For now this code support the following kind of generic declarations :
+ * <p>For now this code support the following kind of generic declarations :
+ *
  * <pre class="code"><code class="java">
  * interface GenericsNest&lt;K extends Comparable&lt;K&gt; & Cloneable&gt; extends Map&lt;K, Set&lt;Number&gt;&gt; {
  *     Set&lt;Number&gt; remove(Object key); // override with fixed ParameterizedType
@@ -72,13 +66,13 @@ public abstract class GenericMetadataSupport {
 
     // public static MockitoLogger logger = new ConsoleMockitoLogger();
 
-    /**
-     * Represents actual type variables resolved for current class.
-     */
-    protected Map<TypeVariable<?>, Type> contextualActualTypeParameters = new HashMap<TypeVariable<?>, Type>();
+    /** Represents actual type variables resolved for current class. */
+    protected Map<TypeVariable<?>, Type> contextualActualTypeParameters =
+            new HashMap<TypeVariable<?>, Type>();
 
     /**
-     * Registers the type variables for the given type and all of its superclasses and superinterfaces.
+     * Registers the type variables for the given type and all of its superclasses and
+     * superinterfaces.
      */
     protected void registerAllTypeVariables(Type classType) {
         Queue<Type> typesToRegister = new LinkedList<Type>();
@@ -126,7 +120,8 @@ public abstract class GenericMetadataSupport {
             return;
         }
         ParameterizedType parameterizedType = (ParameterizedType) classType;
-        TypeVariable<?>[] typeParameters = ((Class<?>) parameterizedType.getRawType()).getTypeParameters();
+        TypeVariable<?>[] typeParameters =
+                ((Class<?>) parameterizedType.getRawType()).getTypeParameters();
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         for (int i = 0; i < actualTypeArguments.length; i++) {
             TypeVariable<?> typeParameter = typeParameters[i];
@@ -142,19 +137,24 @@ public abstract class GenericMetadataSupport {
                  */
                 registerTypeVariableIfNotPresent((TypeVariable<?>) actualTypeArgument);
 
-                // Prevent registration of a cycle of TypeVariables. This can happen when we are processing
-                // type parameters in a Method, while we already processed the type parameters of a class.
+                // Prevent registration of a cycle of TypeVariables. This can happen when we are
+                // processing
+                // type parameters in a Method, while we already processed the type parameters of a
+                // class.
                 if (contextualActualTypeParameters.containsKey(typeParameter)) {
                     continue;
                 }
             }
 
             if (actualTypeArgument instanceof WildcardType) {
-                contextualActualTypeParameters.put(typeParameter, boundsOf((WildcardType) actualTypeArgument));
+                contextualActualTypeParameters.put(
+                        typeParameter, boundsOf((WildcardType) actualTypeArgument));
             } else if (typeParameter != actualTypeArgument) {
                 contextualActualTypeParameters.put(typeParameter, actualTypeArgument);
             }
-            // logger.log("For '" + parameterizedType + "' found type variable : { '" + typeParameter + "(" + System.identityHashCode(typeParameter) + ")" + "' : '" + actualTypeArgument + "(" + System.identityHashCode(typeParameter) + ")" + "' }");
+            // logger.log("For '" + parameterizedType + "' found type variable : { '" +
+            // typeParameter + "(" + System.identityHashCode(typeParameter) + ")" + "' : '" +
+            // actualTypeArgument + "(" + System.identityHashCode(typeParameter) + ")" + "' }");
         }
     }
 
@@ -167,14 +167,16 @@ public abstract class GenericMetadataSupport {
     private void registerTypeVariableIfNotPresent(TypeVariable<?> typeVariable) {
         if (!contextualActualTypeParameters.containsKey(typeVariable)) {
             contextualActualTypeParameters.put(typeVariable, boundsOf(typeVariable));
-            // logger.log("For '" + typeVariable.getGenericDeclaration() + "' found type variable : { '" + typeVariable + "(" + System.identityHashCode(typeVariable) + ")" + "' : '" + boundsOf(typeVariable) + "' }");
+            // logger.log("For '" + typeVariable.getGenericDeclaration() + "' found type variable :
+            // { '" + typeVariable + "(" + System.identityHashCode(typeVariable) + ")" + "' : '" +
+            // boundsOf(typeVariable) + "' }");
         }
     }
 
     /**
      * @param typeParameter The TypeVariable parameter
      * @return A {@link BoundedType} for easy bound information, if first bound is a TypeVariable
-     * then retrieve BoundedType of this TypeVariable
+     *     then retrieve BoundedType of this TypeVariable
      */
     private BoundedType boundsOf(TypeVariable<?> typeParameter) {
         if (typeParameter.getBounds()[0] instanceof TypeVariable) {
@@ -186,7 +188,7 @@ public abstract class GenericMetadataSupport {
     /**
      * @param wildCard The WildCard type
      * @return A {@link BoundedType} for easy bound information, if first bound is a TypeVariable
-     * then retrieve BoundedType of this TypeVariable
+     *     then retrieve BoundedType of this TypeVariable
      */
     private BoundedType boundsOf(WildcardType wildCard) {
         /*
@@ -207,45 +209,47 @@ public abstract class GenericMetadataSupport {
         return wildCardBoundedType;
     }
 
-    /**
-     * @return Raw type of the current instance.
-     */
+    /** @return Raw type of the current instance. */
     public abstract Class<?> rawType();
 
-    /**
-     * @return Returns extra interfaces <strong>if relevant</strong>, otherwise empty List.
-     */
+    /** @return Returns extra interfaces <strong>if relevant</strong>, otherwise empty List. */
     public List<Type> extraInterfaces() {
         return Collections.emptyList();
     }
 
     /**
-     * @return Returns an array with the raw types of {@link #extraInterfaces()} <strong>if relevant</strong>.
+     * @return Returns an array with the raw types of {@link #extraInterfaces()} <strong>if
+     *     relevant</strong>.
      */
     public Class<?>[] rawExtraInterfaces() {
         return new Class[0];
     }
 
     /**
-     * @return Returns true if metadata knows about extra-interfaces {@link #extraInterfaces()} <strong>if relevant</strong>.
+     * @return Returns true if metadata knows about extra-interfaces {@link #extraInterfaces()}
+     *     <strong>if relevant</strong>.
      */
     public boolean hasRawExtraInterfaces() {
         return rawExtraInterfaces().length > 0;
     }
 
     /**
-     * @return Actual type arguments matching the type variables of the raw type represented by this {@link GenericMetadataSupport} instance.
+     * @return Actual type arguments matching the type variables of the raw type represented by this
+     *     {@link GenericMetadataSupport} instance.
      */
     public Map<TypeVariable<?>, Type> actualTypeArguments() {
         TypeVariable<?>[] typeParameters = rawType().getTypeParameters();
-        LinkedHashMap<TypeVariable<?>, Type> actualTypeArguments = new LinkedHashMap<TypeVariable<?>, Type>();
+        LinkedHashMap<TypeVariable<?>, Type> actualTypeArguments =
+                new LinkedHashMap<TypeVariable<?>, Type>();
 
         for (TypeVariable<?> typeParameter : typeParameters) {
 
             Type actualType = getActualTypeArgumentFor(typeParameter);
 
             actualTypeArguments.put(typeParameter, actualType);
-            // logger.log("For '" + rawType().getCanonicalName() + "' returning explicit TypeVariable : { '" + typeParameter + "(" + System.identityHashCode(typeParameter) + ")" + "' : '" + actualType +"' }");
+            // logger.log("For '" + rawType().getCanonicalName() + "' returning explicit
+            // TypeVariable : { '" + typeParameter + "(" + System.identityHashCode(typeParameter) +
+            // ")" + "' : '" + actualType +"' }");
         }
 
         return actualTypeArguments;
@@ -269,7 +273,9 @@ public abstract class GenericMetadataSupport {
      */
     public GenericMetadataSupport resolveGenericReturnType(Method method) {
         Type genericReturnType = method.getGenericReturnType();
-        // logger.log("Method '" + method.toGenericString() + "' has return type : " + genericReturnType.getClass().getInterfaces()[0].getSimpleName() + " : " + genericReturnType);
+        // logger.log("Method '" + method.toGenericString() + "' has return type : " +
+        // genericReturnType.getClass().getInterfaces()[0].getSimpleName() + " : " +
+        // genericReturnType);
 
         int arity = 0;
         while (genericReturnType instanceof GenericArrayType) {
@@ -277,7 +283,8 @@ public abstract class GenericMetadataSupport {
             genericReturnType = ((GenericArrayType) genericReturnType).getGenericComponentType();
         }
 
-        GenericMetadataSupport genericMetadataSupport = resolveGenericType(genericReturnType, method);
+        GenericMetadataSupport genericMetadataSupport =
+                resolveGenericType(genericReturnType, method);
         if (arity == 0) {
             return genericMetadataSupport;
         } else {
@@ -291,26 +298,33 @@ public abstract class GenericMetadataSupport {
             return new NotGenericReturnTypeSupport(this, type);
         }
         if (type instanceof ParameterizedType) {
-            return new ParameterizedReturnType(this, method.getTypeParameters(), (ParameterizedType) type);
+            return new ParameterizedReturnType(
+                    this, method.getTypeParameters(), (ParameterizedType) type);
         }
         if (type instanceof TypeVariable) {
-            return new TypeVariableReturnType(this, method.getTypeParameters(), (TypeVariable<?>) type);
+            return new TypeVariableReturnType(
+                    this, method.getTypeParameters(), (TypeVariable<?>) type);
         }
 
-        throw new MockitoException("Ouch, it shouldn't happen, type '" + type.getClass().getCanonicalName() + "' on method : '" + method.toGenericString() + "' is not supported : " + type);
+        throw new MockitoException(
+                "Ouch, it shouldn't happen, type '"
+                        + type.getClass().getCanonicalName()
+                        + "' on method : '"
+                        + method.toGenericString()
+                        + "' is not supported : "
+                        + type);
     }
 
     /**
      * Create an new instance of {@link GenericMetadataSupport} inferred from a {@link Type}.
      *
-     * <p>
-     * At the moment <code>type</code> can only be a {@link Class} or a {@link ParameterizedType}, otherwise
-     * it'll throw a {@link MockitoException}.
-     * </p>
+     * <p>At the moment <code>type</code> can only be a {@link Class} or a {@link
+     * ParameterizedType}, otherwise it'll throw a {@link MockitoException}.
      *
      * @param type The class from which the {@link GenericMetadataSupport} should be built.
      * @return The new {@link GenericMetadataSupport}.
-     * @throws MockitoException Raised if type is not a {@link Class} or a {@link ParameterizedType}.
+     * @throws MockitoException Raised if type is not a {@link Class} or a {@link
+     *     ParameterizedType}.
      */
     public static GenericMetadataSupport inferFrom(Type type) {
         Checks.checkNotNull(type, "type");
@@ -321,19 +335,23 @@ public abstract class GenericMetadataSupport {
             return new FromParameterizedTypeGenericMetadataSupport((ParameterizedType) type);
         }
 
-        throw new MockitoException("Type meta-data for this Type (" + type.getClass().getCanonicalName() + ") is not supported : " + type);
+        throw new MockitoException(
+                "Type meta-data for this Type ("
+                        + type.getClass().getCanonicalName()
+                        + ") is not supported : "
+                        + type);
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //// Below are specializations of GenericMetadataSupport that could handle retrieval of possible Types
+    //// Below are specializations of GenericMetadataSupport that could handle retrieval of possible
+    // Types
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Generic metadata implementation for {@link Class}.
-     * <p>
-     * Offer support to retrieve generic metadata on a {@link Class} by reading type parameters and type variables on
-     * the class and its ancestors and interfaces.
+     *
+     * <p>Offer support to retrieve generic metadata on a {@link Class} by reading type parameters
+     * and type variables on the class and its ancestors and interfaces.
      */
     private static class FromClassGenericMetadataSupport extends GenericMetadataSupport {
         private final Class<?> clazz;
@@ -353,16 +371,17 @@ public abstract class GenericMetadataSupport {
 
     /**
      * Generic metadata implementation for "standalone" {@link ParameterizedType}.
-     * <p>
-     * Offer support to retrieve generic metadata on a {@link ParameterizedType} by reading type variables of
-     * the related raw type and declared type variable of this parameterized type.
-     * <p>
-     * This class is not designed to work on ParameterizedType returned by {@link Method#getGenericReturnType()}, as
-     * the ParameterizedType instance return in these cases could have Type Variables that refer to type declaration(s).
-     * That's what meant the "standalone" word at the beginning of the Javadoc.
-     * Instead use {@link ParameterizedReturnType}.
+     *
+     * <p>Offer support to retrieve generic metadata on a {@link ParameterizedType} by reading type
+     * variables of the related raw type and declared type variable of this parameterized type.
+     *
+     * <p>This class is not designed to work on ParameterizedType returned by {@link
+     * Method#getGenericReturnType()}, as the ParameterizedType instance return in these cases could
+     * have Type Variables that refer to type declaration(s). That's what meant the "standalone"
+     * word at the beginning of the Javadoc. Instead use {@link ParameterizedReturnType}.
      */
-    private static class FromParameterizedTypeGenericMetadataSupport extends GenericMetadataSupport {
+    private static class FromParameterizedTypeGenericMetadataSupport
+            extends GenericMetadataSupport {
         private final ParameterizedType parameterizedType;
 
         public FromParameterizedTypeGenericMetadataSupport(ParameterizedType parameterizedType) {
@@ -381,13 +400,17 @@ public abstract class GenericMetadataSupport {
     }
 
     /**
-     * Generic metadata specific to {@link ParameterizedType} returned via {@link Method#getGenericReturnType()}.
+     * Generic metadata specific to {@link ParameterizedType} returned via {@link
+     * Method#getGenericReturnType()}.
      */
     private static class ParameterizedReturnType extends GenericMetadataSupport {
         private final ParameterizedType parameterizedType;
         private final TypeVariable<?>[] typeParameters;
 
-        public ParameterizedReturnType(GenericMetadataSupport source, TypeVariable<?>[] typeParameters, ParameterizedType parameterizedType) {
+        public ParameterizedReturnType(
+                GenericMetadataSupport source,
+                TypeVariable<?>[] typeParameters,
+                ParameterizedType parameterizedType) {
             this.parameterizedType = parameterizedType;
             this.typeParameters = typeParameters;
             this.contextualActualTypeParameters = source.contextualActualTypeParameters;
@@ -408,7 +431,6 @@ public abstract class GenericMetadataSupport {
         public Class<?> rawType() {
             return (Class<?>) parameterizedType.getRawType();
         }
-
     }
 
     /**
@@ -420,7 +442,10 @@ public abstract class GenericMetadataSupport {
         private Class<?> rawType;
         private List<Type> extraInterfaces;
 
-        public TypeVariableReturnType(GenericMetadataSupport source, TypeVariable<?>[] typeParameters, TypeVariable<?> typeVariable) {
+        public TypeVariableReturnType(
+                GenericMetadataSupport source,
+                TypeVariable<?>[] typeParameters,
+                TypeVariable<?> typeVariable) {
             this.typeParameters = typeParameters;
             this.typeVariable = typeVariable;
             this.contextualActualTypeParameters = source.contextualActualTypeParameters;
@@ -437,7 +462,7 @@ public abstract class GenericMetadataSupport {
             for (Type type : typeVariable.getBounds()) {
                 registerTypeVariablesOn(type);
             }
-            registerTypeParametersOn(new TypeVariable[]{typeVariable});
+            registerTypeParametersOn(new TypeVariable[] {typeVariable});
             registerTypeVariablesOn(getActualTypeArgumentFor(typeVariable));
         }
 
@@ -464,7 +489,8 @@ public abstract class GenericMetadataSupport {
             if (type instanceof Class) {
                 return extraInterfaces = Collections.emptyList();
             }
-            throw new MockitoException("Cannot extract extra-interfaces from '" + typeVariable + "' : '" + type + "'");
+            throw new MockitoException(
+                    "Cannot extract extra-interfaces from '" + typeVariable + "' : '" + type + "'");
         }
 
         /**
@@ -476,7 +502,8 @@ public abstract class GenericMetadataSupport {
             List<Class<?>> rawExtraInterfaces = new ArrayList<Class<?>>();
             for (Type extraInterface : extraInterfaces) {
                 Class<?> rawInterface = extractRawTypeOf(extraInterface);
-                // avoid interface collision with actual raw type (with typevariables, resolution ca be quite aggressive)
+                // avoid interface collision with actual raw type (with typevariables, resolution ca
+                // be quite aggressive)
                 if (!rawType().equals(rawInterface)) {
                     rawExtraInterfaces.add(rawInterface);
                 }
@@ -493,9 +520,11 @@ public abstract class GenericMetadataSupport {
                 return extractActualBoundedTypeOf(contextualActualTypeParameters.get(type));
             }
             if (type instanceof BoundedType) {
-                Type actualFirstBound = extractActualBoundedTypeOf(((BoundedType) type).firstBound());
+                Type actualFirstBound =
+                        extractActualBoundedTypeOf(((BoundedType) type).firstBound());
                 if (!(actualFirstBound instanceof BoundedType)) {
-                    return type; // avoid going one step further, ie avoid : O(TypeVar) -> K(TypeVar) -> Some ParamType
+                    return type; // avoid going one step further, ie avoid : O(TypeVar) ->
+                    // K(TypeVar) -> Some ParamType
                 }
                 return actualFirstBound;
             }
@@ -522,7 +551,14 @@ public abstract class GenericMetadataSupport {
                 stringBuilder.append("[");
             }
             try {
-                return Class.forName(stringBuilder.append("L").append(rawComponentType.getName()).append(";").toString(), false, rawComponentType.getClassLoader());
+                return Class.forName(
+                        stringBuilder
+                                .append("L")
+                                .append(rawComponentType.getName())
+                                .append(";")
+                                .toString(),
+                        false,
+                        rawComponentType.getClassLoader());
             } catch (ClassNotFoundException e) {
                 throw new IllegalStateException("This was not supposed to happend", e);
             }
@@ -548,14 +584,15 @@ public abstract class GenericMetadataSupport {
         }
     }
 
-
     /**
      * Type representing bounds of a type
      *
      * @see TypeVarBoundedType
-     * @see <a href="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4</a>
+     * @see <a
+     *     href="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4</a>
      * @see WildCardBoundedType
-     * @see <a href="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.5.1">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.5.1</a>
+     * @see <a
+     *     href="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.5.1">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.5.1</a>
      */
     public interface BoundedType extends Type {
         Type firstBound();
@@ -566,22 +603,23 @@ public abstract class GenericMetadataSupport {
     /**
      * Type representing bounds of a type variable, allows to keep all bounds information.
      *
-     * <p>It uses the first bound in the array, as this array is never null and always contains at least
-     * one element (Object is always here if no bounds are declared).</p>
+     * <p>It uses the first bound in the array, as this array is never null and always contains at
+     * least one element (Object is always here if no bounds are declared).
      *
-     * <p>If upper bounds are declared with SomeClass and additional interfaces, then firstBound will be SomeClass and
-     * interfacesBound will be an array of the additional interfaces.
-     * <p>
-     * i.e. <code>SomeClass</code>.
+     * <p>If upper bounds are declared with SomeClass and additional interfaces, then firstBound
+     * will be SomeClass and interfacesBound will be an array of the additional interfaces.
+     *
+     * <p>i.e. <code>SomeClass</code>.
+     *
      * <pre class="code"><code class="java">
      *     interface UpperBoundedTypeWithClass<E extends Comparable<E> & Cloneable> {
      *         E get();
      *     }
      *     // will return Comparable type
      * </code></pre>
-     * </p>
      *
-     * @see <a href="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4</a>
+     * @see <a
+     *     href="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4</a>
      */
     public static class TypeVarBoundedType implements BoundedType {
         private final TypeVariable<?> typeVariable;
@@ -591,7 +629,8 @@ public abstract class GenericMetadataSupport {
         }
 
         /**
-         * @return either a class or an interface (parameterized or not), if no bounds declared Object is returned.
+         * @return either a class or an interface (parameterized or not), if no bounds declared
+         *     Object is returned.
          */
         public Type firstBound() {
             return typeVariable.getBounds()[0]; //
@@ -601,12 +640,17 @@ public abstract class GenericMetadataSupport {
          * On a Type Variable (typeVar extends C_0 & I_1 & I_2 & etc), will return an array
          * containing I_1 and I_2.
          *
-         * @return other bounds for this type, these bounds can only be only interfaces as the JLS says,
-         * empty array if no other bound declared.
+         * @return other bounds for this type, these bounds can only be only interfaces as the JLS
+         *     says, empty array if no other bound declared.
          */
         public Type[] interfaceBounds() {
             Type[] interfaceBounds = new Type[typeVariable.getBounds().length - 1];
-            System.arraycopy(typeVariable.getBounds(), 1, interfaceBounds, 0, typeVariable.getBounds().length - 1);
+            System.arraycopy(
+                    typeVariable.getBounds(),
+                    1,
+                    interfaceBounds,
+                    0,
+                    typeVariable.getBounds().length - 1);
             return interfaceBounds;
         }
 
@@ -616,7 +660,6 @@ public abstract class GenericMetadataSupport {
             if (o == null || getClass() != o.getClass()) return false;
 
             return typeVariable.equals(((TypeVarBoundedType) o).typeVariable);
-
         }
 
         @Override
@@ -626,7 +669,11 @@ public abstract class GenericMetadataSupport {
 
         @Override
         public String toString() {
-            return "{firstBound=" + firstBound() + ", interfaceBounds=" + Arrays.deepToString(interfaceBounds()) + '}';
+            return "{firstBound="
+                    + firstBound()
+                    + ", interfaceBounds="
+                    + Arrays.deepToString(interfaceBounds())
+                    + '}';
         }
 
         public TypeVariable<?> typeVariable() {
@@ -637,22 +684,20 @@ public abstract class GenericMetadataSupport {
     /**
      * Type representing bounds of a wildcard, allows to keep all bounds information.
      *
-     * <p>The JLS says that lower bound and upper bound are mutually exclusive, and that multiple bounds
-     * are not allowed.
+     * <p>The JLS says that lower bound and upper bound are mutually exclusive, and that multiple
+     * bounds are not allowed.
      *
-     * @see <a href="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4</a>
+     * @see <a
+     *     href="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html#4.4</a>
      */
     public static class WildCardBoundedType implements BoundedType {
         private final WildcardType wildcard;
-
 
         public WildCardBoundedType(WildcardType wildcard) {
             this.wildcard = wildcard;
         }
 
-        /**
-         * @return The first bound, either a type or a reference to a TypeVariable
-         */
+        /** @return The first bound, either a type or a reference to a TypeVariable */
         public Type firstBound() {
             Type[] lowerBounds = wildcard.getLowerBounds();
             Type[] upperBounds = wildcard.getUpperBounds();
@@ -660,9 +705,7 @@ public abstract class GenericMetadataSupport {
             return lowerBounds.length != 0 ? lowerBounds[0] : upperBounds[0];
         }
 
-        /**
-         * @return An empty array as, wildcard don't support multiple bounds.
-         */
+        /** @return An empty array as, wildcard don't support multiple bounds. */
         public Type[] interfaceBounds() {
             return new Type[0];
         }
@@ -673,7 +716,6 @@ public abstract class GenericMetadataSupport {
             if (o == null || getClass() != o.getClass()) return false;
 
             return wildcard.equals(((TypeVarBoundedType) o).typeVariable);
-
         }
 
         @Override
@@ -690,5 +732,4 @@ public abstract class GenericMetadataSupport {
             return wildcard;
         }
     }
-
 }

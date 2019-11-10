@@ -10,7 +10,6 @@ import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -19,8 +18,7 @@ import org.mockito.exceptions.base.MockitoAssertionError;
 
 public class VerificationWithDescriptionTest {
 
-    @Mock
-    private List<?> mock;
+    @Mock private List<?> mock;
 
     @Before
     public void setUp() {

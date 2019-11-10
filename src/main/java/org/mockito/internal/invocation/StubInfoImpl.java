@@ -5,7 +5,6 @@
 package org.mockito.internal.invocation;
 
 import java.io.Serializable;
-
 import org.mockito.invocation.DescribedInvocation;
 import org.mockito.invocation.Location;
 import org.mockito.invocation.StubInfo;

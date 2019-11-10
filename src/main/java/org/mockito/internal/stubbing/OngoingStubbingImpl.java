@@ -7,7 +7,6 @@ package org.mockito.internal.stubbing;
 import static org.mockito.internal.exceptions.Reporter.incorrectUseOfApi;
 
 import java.util.List;
-
 import org.mockito.invocation.Invocation;
 import org.mockito.quality.Strictness;
 import org.mockito.stubbing.Answer;
@@ -25,7 +24,7 @@ public class OngoingStubbingImpl<T> extends BaseStubbing<T> {
 
     @Override
     public OngoingStubbing<T> thenAnswer(Answer<?> answer) {
-        if(!invocationContainer.hasInvocationForPotentialStubbing()) {
+        if (!invocationContainer.hasInvocationForPotentialStubbing()) {
             throw incorrectUseOfApi();
         }
 
@@ -34,7 +33,7 @@ public class OngoingStubbingImpl<T> extends BaseStubbing<T> {
     }
 
     public List<Invocation> getRegisteredInvocations() {
-        //TODO interface for tests
+        // TODO interface for tests
         return invocationContainer.getInvocations();
     }
 

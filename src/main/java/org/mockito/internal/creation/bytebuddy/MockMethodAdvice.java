@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.Callable;
-
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.description.type.TypeDescription;
@@ -40,22 +39,27 @@ public class MockMethodAdvice extends MockMethodDispatcher {
 
     private final SelfCallInfo selfCallInfo = new SelfCallInfo();
     private final MethodGraph.Compiler compiler = MethodGraph.Compiler.Default.forJavaHierarchy();
-    private final WeakConcurrentMap<Class<?>, SoftReference<MethodGraph>> graphs
-        = new WeakConcurrentMap.WithInlinedExpunction<Class<?>, SoftReference<MethodGraph>>();
+    private final WeakConcurrentMap<Class<?>, SoftReference<MethodGraph>> graphs =
+            new WeakConcurrentMap.WithInlinedExpunction<Class<?>, SoftReference<MethodGraph>>();
 
-    public MockMethodAdvice(WeakConcurrentMap<Object, MockMethodInterceptor> interceptors, String identifier) {
+    public MockMethodAdvice(
+            WeakConcurrentMap<Object, MockMethodInterceptor> interceptors, String identifier) {
         this.interceptors = interceptors;
         this.identifier = identifier;
     }
 
     @SuppressWarnings("unused")
     @Advice.OnMethodEnter(skipOn = Advice.OnNonDefaultValue.class)
-    private static Callable<?> enter(@Identifier String identifier,
-                                     @Advice.This Object mock,
-                                     @Advice.Origin Method origin,
-                                     @Advice.AllArguments Object[] arguments) throws Throwable {
+    private static Callable<?> enter(
+            @Identifier String identifier,
+            @Advice.This Object mock,
+            @Advice.Origin Method origin,
+            @Advice.AllArguments Object[] arguments)
+            throws Throwable {
         MockMethodDispatcher dispatcher = MockMethodDispatcher.get(identifier, mock);
-        if (dispatcher == null || !dispatcher.isMocked(mock) || dispatcher.isOverridden(mock, origin)) {
+        if (dispatcher == null
+                || !dispatcher.isMocked(mock)
+                || dispatcher.isOverridden(mock, origin)) {
             return null;
         } else {
             return dispatcher.handle(mock, origin, arguments);
@@ -64,8 +68,10 @@ public class MockMethodAdvice extends MockMethodDispatcher {
 
     @SuppressWarnings({"unused", "UnusedAssignment"})
     @Advice.OnMethodExit
-    private static void exit(@Advice.Return(readOnly = false, typing = Assigner.Typing.DYNAMIC) Object returned,
-                             @Advice.Enter Callable<?> mocked) throws Throwable {
+    private static void exit(
+            @Advice.Return(readOnly = false, typing = Assigner.Typing.DYNAMIC) Object returned,
+            @Advice.Enter Callable<?> mocked)
+            throws Throwable {
         if (mocked != null) {
             returned = mocked.call();
         }
@@ -86,7 +92,8 @@ public class MockMethodAdvice extends MockMethodDispatcher {
             throwable.setStackTrace(cleared);
             return throwable;
         } catch (RuntimeException ignored) {
-            // This should not happen unless someone instrumented or manipulated exception stack traces.
+            // This should not happen unless someone instrumented or manipulated exception stack
+            // traces.
             return throwable;
         }
     }
@@ -103,11 +110,13 @@ public class MockMethodAdvice extends MockMethodDispatcher {
         } else {
             realMethod = new RealMethodCall(selfCallInfo, origin, instance, arguments);
         }
-        return new ReturnValueWrapper(interceptor.doIntercept(instance,
-                origin,
-                arguments,
-                realMethod,
-                new LocationImpl(new Throwable(), true)));
+        return new ReturnValueWrapper(
+                interceptor.doIntercept(
+                        instance,
+                        origin,
+                        arguments,
+                        realMethod,
+                        new LocationImpl(new Throwable(), true)));
     }
 
     @Override
@@ -130,8 +139,14 @@ public class MockMethodAdvice extends MockMethodDispatcher {
             methodGraph = compiler.compile(new TypeDescription.ForLoadedType(instance.getClass()));
             graphs.put(instance.getClass(), new SoftReference<MethodGraph>(methodGraph));
         }
-        MethodGraph.Node node = methodGraph.locate(new MethodDescription.ForLoadedMethod(origin).asSignatureToken());
-        return !node.getSort().isResolved() || !node.getRepresentative().asDefined().getDeclaringType().represents(origin.getDeclaringClass());
+        MethodGraph.Node node =
+                methodGraph.locate(
+                        new MethodDescription.ForLoadedMethod(origin).asSignatureToken());
+        return !node.getSort().isResolved()
+                || !node.getRepresentative()
+                        .asDefined()
+                        .getDeclaringType()
+                        .represents(origin.getDeclaringClass());
     }
 
     private static class RealMethodCall implements RealMethod {
@@ -144,7 +159,8 @@ public class MockMethodAdvice extends MockMethodDispatcher {
 
         private final Object[] arguments;
 
-        private RealMethodCall(SelfCallInfo selfCallInfo, Method origin, Object instance, Object[] arguments) {
+        private RealMethodCall(
+                SelfCallInfo selfCallInfo, Method origin, Object instance, Object[] arguments) {
             this.selfCallInfo = selfCallInfo;
             this.origin = origin;
             this.instanceRef = new MockWeakReference<Object>(instance);
@@ -158,13 +174,13 @@ public class MockMethodAdvice extends MockMethodDispatcher {
 
         @Override
         public Object invoke() throws Throwable {
-            if (!Modifier.isPublic(origin.getDeclaringClass().getModifiers() & origin.getModifiers())) {
+            if (!Modifier.isPublic(
+                    origin.getDeclaringClass().getModifiers() & origin.getModifiers())) {
                 origin.setAccessible(true);
             }
             selfCallInfo.set(instanceRef.get());
             return tryInvoke(origin, instanceRef.get(), arguments);
         }
-
     }
 
     private static class SerializableRealMethodCall implements RealMethod {
@@ -177,7 +193,8 @@ public class MockMethodAdvice extends MockMethodDispatcher {
 
         private final Object[] arguments;
 
-        private SerializableRealMethodCall(String identifier, Method origin, Object instance, Object[] arguments) {
+        private SerializableRealMethodCall(
+                String identifier, Method origin, Object instance, Object[] arguments) {
             this.origin = new SerializableMethod(origin);
             this.identifier = identifier;
             this.instanceRef = new MockWeakReference<Object>(instance);
@@ -192,14 +209,18 @@ public class MockMethodAdvice extends MockMethodDispatcher {
         @Override
         public Object invoke() throws Throwable {
             Method method = origin.getJavaMethod();
-            if (!Modifier.isPublic(method.getDeclaringClass().getModifiers() & method.getModifiers())) {
+            if (!Modifier.isPublic(
+                    method.getDeclaringClass().getModifiers() & method.getModifiers())) {
                 method.setAccessible(true);
             }
-            MockMethodDispatcher mockMethodDispatcher = MockMethodDispatcher.get(identifier, instanceRef.get());
+            MockMethodDispatcher mockMethodDispatcher =
+                    MockMethodDispatcher.get(identifier, instanceRef.get());
             if (!(mockMethodDispatcher instanceof MockMethodAdvice)) {
                 throw new MockitoException("Unexpected dispatcher for advice-based super call");
             }
-            Object previous = ((MockMethodAdvice) mockMethodDispatcher).selfCallInfo.replace(instanceRef.get());
+            Object previous =
+                    ((MockMethodAdvice) mockMethodDispatcher)
+                            .selfCallInfo.replace(instanceRef.get());
             try {
                 return tryInvoke(method, instanceRef.get(), arguments);
             } finally {
@@ -208,12 +229,18 @@ public class MockMethodAdvice extends MockMethodDispatcher {
         }
     }
 
-    private static Object tryInvoke(Method origin, Object instance, Object[] arguments) throws Throwable {
+    private static Object tryInvoke(Method origin, Object instance, Object[] arguments)
+            throws Throwable {
         try {
             return origin.invoke(instance, arguments);
         } catch (InvocationTargetException exception) {
             Throwable cause = exception.getCause();
-            new ConditionalStackTraceFilter().filter(hideRecursiveCall(cause, new Throwable().getStackTrace().length, origin.getDeclaringClass()));
+            new ConditionalStackTraceFilter()
+                    .filter(
+                            hideRecursiveCall(
+                                    cause,
+                                    new Throwable().getStackTrace().length,
+                                    origin.getDeclaringClass()));
             throw cause;
         }
     }
@@ -251,25 +278,23 @@ public class MockMethodAdvice extends MockMethodDispatcher {
     }
 
     @Retention(RetentionPolicy.RUNTIME)
-    @interface Identifier {
-
-    }
+    @interface Identifier {}
 
     static class ForHashCode {
 
         @SuppressWarnings("unused")
         @Advice.OnMethodEnter(skipOn = Advice.OnNonDefaultValue.class)
-        private static boolean enter(@Identifier String id,
-                                     @Advice.This Object self) {
+        private static boolean enter(@Identifier String id, @Advice.This Object self) {
             MockMethodDispatcher dispatcher = MockMethodDispatcher.get(id, self);
             return dispatcher != null && dispatcher.isMock(self);
         }
 
         @SuppressWarnings({"unused", "UnusedAssignment"})
         @Advice.OnMethodExit
-        private static void enter(@Advice.This Object self,
-                                  @Advice.Return(readOnly = false) int hashCode,
-                                  @Advice.Enter boolean skipped) {
+        private static void enter(
+                @Advice.This Object self,
+                @Advice.Return(readOnly = false) int hashCode,
+                @Advice.Enter boolean skipped) {
             if (skipped) {
                 hashCode = System.identityHashCode(self);
             }
@@ -280,18 +305,18 @@ public class MockMethodAdvice extends MockMethodDispatcher {
 
         @SuppressWarnings("unused")
         @Advice.OnMethodEnter(skipOn = Advice.OnNonDefaultValue.class)
-        private static boolean enter(@Identifier String identifier,
-                                     @Advice.This Object self) {
+        private static boolean enter(@Identifier String identifier, @Advice.This Object self) {
             MockMethodDispatcher dispatcher = MockMethodDispatcher.get(identifier, self);
             return dispatcher != null && dispatcher.isMock(self);
         }
 
         @SuppressWarnings({"unused", "UnusedAssignment"})
         @Advice.OnMethodExit
-        private static void enter(@Advice.This Object self,
-                                  @Advice.Argument(0) Object other,
-                                  @Advice.Return(readOnly = false) boolean equals,
-                                  @Advice.Enter boolean skipped) {
+        private static void enter(
+                @Advice.This Object self,
+                @Advice.Argument(0) Object other,
+                @Advice.Return(readOnly = false) boolean equals,
+                @Advice.Enter boolean skipped) {
             if (skipped) {
                 equals = self == other;
             }
@@ -301,11 +326,14 @@ public class MockMethodAdvice extends MockMethodDispatcher {
     public static class ForReadObject {
 
         @SuppressWarnings("unused")
-        public static void doReadObject(@Identifier String identifier,
-                                        @This MockAccess thiz,
-                                        @Argument(0) ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        public static void doReadObject(
+                @Identifier String identifier,
+                @This MockAccess thiz,
+                @Argument(0) ObjectInputStream objectInputStream)
+                throws IOException, ClassNotFoundException {
             objectInputStream.defaultReadObject();
-            MockMethodAdvice mockMethodAdvice = (MockMethodAdvice) MockMethodDispatcher.get(identifier, thiz);
+            MockMethodAdvice mockMethodAdvice =
+                    (MockMethodAdvice) MockMethodDispatcher.get(identifier, thiz);
             if (mockMethodAdvice != null) {
                 mockMethodAdvice.interceptors.put(thiz, thiz.getMockitoInterceptor());
             }

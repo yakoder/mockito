@@ -15,14 +15,13 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * <p>
- * A thread-safe map with weak keys. Entries are based on a key's system hash code and keys are considered
- * equal only by reference equality.
- * </p>
- * This class does not implement the {@link java.util.Map} interface because this implementation is incompatible
- * with the map contract. While iterating over a map's entries, any key that has not passed iteration is referenced non-weakly.
+ * A thread-safe map with weak keys. Entries are based on a key's system hash code and keys are
+ * considered equal only by reference equality. This class does not implement the {@link
+ * java.util.Map} interface because this implementation is incompatible with the map contract. While
+ * iterating over a map's entries, any key that has not passed iteration is referenced non-weakly.
  */
-public class WeakConcurrentMap<K, V> extends ReferenceQueue<K> implements Runnable, Iterable<Map.Entry<K, V>> {
+public class WeakConcurrentMap<K, V> extends ReferenceQueue<K>
+        implements Runnable, Iterable<Map.Entry<K, V>> {
 
     private static final AtomicLong ID = new AtomicLong();
 
@@ -77,7 +76,7 @@ public class WeakConcurrentMap<K, V> extends ReferenceQueue<K> implements Runnab
     }
 
     /**
-     * @param key   The key of the entry.
+     * @param key The key of the entry.
      * @param value The value of the entry.
      * @return The previous entry or {@code null} if it does not exist.
      */
@@ -96,34 +95,29 @@ public class WeakConcurrentMap<K, V> extends ReferenceQueue<K> implements Runnab
         return target.remove(new LatentKey<K>(key));
     }
 
-    /**
-     * Clears the entire map.
-     */
+    /** Clears the entire map. */
     public void clear() {
         target.clear();
     }
 
     /**
-     * Creates a default value. There is no guarantee that the requested value will be set as a once it is created
-     * in case that another thread requests a value for a key concurrently.
+     * Creates a default value. There is no guarantee that the requested value will be set as a once
+     * it is created in case that another thread requests a value for a key concurrently.
      *
      * @param key The key for which to create a default value.
-     * @return The default value for a key without value or {@code null} for not defining a default value.
+     * @return The default value for a key without value or {@code null} for not defining a default
+     *     value.
      */
     protected V defaultValue(K key) {
         return null;
     }
 
-    /**
-     * @return The cleaner thread or {@code null} if no such thread was set.
-     */
+    /** @return The cleaner thread or {@code null} if no such thread was set. */
     public Thread getCleanerThread() {
         return thread;
     }
 
-    /**
-     * Cleans all unused references.
-     */
+    /** Cleans all unused references. */
     public void expungeStaleEntries() {
         Reference<?> reference;
         while ((reference = poll()) != null) {
@@ -132,7 +126,8 @@ public class WeakConcurrentMap<K, V> extends ReferenceQueue<K> implements Runnab
     }
 
     /**
-     * Returns the approximate size of this map where the returned number is at least as big as the actual number of entries.
+     * Returns the approximate size of this map where the returned number is at least as big as the
+     * actual number of entries.
      *
      * @return The minimum size of this map.
      */
@@ -244,7 +239,8 @@ public class WeakConcurrentMap<K, V> extends ReferenceQueue<K> implements Runnab
     }
 
     /**
-     * A {@link WeakConcurrentMap} where stale entries are removed as a side effect of interacting with this map.
+     * A {@link WeakConcurrentMap} where stale entries are removed as a side effect of interacting
+     * with this map.
      */
     public static class WithInlinedExpunction<K, V> extends WeakConcurrentMap<K, V> {
 

@@ -11,7 +11,6 @@ import static org.mockito.internal.exceptions.Reporter.mockedTypeIsInconsistentW
 import static org.mockito.internal.exceptions.Reporter.usingConstructorWithFancySerializable;
 
 import java.util.Collection;
-
 import org.mockito.mock.SerializableMode;
 import org.mockito.plugins.MockMaker.TypeMockability;
 
@@ -25,7 +24,8 @@ public class MockCreationValidator {
         }
     }
 
-    public void validateExtraInterfaces(Class<?> classToMock, Collection<Class<?>> extraInterfaces) {
+    public void validateExtraInterfaces(
+            Class<?> classToMock, Collection<Class<?>> extraInterfaces) {
         if (extraInterfaces == null) {
             return;
         }

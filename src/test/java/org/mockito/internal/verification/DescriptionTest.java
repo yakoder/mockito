@@ -19,11 +19,9 @@ import org.mockito.verification.VerificationMode;
 
 public class DescriptionTest {
 
-    @Mock
-    private VerificationMode mockVerificationMode;
+    @Mock private VerificationMode mockVerificationMode;
 
-    @Mock
-    private VerificationData mockVerificationData;
+    @Mock private VerificationData mockVerificationData;
 
     @Before
     public void setUp() {
@@ -31,8 +29,8 @@ public class DescriptionTest {
     }
 
     /**
-     * Test of verify method, of class Description. This test validates that the custom message is prepended to the
-     * error message when verification fails.
+     * Test of verify method, of class Description. This test validates that the custom message is
+     * prepended to the error message when verification fails.
      */
     @Test
     public void verification_failure_should_prepend_expected_message() {

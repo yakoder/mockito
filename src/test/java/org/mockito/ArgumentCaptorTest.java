@@ -13,16 +13,13 @@ import org.mockito.exceptions.misusing.InvalidUseOfMatchersException;
 
 public class ArgumentCaptorTest {
 
-    /**
-     * Clean up the internal Mockito-Stubbing state
-     */
+    /** Clean up the internal Mockito-Stubbing state */
     @After
     public void tearDown() {
         try {
             validateMockitoUsage();
         } catch (InvalidUseOfMatchersException ignore) {
         }
-
     }
 
     @Test
@@ -30,7 +27,5 @@ public class ArgumentCaptorTest {
 
         ArgumentCaptor<Object> captor = ArgumentCaptor.forClass(Object.class);
         assertThat(captor.capture()).isNull();
-
     }
-
 }

@@ -15,7 +15,6 @@ import static org.mockito.Mockito.validateMockitoUsage;
 import static org.mockito.Mockito.verify;
 
 import java.util.Observer;
-
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -77,12 +76,14 @@ public class DetectingMisusedMatchersTest extends TestBase {
             fail();
         } catch (InvalidUseOfMatchersException e) {
             assertThat(e)
-                .hasMessageContaining("DetectingMisusedMatchersTest.misplaced_anyInt_argument_matcher")
-                .hasMessageContaining("DetectingMisusedMatchersTest.misplaced_anyObject_argument_matcher")
-                .hasMessageContaining("DetectingMisusedMatchersTest.misplaced_anyBoolean_argument_matcher");
+                    .hasMessageContaining(
+                            "DetectingMisusedMatchersTest.misplaced_anyInt_argument_matcher")
+                    .hasMessageContaining(
+                            "DetectingMisusedMatchersTest.misplaced_anyObject_argument_matcher")
+                    .hasMessageContaining(
+                            "DetectingMisusedMatchersTest.misplaced_anyBoolean_argument_matcher");
         }
     }
-
 
     @SuppressWarnings({"MockitoUsage", "CheckReturnValue"})
     @Test
@@ -92,6 +93,7 @@ public class DetectingMisusedMatchersTest extends TestBase {
         try {
             verify(withFinal);
             fail();
-        } catch (UnfinishedVerificationException e) {}
+        } catch (UnfinishedVerificationException e) {
+        }
     }
 }

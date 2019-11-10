@@ -9,7 +9,6 @@ import static java.util.Collections.singletonList;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -29,11 +28,9 @@ public class MissingInvocationCheckerTest extends TestBase {
     private InvocationMatcher wanted;
     private List<Invocation> invocations;
 
-    @Mock
-    private IMethods mock;
+    @Mock private IMethods mock;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+    @Rule public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void shouldPassBecauseActualInvocationFound() {
@@ -75,7 +72,9 @@ public class MissingInvocationCheckerTest extends TestBase {
     @Test
     public void shouldReportUsingInvocationDescription() {
         wanted = buildIntArgMethod(new CustomInvocationBuilder()).arg(2222).toInvocationMatcher();
-        invocations = singletonList(buildIntArgMethod(new CustomInvocationBuilder()).arg(1111).toInvocation());
+        invocations =
+                singletonList(
+                        buildIntArgMethod(new CustomInvocationBuilder()).arg(1111).toInvocation());
 
         exception.expect(ArgumentsAreDifferent.class);
 
@@ -101,24 +100,31 @@ public class MissingInvocationCheckerTest extends TestBase {
 
     static class CustomInvocationBuilder extends InvocationBuilder {
         @Override
-        protected Invocation createInvocation(MockReference<Object> mockRef, MockitoMethod mockitoMethod, final Object[] arguments,
-            RealMethod realMethod, Location location, int sequenceNumber) {
-            return new InterceptedInvocation(mockRef, mockitoMethod, arguments, realMethod, location, sequenceNumber) {
+        protected Invocation createInvocation(
+                MockReference<Object> mockRef,
+                MockitoMethod mockitoMethod,
+                final Object[] arguments,
+                RealMethod realMethod,
+                Location location,
+                int sequenceNumber) {
+            return new InterceptedInvocation(
+                    mockRef, mockitoMethod, arguments, realMethod, location, sequenceNumber) {
                 @Override
                 public List<ArgumentMatcher> getArgumentsAsMatchers() {
                     List<ArgumentMatcher> matchers = new ArrayList<ArgumentMatcher>();
                     for (final Object argument : getRawArguments()) {
-                        matchers.add(new ArgumentMatcher() {
-                            @Override
-                            public boolean matches(Object a) {
-                                return a == argument;
-                            }
+                        matchers.add(
+                                new ArgumentMatcher() {
+                                    @Override
+                                    public boolean matches(Object a) {
+                                        return a == argument;
+                                    }
 
-                            @Override
-                            public String toString() {
-                                return "MyCoolPrint(" + argument + ")";
-                            }
-                        });
+                                    @Override
+                                    public String toString() {
+                                        return "MyCoolPrint(" + argument + ")";
+                                    }
+                                });
                     }
                     return matchers;
                 }

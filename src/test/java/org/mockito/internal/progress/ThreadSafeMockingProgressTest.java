@@ -10,7 +10,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.internal.progress.ThreadSafeMockingProgress.mockingProgress;
 
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.internal.verification.DummyVerificationMode;
@@ -25,11 +24,11 @@ public class ThreadSafeMockingProgressTest extends TestBase {
 
     @Test
     public void shouldShareState() throws Exception {
-        //given
+        // given
         MockingProgress p = mockingProgress();
         p.verificationStarted(new DummyVerificationMode());
 
-        //then
+        // then
         p = mockingProgress();
         assertNotNull(p.pullVerificationMode());
     }
@@ -37,11 +36,11 @@ public class ThreadSafeMockingProgressTest extends TestBase {
     @SuppressWarnings({"CheckReturnValue", "MockitoUsage"})
     @Test
     public void shouldKnowWhenVerificationHasStarted() throws Exception {
-        //given
+        // given
         verify(mock(List.class));
         MockingProgress p = mockingProgress();
 
-        //then
+        // then
         assertNotNull(p.pullVerificationMode());
     }
 }

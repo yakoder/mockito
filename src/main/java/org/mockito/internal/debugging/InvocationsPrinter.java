@@ -6,15 +6,12 @@ package org.mockito.internal.debugging;
 
 import java.util.Collection;
 import java.util.LinkedList;
-
 import org.mockito.Mockito;
 import org.mockito.internal.util.collections.ListUtil;
 import org.mockito.invocation.Invocation;
 import org.mockito.stubbing.Stubbing;
 
-/**
- * Prints invocations in human-readable, printable way
- */
+/** Prints invocations in human-readable, printable way */
 public class InvocationsPrinter {
 
     public String printInvocations(Object mock) {
@@ -26,7 +23,7 @@ public class InvocationsPrinter {
 
         StringBuilder sb = new StringBuilder();
         int x = 1;
-        for(Invocation i:invocations) {
+        for (Invocation i : invocations) {
             if (x == 1) {
                 sb.append("[Mockito] Interactions of: ").append(mock).append("\n");
             }
@@ -37,11 +34,14 @@ public class InvocationsPrinter {
             }
         }
 
-        LinkedList<Stubbing> unused = ListUtil.filter(stubbings, new ListUtil.Filter<Stubbing>() {
-            public boolean isOut(Stubbing s) {
-                return s.wasUsed();
-            }
-        });
+        LinkedList<Stubbing> unused =
+                ListUtil.filter(
+                        stubbings,
+                        new ListUtil.Filter<Stubbing>() {
+                            public boolean isOut(Stubbing s) {
+                                return s.wasUsed();
+                            }
+                        });
 
         if (unused.isEmpty()) {
             return sb.toString();
@@ -49,7 +49,7 @@ public class InvocationsPrinter {
         sb.append("[Mockito] Unused stubbings of: ").append(mock).append("\n");
 
         x = 1;
-        for(Stubbing s:stubbings) {
+        for (Stubbing s : stubbings) {
             sb.append(" ").append(x++).append(". ").append(s.getInvocation()).append("\n");
             sb.append("  - stubbed ").append(s.getInvocation().getLocation()).append("\n");
         }

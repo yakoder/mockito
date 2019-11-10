@@ -10,19 +10,20 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class Primitives {
 
-    private static final Map<Class<?>, Class<?>> PRIMITIVE_TYPES = new HashMap<Class<?>, Class<?>>();
-    private static final Map<Class<?>, Object> PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES = new HashMap<Class<?>, Object>();
-
+    private static final Map<Class<?>, Class<?>> PRIMITIVE_TYPES =
+            new HashMap<Class<?>, Class<?>>();
+    private static final Map<Class<?>, Object> PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES =
+            new HashMap<Class<?>, Object>();
 
     /**
      * Returns the primitive type of the given class.
-     * <p/>
-     * The passed class can be any class : <code>boolean.class</code>, <code>Integer.class</code>
-     * in witch case this method will return <code>boolean.class</code>, even <code>SomeObject.class</code>
-     * in which case <code>null</code> will be returned.
+     *
+     * <p>The passed class can be any class : <code>boolean.class</code>, <code>Integer.class</code>
+     * in witch case this method will return <code>boolean.class</code>, even <code>SomeObject.class
+     * </code> in which case <code>null</code> will be returned.
      *
      * @param clazz The class from which primitive type has to be retrieved
-     * @param <T>   The type
+     * @param <T> The type
      * @return The primitive type if relevant, otherwise <code>null</code>
      */
     public static <T> Class<T> primitiveTypeOf(Class<T> clazz) {
@@ -43,8 +44,9 @@ public class Primitives {
     }
 
     public static boolean isAssignableFromWrapper(Class<?> valueClass, Class<?> referenceType) {
-        if(isPrimitiveOrWrapper(valueClass) && isPrimitiveOrWrapper(referenceType)) {
-            return Primitives.primitiveTypeOf(valueClass).isAssignableFrom(Primitives.primitiveTypeOf(referenceType));
+        if (isPrimitiveOrWrapper(valueClass) && isPrimitiveOrWrapper(referenceType)) {
+            return Primitives.primitiveTypeOf(valueClass)
+                    .isAssignableFrom(Primitives.primitiveTypeOf(referenceType));
         }
         return false;
     }
@@ -53,13 +55,12 @@ public class Primitives {
      * Returns the boxed default value for a primitive or a primitive wrapper.
      *
      * @param primitiveOrWrapperType The type to lookup the default value
-     * @return The boxed default values as defined in Java Language Specification,
-     *         <code>null</code> if the type is neither a primitive nor a wrapper
+     * @return The boxed default values as defined in Java Language Specification, <code>null</code>
+     *     if the type is neither a primitive nor a wrapper
      */
     public static <T> T defaultValue(Class<T> primitiveOrWrapperType) {
         return (T) PRIMITIVE_OR_WRAPPER_DEFAULT_VALUES.get(primitiveOrWrapperType);
     }
-
 
     static {
         PRIMITIVE_TYPES.put(Boolean.class, Boolean.TYPE);

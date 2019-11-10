@@ -4,15 +4,16 @@
  */
 package org.mockito.internal.util.reflection;
 
-/**
- * Report on field initialization
- */
+/** Report on field initialization */
 public class FieldInitializationReport {
     private final Object fieldInstance;
     private final boolean wasInitialized;
     private final boolean wasInitializedUsingConstructorArgs;
 
-    public FieldInitializationReport(Object fieldInstance, boolean wasInitialized, boolean wasInitializedUsingConstructorArgs) {
+    public FieldInitializationReport(
+            Object fieldInstance,
+            boolean wasInitialized,
+            boolean wasInitializedUsingConstructorArgs) {
         this.fieldInstance = fieldInstance;
         this.wasInitialized = wasInitialized;
         this.wasInitializedUsingConstructorArgs = wasInitializedUsingConstructorArgs;
@@ -30,7 +31,8 @@ public class FieldInitializationReport {
     /**
      * Indicate whether the field was created during the process or not.
      *
-     * @return <code>true</code> if created, <code>false</code> if the field did already hold an instance.
+     * @return <code>true</code> if created, <code>false</code> if the field did already hold an
+     *     instance.
      */
     public boolean fieldWasInitialized() {
         return wasInitialized;

@@ -10,7 +10,6 @@ import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
@@ -23,11 +22,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 /**
  * Tests the verbose logging of invocation on mock methods.
  *
- * BEWARE: These tests rely on mocking the standard output. While in a
- * single-threaded environment the Before/After-contract ensures, that the
- * original output stream is restored, there is no guarantee for this
- * in the parallel setting.
- * Maybe, the test class should be @Ignore'd by default ...
+ * <p>BEWARE: These tests rely on mocking the standard output. While in a single-threaded
+ * environment the Before/After-contract ensures, that the original output stream is restored, there
+ * is no guarantee for this in the parallel setting. Maybe, the test class should be @Ignore'd by
+ * default ...
  */
 @RunWith(MockitoJUnitRunner.class)
 public class VerboseLoggingOfInvocationsOnMockTest {
@@ -123,8 +121,8 @@ public class VerboseLoggingOfInvocationsOnMockTest {
     @Test
     public void shouldPrintRealInvocationOnSpyToStdOut() {
         // given
-        FooImpl fooSpy = mock(FooImpl.class,
-                withSettings().spiedInstance(new FooImpl()).verboseLogging());
+        FooImpl fooSpy =
+                mock(FooImpl.class, withSettings().spiedInstance(new FooImpl()).verboseLogging());
         doCallRealMethod().when(fooSpy).doSomething("Klipsch");
 
         // when
@@ -142,8 +140,7 @@ public class VerboseLoggingOfInvocationsOnMockTest {
     public void usage() {
         // given
         Foo foo = mock(Foo.class, withSettings().verboseLogging());
-        given(foo.giveMeSomeString("Apple")).willReturn(
-                "earbuds");
+        given(foo.giveMeSomeString("Apple")).willReturn("earbuds");
 
         // when
         foo.giveMeSomeString("Shure");
@@ -160,13 +157,12 @@ public class VerboseLoggingOfInvocationsOnMockTest {
     }
 
     private static class UnrelatedClass {
-        void unrelatedMethod(String anotherStringValue) {
-        }
+        void unrelatedMethod(String anotherStringValue) {}
     }
 
     /**
-     * An exception that isn't defined by Mockito or the JDK and therefore does
-     * not appear in the logging result by chance alone.
+     * An exception that isn't defined by Mockito or the JDK and therefore does not appear in the
+     * logging result by chance alone.
      */
     static class ThirdPartyException extends RuntimeException {
         private static final long serialVersionUID = 2160445705646210847L;
@@ -177,7 +173,6 @@ public class VerboseLoggingOfInvocationsOnMockTest {
             return null;
         }
 
-        public void doSomething(String param) {
-        }
+        public void doSomething(String param) {}
     }
 }

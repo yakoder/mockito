@@ -5,23 +5,24 @@
 package org.mockito.verification;
 
 import java.time.Duration;
-
 import org.mockito.internal.verification.VerificationOverTimeImpl;
 import org.mockito.internal.verification.VerificationWrapper;
 
 /**
  * See the javadoc for {@link VerificationAfterDelay}
- * <p>
- * Typically, you won't use this class explicitly. Instead use timeout() method on Mockito class.
+ *
+ * <p>Typically, you won't use this class explicitly. Instead use timeout() method on Mockito class.
  * See javadoc for {@link VerificationWithTimeout}
  */
-public class After extends VerificationWrapper<VerificationOverTimeImpl> implements VerificationAfterDelay {
+public class After extends VerificationWrapper<VerificationOverTimeImpl>
+        implements VerificationAfterDelay {
 
     /**
      * See the javadoc for {@link VerificationAfterDelay}
-     * <p>
-     * Typically, you won't use this class explicitly. Instead use timeout() method on Mockito class.
-     * See javadoc for {@link VerificationWithTimeout}
+     *
+     * <p>Typically, you won't use this class explicitly. Instead use timeout() method on Mockito
+     * class. See javadoc for {@link VerificationWithTimeout}
+     *
      * @deprecated Use {@link After#After(Duration, VerificationMode)} instead.
      */
     @Deprecated
@@ -31,9 +32,9 @@ public class After extends VerificationWrapper<VerificationOverTimeImpl> impleme
 
     /**
      * See the javadoc for {@link VerificationAfterDelay}
-     * <p>
-     * Typically, you won't use this class explicitly. Instead use timeout() method on Mockito class.
-     * See javadoc for {@link VerificationWithTimeout}
+     *
+     * <p>Typically, you won't use this class explicitly. Instead use timeout() method on Mockito
+     * class. See javadoc for {@link VerificationWithTimeout}
      */
     public After(Duration delay, VerificationMode verificationMode) {
         this(Duration.ofMillis(10), delay, verificationMode);

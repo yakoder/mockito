@@ -7,15 +7,12 @@ package org.mockito.internal.junit;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.mockito.internal.exceptions.Reporter;
 import org.mockito.invocation.Invocation;
 import org.mockito.plugins.MockitoLogger;
 import org.mockito.stubbing.Stubbing;
 
-/**
- * Contains unused stubbings, knows how to format them
- */
+/** Contains unused stubbings, knows how to format them */
 public class UnusedStubbings {
 
     private final Collection<? extends Stubbing> unused;

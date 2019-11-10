@@ -5,7 +5,6 @@
 package org.mockito.internal.progress;
 
 import java.util.List;
-
 import org.mockito.ArgumentMatcher;
 import org.mockito.internal.matchers.LocalizedMatcher;
 
@@ -25,5 +24,4 @@ public interface ArgumentMatcherStorage {
     void validateState();
 
     void reset();
-
 }

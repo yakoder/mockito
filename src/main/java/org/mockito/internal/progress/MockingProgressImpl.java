@@ -11,7 +11,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
 import org.mockito.internal.configuration.GlobalConfiguration;
 import org.mockito.internal.debugging.Localized;
 import org.mockito.internal.debugging.LocationImpl;
@@ -61,7 +60,8 @@ public class MockingProgressImpl implements MockingProgress {
 
     @Override
     public Set<VerificationListener> verificationListeners() {
-        final LinkedHashSet<VerificationListener> verificationListeners = new LinkedHashSet<VerificationListener>();
+        final LinkedHashSet<VerificationListener> verificationListeners =
+                new LinkedHashSet<VerificationListener>();
 
         for (MockitoListener listener : listeners) {
             if (listener instanceof VerificationListener) {
@@ -71,7 +71,6 @@ public class MockingProgressImpl implements MockingProgress {
 
         return verificationListeners;
     }
-
 
     public void verificationStarted(VerificationMode verify) {
         validateState();
@@ -104,7 +103,7 @@ public class MockingProgressImpl implements MockingProgress {
     public void validateState() {
         validateMostStuff();
 
-        //validate stubbing:
+        // validate stubbing:
         if (stubbingInProgress != null) {
             Location temp = stubbingInProgress;
             stubbingInProgress = null;
@@ -113,8 +112,9 @@ public class MockingProgressImpl implements MockingProgress {
     }
 
     private void validateMostStuff() {
-        //State is cool when GlobalConfiguration is already loaded
-        //this cannot really be tested functionally because I cannot dynamically mess up org.mockito.configuration.MockitoConfiguration class
+        // State is cool when GlobalConfiguration is already loaded
+        // this cannot really be tested functionally because I cannot dynamically mess up
+        // org.mockito.configuration.MockitoConfiguration class
         GlobalConfiguration.validate();
 
         if (verificationMode != null) {
@@ -131,9 +131,12 @@ public class MockingProgressImpl implements MockingProgress {
     }
 
     public String toString() {
-        return  "ongoingStubbing: " + ongoingStubbing +
-        ", verificationMode: " + verificationMode +
-        ", stubbingInProgress: " + stubbingInProgress;
+        return "ongoingStubbing: "
+                + ongoingStubbing
+                + ", verificationMode: "
+                + verificationMode
+                + ", stubbingInProgress: "
+                + stubbingInProgress;
     }
 
     public void reset() {
@@ -163,17 +166,19 @@ public class MockingProgressImpl implements MockingProgress {
         List<MockitoListener> delete = new LinkedList<MockitoListener>();
         for (MockitoListener existing : listeners) {
             if (existing.getClass().equals(listener.getClass())) {
-                if (existing instanceof AutoCleanableListener && ((AutoCleanableListener) existing).isListenerDirty()) {
-                    //dirty listener means that there was an exception even before the test started
-                    //if we fail here with redundant mockito listener exception there will be multiple failures causing confusion
-                    //so we simply remove the existing listener and move on
+                if (existing instanceof AutoCleanableListener
+                        && ((AutoCleanableListener) existing).isListenerDirty()) {
+                    // dirty listener means that there was an exception even before the test started
+                    // if we fail here with redundant mockito listener exception there will be
+                    // multiple failures causing confusion
+                    // so we simply remove the existing listener and move on
                     delete.add(existing);
                 } else {
                     Reporter.redundantMockitoListener(listener.getClass().getSimpleName());
                 }
             }
         }
-        //delete dirty listeners so they don't occupy state/memory and don't receive notifications
+        // delete dirty listeners so they don't occupy state/memory and don't receive notifications
         for (MockitoListener toDelete : delete) {
             listeners.remove(toDelete);
         }
@@ -196,14 +201,14 @@ public class MockingProgressImpl implements MockingProgress {
         listeners.clear();
     }
 
-     /*
+    /*
 
-     //TODO 545 thread safety of all mockito
+    //TODO 545 thread safety of all mockito
 
-     use cases:
-        - single threaded execution throughout
-        - single threaded mock creation, stubbing & verification, multi-threaded interaction with mock
-        - thread per test case
+    use cases:
+       - single threaded execution throughout
+       - single threaded mock creation, stubbing & verification, multi-threaded interaction with mock
+       - thread per test case
 
-     */
+    */
 }

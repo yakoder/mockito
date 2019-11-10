@@ -5,7 +5,6 @@
 package org.mockito;
 
 import java.io.Serializable;
-
 import org.mockito.exceptions.misusing.PotentialStubbingProblem;
 import org.mockito.exceptions.misusing.UnnecessaryStubbingException;
 import org.mockito.invocation.InvocationFactory;
@@ -20,13 +19,13 @@ import org.mockito.stubbing.Answer;
 
 /**
  * Allows mock creation with additional mock settings.
- * <p/>
- * Don't use it too often.
- * Consider writing simple tests that use simple mocks.
- * Repeat after me: simple tests push simple, KISSy, readable & maintainable code.
- * If you cannot write a test in a simple way - refactor the code under test.
- * <p/>
- * Examples of mock settings:
+ *
+ * <p>Don't use it too often. Consider writing simple tests that use simple mocks. Repeat after me:
+ * simple tests push simple, KISSy, readable & maintainable code. If you cannot write a test in a
+ * simple way - refactor the code under test.
+ *
+ * <p>Examples of mock settings:
+ *
  * <pre class="code"><code class="java">
  *   //Creates mock with different default answer & name
  *   Foo mock = mock(Foo.class, withSettings()
@@ -40,21 +39,24 @@ import org.mockito.stubbing.Answer;
  *                                .name("cool mockie")
  *                                .extraInterfaces(Bar.class));
  * </code></pre>
- * {@link MockSettings} has been introduced for two reasons.
- * Firstly, to make it easy to add another mock setting when the demand comes.
- * Secondly, to enable combining together different mock settings without introducing zillions of overloaded mock() methods.
+ *
+ * {@link MockSettings} has been introduced for two reasons. Firstly, to make it easy to add another
+ * mock setting when the demand comes. Secondly, to enable combining together different mock
+ * settings without introducing zillions of overloaded mock() methods.
  */
 @NotExtensible
 public interface MockSettings extends Serializable {
 
     /**
-     * Specifies extra interfaces the mock should implement. Might be useful for legacy code or some corner cases.
-     * <p>
-     * This mysterious feature should be used very occasionally.
-     * The object under test should know exactly its collaborators & dependencies.
-     * If you happen to use it often than please make sure you are really producing simple, clean & readable code.
-     * <p>
-     * Examples:
+     * Specifies extra interfaces the mock should implement. Might be useful for legacy code or some
+     * corner cases.
+     *
+     * <p>This mysterious feature should be used very occasionally. The object under test should
+     * know exactly its collaborators & dependencies. If you happen to use it often than please make
+     * sure you are really producing simple, clean & readable code.
+     *
+     * <p>Examples:
+     *
      * <pre class="code"><code class="java">
      *   Foo foo = mock(Foo.class, withSettings().extraInterfaces(Bar.class, Baz.class));
      *
@@ -69,20 +71,25 @@ public interface MockSettings extends Serializable {
     MockSettings extraInterfaces(Class<?>... interfaces);
 
     /**
-     * Specifies mock name. Naming mocks can be helpful for debugging - the name is used in all verification errors.
-     * <p>
-     * Beware that naming mocks is not a solution for complex code which uses too many mocks or collaborators.
-     * <b>If you have too many mocks then refactor the code</b> so that it's easy to test/debug without necessity of naming mocks.
-     * <p>
-     * <b>If you use &#064;Mock annotation then you've got naming mocks for free!</b> &#064;Mock uses field name as mock name. {@link Mock Read more.}
-     * <p>
-     * Examples:
+     * Specifies mock name. Naming mocks can be helpful for debugging - the name is used in all
+     * verification errors.
+     *
+     * <p>Beware that naming mocks is not a solution for complex code which uses too many mocks or
+     * collaborators. <b>If you have too many mocks then refactor the code</b> so that it's easy to
+     * test/debug without necessity of naming mocks.
+     *
+     * <p><b>If you use &#064;Mock annotation then you've got naming mocks for free!</b> &#064;Mock
+     * uses field name as mock name. {@link Mock Read more.}
+     *
+     * <p>Examples:
+     *
      * <pre class="code"><code class="java">
      *   Foo foo = mock(Foo.class, withSettings().name("foo"));
      *
      *   //Below does exactly the same:
      *   Foo foo = mock(Foo.class, "foo");
      * </code></pre>
+     *
      * @param name the name of the mock, later used in all verification errors
      * @return settings instance so that you can fluently specify other settings
      */
@@ -131,11 +138,12 @@ public interface MockSettings extends Serializable {
     MockSettings spiedInstance(Object instance);
 
     /**
-     * Specifies default answers to interactions.
-     * It's quite advanced feature and typically you don't need it to write decent tests.
-     * However it can be helpful when working with legacy systems.
-     * <p>
-     * It is the default answer so it will be used <b>only when you don't</b> stub the method call.
+     * Specifies default answers to interactions. It's quite advanced feature and typically you
+     * don't need it to write decent tests. However it can be helpful when working with legacy
+     * systems.
+     *
+     * <p>It is the default answer so it will be used <b>only when you don't</b> stub the method
+     * call.
      *
      * <pre class="code"><code class="java">
      *   Foo mock = mock(Foo.class, withSettings().defaultAnswer(RETURNS_SMART_NULLS));
@@ -152,14 +160,17 @@ public interface MockSettings extends Serializable {
     MockSettings defaultAnswer(Answer defaultAnswer);
 
     /**
-     * Configures the mock to be serializable. With this feature you can use a mock in a place that requires dependencies to be serializable.
-     * <p>
-     * WARNING: This should be rarely used in unit testing.
-     * <p>
-     * The behaviour was implemented for a specific use case of a BDD spec that had an unreliable external dependency.  This
-     * was in a web environment and the objects from the external dependency were being serialized to pass between layers.
-     * <p>
-     * Example:
+     * Configures the mock to be serializable. With this feature you can use a mock in a place that
+     * requires dependencies to be serializable.
+     *
+     * <p>WARNING: This should be rarely used in unit testing.
+     *
+     * <p>The behaviour was implemented for a specific use case of a BDD spec that had an unreliable
+     * external dependency. This was in a web environment and the objects from the external
+     * dependency were being serialized to pass between layers.
+     *
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      *   List serializableMock = mock(List.class, withSettings().serializable());
      * </code></pre>
@@ -170,13 +181,14 @@ public interface MockSettings extends Serializable {
     MockSettings serializable();
 
     /**
-     * Configures the mock to be serializable with a specific serializable mode.
-     * With this feature you can use a mock in a place that requires dependencies to be serializable.
-     * <p>
-     * WARNING: This should be rarely used in unit testing.
-     * <p>
-     * The behaviour was implemented for a specific use case of a BDD spec that had an unreliable external dependency.  This
-     * was in a web environment and the objects from the external dependency were being serialized to pass between layers.
+     * Configures the mock to be serializable with a specific serializable mode. With this feature
+     * you can use a mock in a place that requires dependencies to be serializable.
+     *
+     * <p>WARNING: This should be rarely used in unit testing.
+     *
+     * <p>The behaviour was implemented for a specific use case of a BDD spec that had an unreliable
+     * external dependency. This was in a web environment and the objects from the external
+     * dependency were being serialized to pass between layers.
      *
      * <pre class="code"><code class="java">
      *   List serializableMock = mock(List.class, withSettings().serializable(SerializableMode.ACROSS_CLASSLOADERS));
@@ -189,14 +201,15 @@ public interface MockSettings extends Serializable {
     MockSettings serializable(SerializableMode mode);
 
     /**
-     * Enables real-time logging of method invocations on this mock. Can be used
-     * during test debugging in order to find wrong interactions with this mock.
-     * <p>
-     * Invocations are logged as they happen to the standard output stream.
-     * <p>
-     * Calling this method multiple times makes no difference.
-     * <p>
-     * Example:
+     * Enables real-time logging of method invocations on this mock. Can be used during test
+     * debugging in order to find wrong interactions with this mock.
+     *
+     * <p>Invocations are logged as they happen to the standard output stream.
+     *
+     * <p>Calling this method multiple times makes no difference.
+     *
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      * List mockWithLogger = mock(List.class, withSettings().verboseLogging());
      * </code></pre>
@@ -208,11 +221,12 @@ public interface MockSettings extends Serializable {
     /**
      * Add stubbing lookup listener to the mock object.
      *
-     * Multiple listeners may be added and they will be notified orderly.
+     * <p>Multiple listeners may be added and they will be notified orderly.
      *
-     * For use cases and more info see {@link StubbingLookupListener}.
+     * <p>For use cases and more info see {@link StubbingLookupListener}.
      *
-     * Example:
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      *  List mockWithListener = mock(List.class, withSettings().stubbingLookupListeners(new YourStubbingLookupListener()));
      * </code></pre>
@@ -224,12 +238,13 @@ public interface MockSettings extends Serializable {
     MockSettings stubbingLookupListeners(StubbingLookupListener... listeners);
 
     /**
-     * Registers a listener for method invocations on this mock. The listener is
-     * notified every time a method on this mock is called.
-     * <p>
-     * Multiple listeners may be added and they will be notified in the order they were supplied.
+     * Registers a listener for method invocations on this mock. The listener is notified every time
+     * a method on this mock is called.
      *
-     * Example:
+     * <p>Multiple listeners may be added and they will be notified in the order they were supplied.
+     *
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      *  List mockWithListener = mock(List.class, withSettings().invocationListeners(new YourInvocationListener()));
      * </code></pre>
@@ -242,14 +257,15 @@ public interface MockSettings extends Serializable {
     MockSettings invocationListeners(InvocationListener... listeners);
 
     /**
-     * Registers a listener(s) that will be notified when user starts verification.
-     * See {@link VerificationStartedListener} on how such listener can be useful.
-     * <p>
-     * When multiple listeners are added, they are notified in order they were supplied.
-     * There is no reason to supply multiple listeners but we wanted to keep the API
-     * simple and consistent with {@link #invocationListeners(InvocationListener...)}.
-     * <p>
-     * Throws exception when any of the passed listeners is null or when the entire vararg array is null.
+     * Registers a listener(s) that will be notified when user starts verification. See {@link
+     * VerificationStartedListener} on how such listener can be useful.
+     *
+     * <p>When multiple listeners are added, they are notified in order they were supplied. There is
+     * no reason to supply multiple listeners but we wanted to keep the API simple and consistent
+     * with {@link #invocationListeners(InvocationListener...)}.
+     *
+     * <p>Throws exception when any of the passed listeners is null or when the entire vararg array
+     * is null.
      *
      * @param listeners to be notified when user starts verification.
      * @return settings instance so that you can fluently specify other settings
@@ -259,11 +275,11 @@ public interface MockSettings extends Serializable {
     MockSettings verificationStartedListeners(VerificationStartedListener... listeners);
 
     /**
-     * A stub-only mock does not record method
-     * invocations, thus saving memory but
-     * disallowing verification of invocations.
-     * <p>
-     * Example:
+     * A stub-only mock does not record method invocations, thus saving memory but disallowing
+     * verification of invocations.
+     *
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      * List stubOnly = mock(List.class, withSettings().stubOnly());
      * </code></pre>
@@ -273,10 +289,11 @@ public interface MockSettings extends Serializable {
     MockSettings stubOnly();
 
     /**
-     * Mockito attempts to use constructor when creating instance of the mock.
-     * This is particularly useful for spying on abstract classes. See also {@link Mockito#spy(Class)}.
-     * <p>
-     * Example:
+     * Mockito attempts to use constructor when creating instance of the mock. This is particularly
+     * useful for spying on abstract classes. See also {@link Mockito#spy(Class)}.
+     *
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      * //Robust API, via settings builder:
      * OtherAbstract spy = mock(OtherAbstract.class, withSettings()
@@ -291,8 +308,8 @@ public interface MockSettings extends Serializable {
      *   .useConstructor().outerInstance(outerInstance).defaultAnswer(CALLS_REAL_METHODS));
      * </code></pre>
      *
-     * @param args The arguments to pass to the constructor. Not passing any arguments means that a parameter-less
-     *             constructor will be called
+     * @param args The arguments to pass to the constructor. Not passing any arguments means that a
+     *     parameter-less constructor will be called
      * @return settings instance so that you can fluently specify other settings
      * @since 2.7.14 (useConstructor with no arguments was supported since 1.10.12)
      */
@@ -300,9 +317,11 @@ public interface MockSettings extends Serializable {
     MockSettings useConstructor(Object... args);
 
     /**
-     * Makes it possible to mock non-static inner classes in conjunction with {@link #useConstructor(Object...)}.
-     * <p>
-     * Example:
+     * Makes it possible to mock non-static inner classes in conjunction with {@link
+     * #useConstructor(Object...)}.
+     *
+     * <p>Example:
+     *
      * <pre class="code"><code class="java">
      * InnerClass mock = mock(InnerClass.class, withSettings()
      *   .useConstructor().outerInstance(outerInstance).defaultAnswer(CALLS_REAL_METHODS));
@@ -315,9 +334,9 @@ public interface MockSettings extends Serializable {
     MockSettings outerInstance(Object outerClassInstance);
 
     /**
-     * By default, Mockito makes an attempt to preserve all annotation meta data on the mocked
-     * type and its methods to mirror the mocked type as closely as possible. If this is not
-     * desired, this option can be used to disable this behavior.
+     * By default, Mockito makes an attempt to preserve all annotation meta data on the mocked type
+     * and its methods to mirror the mocked type as closely as possible. If this is not desired,
+     * this option can be used to disable this behavior.
      *
      * @return settings instance so that you can fluently specify other settings
      * @since 1.10.13
@@ -326,11 +345,11 @@ public interface MockSettings extends Serializable {
     MockSettings withoutAnnotations();
 
     /**
-     * Creates immutable view of mock settings used later by Mockito.
-     * Framework integrators can use this method to create instances of creation settings
-     * and use them in advanced use cases, for example to create invocations with {@link InvocationFactory},
-     * or to implement custom {@link MockHandler}.
-     * Since {@link MockCreationSettings} is {@link NotExtensible}, Mockito public API needs a creation method for this type.
+     * Creates immutable view of mock settings used later by Mockito. Framework integrators can use
+     * this method to create instances of creation settings and use them in advanced use cases, for
+     * example to create invocations with {@link InvocationFactory}, or to implement custom {@link
+     * MockHandler}. Since {@link MockCreationSettings} is {@link NotExtensible}, Mockito public API
+     * needs a creation method for this type.
      *
      * @param typeToMock class to mock
      * @param <T> type to mock
@@ -341,9 +360,10 @@ public interface MockSettings extends Serializable {
     <T> MockCreationSettings<T> build(Class<T> typeToMock);
 
     /**
-     * Lenient mocks bypass "strict stubbing" validation (see {@link Strictness#STRICT_STUBS}).
-     * When mock is declared as lenient none of its stubbings will be checked for potential stubbing problems such as
-     * 'unnecessary stubbing' ({@link UnnecessaryStubbingException}) or for 'stubbing argument mismatch' {@link PotentialStubbingProblem}.
+     * Lenient mocks bypass "strict stubbing" validation (see {@link Strictness#STRICT_STUBS}). When
+     * mock is declared as lenient none of its stubbings will be checked for potential stubbing
+     * problems such as 'unnecessary stubbing' ({@link UnnecessaryStubbingException}) or for
+     * 'stubbing argument mismatch' {@link PotentialStubbingProblem}.
      *
      * <pre class="code"><code class="java">
      *   Foo mock = mock(Foo.class, withSettings.lenient());

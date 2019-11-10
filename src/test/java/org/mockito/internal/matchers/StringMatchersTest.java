@@ -9,9 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-/**
- * Tests for the Matchers that operate over strings
- */
+/** Tests for the Matchers that operate over strings */
 public class StringMatchersTest {
     @Test
     public void startsWithString() {
@@ -73,5 +71,4 @@ public class StringMatchersTest {
     public void nullDoesNotMatchRegex() {
         assertFalse(new Find("eleph.nt").matches(null));
     }
-
 }

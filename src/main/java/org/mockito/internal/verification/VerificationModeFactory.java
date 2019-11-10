@@ -17,7 +17,7 @@ public class VerificationModeFactory {
     }
 
     public static VerificationMode only() {
-        return new Only(); //TODO make exception message nicer
+        return new Only(); // TODO make exception message nicer
     }
 
     public static Times times(int wantedNumberOfInvocations) {
@@ -25,7 +25,7 @@ public class VerificationModeFactory {
     }
 
     public static Calls calls(int wantedNumberOfInvocations) {
-        return new Calls( wantedNumberOfInvocations );
+        return new Calls(wantedNumberOfInvocations);
     }
 
     public static NoMoreInteractions noMoreInteractions() {
@@ -45,7 +45,9 @@ public class VerificationModeFactory {
     }
 
     /**
-     * Verification mode will prepend the specified failure message if verification fails with the given implementation.
+     * Verification mode will prepend the specified failure message if verification fails with the
+     * given implementation.
+     *
      * @param mode Implementation used for verification
      * @param description The custom failure message
      * @return VerificationMode

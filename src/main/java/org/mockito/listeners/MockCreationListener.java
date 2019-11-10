@@ -7,8 +7,8 @@ package org.mockito.listeners;
 import org.mockito.mock.MockCreationSettings;
 
 /**
- * Notified when mock object is created.
- * For more information on listeners see {@link org.mockito.MockitoFramework#addListener(MockitoListener)}.
+ * Notified when mock object is created. For more information on listeners see {@link
+ * org.mockito.MockitoFramework#addListener(MockitoListener)}.
  */
 public interface MockCreationListener extends MockitoListener {
 

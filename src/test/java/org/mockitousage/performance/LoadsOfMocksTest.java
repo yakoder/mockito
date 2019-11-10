@@ -9,7 +9,6 @@ import static org.mockito.Mockito.*;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockitousage.IMethods;

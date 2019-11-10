@@ -6,7 +6,6 @@ package org.mockito.internal.stubbing.answers;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-
 import org.mockito.internal.invocation.AbstractAwareMethod;
 import org.mockito.internal.util.MockUtil;
 import org.mockito.internal.util.Primitives;
@@ -38,22 +37,24 @@ public class InvocationInfo implements AbstractAwareMethod {
 
     public boolean isValidReturnType(Class<?> clazz) {
         if (method.getReturnType().isPrimitive() || clazz.isPrimitive()) {
-            return Primitives.primitiveTypeOf(clazz) == Primitives.primitiveTypeOf(method.getReturnType());
+            return Primitives.primitiveTypeOf(clazz)
+                    == Primitives.primitiveTypeOf(method.getReturnType());
         } else {
             return method.getReturnType().isAssignableFrom(clazz);
         }
     }
 
     /**
-     * Returns {@code true} is the return type is {@link Void} or represents the pseudo-type to the keyword {@code void}.
-     * E.g:  {@code void foo()} or {@code Void bar()}
+     * Returns {@code true} is the return type is {@link Void} or represents the pseudo-type to the
+     * keyword {@code void}. E.g: {@code void foo()} or {@code Void bar()}
      */
     public boolean isVoid() {
-        final MockCreationSettings mockSettings = MockUtil.getMockHandler(invocation.getMock())
-            .getMockSettings();
-        Class<?> returnType = GenericMetadataSupport.inferFrom(mockSettings.getTypeToMock())
-            .resolveGenericReturnType(this.method)
-            .rawType();
+        final MockCreationSettings mockSettings =
+                MockUtil.getMockHandler(invocation.getMock()).getMockSettings();
+        Class<?> returnType =
+                GenericMetadataSupport.inferFrom(mockSettings.getTypeToMock())
+                        .resolveGenericReturnType(this.method)
+                        .rawType();
         return returnType == Void.TYPE || returnType == Void.class;
     }
 

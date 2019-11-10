@@ -9,7 +9,8 @@ import org.mockito.plugins.InstantiatorProvider;
 import org.mockito.plugins.InstantiatorProvider2;
 
 /**
- * Adapts new public API {@link InstantiatorProvider2} onto old, deprecated API {@link InstantiatorProvider}
+ * Adapts new public API {@link InstantiatorProvider2} onto old, deprecated API {@link
+ * InstantiatorProvider}
  */
 public class InstantiatorProvider2Adapter implements InstantiatorProvider {
     private final InstantiatorProvider2 provider;

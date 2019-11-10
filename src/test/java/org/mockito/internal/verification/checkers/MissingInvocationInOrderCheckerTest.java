@@ -5,11 +5,9 @@
 package org.mockito.internal.verification.checkers;
 
 import static java.util.Arrays.asList;
-
 import static org.mockito.internal.verification.checkers.MissingInvocationChecker.checkMissingInvocation;
 
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,25 +25,21 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockitousage.IMethods;
 
-public class MissingInvocationInOrderCheckerTest  {
+public class MissingInvocationInOrderCheckerTest {
 
     private InvocationMatcher wanted;
     private List<Invocation> invocations;
 
-    @Mock
-    private IMethods mock;
+    @Mock private IMethods mock;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+    @Rule public ExpectedException exception = ExpectedException.none();
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     private InOrderContext context = new InOrderContextImpl();
 
     @Before
-    public void setup() {
-    }
+    public void setup() {}
 
     @Test
     public void shouldPassWhenMatchingInteractionFound() throws Exception {
@@ -81,8 +75,7 @@ public class MissingInvocationInOrderCheckerTest  {
         exception.expectMessage("mock.intArgumentMethod(1111);");
 
         checkMissingInvocation(invocations, wanted, context);
-
-     }
+    }
 
     @Test
     public void shouldReportWantedDiffersFromActual() throws Exception {
@@ -91,7 +84,7 @@ public class MissingInvocationInOrderCheckerTest  {
         Invocation invocation2 = buildIntArgMethod().arg(2222).toInvocation();
 
         context.markVerified(invocation2);
-        invocations = asList(invocation1,invocation2);
+        invocations = asList(invocation1, invocation2);
         wanted = buildIntArgMethod().arg(2222).toInvocationMatcher();
 
         exception.expect(VerificationInOrderFailure.class);
@@ -116,6 +109,4 @@ public class MissingInvocationInOrderCheckerTest  {
     private InvocationBuilder buildDifferentMethod() {
         return new InvocationBuilder().mock(mock).differentMethod();
     }
-
-
 }

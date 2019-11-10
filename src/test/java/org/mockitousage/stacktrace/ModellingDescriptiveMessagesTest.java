@@ -8,7 +8,6 @@ import static org.mockito.Mockito.*;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -34,7 +33,7 @@ public class ModellingDescriptiveMessagesTest extends TestBase {
     @SuppressWarnings({"MockitoUsage", "CheckReturnValue"})
     @Test
     public void makeSureStateIsValidatedInTheVeryFirstTestThanksToTheRunner() {
-        //mess up the state:
+        // mess up the state:
         verify(mock);
     }
 

@@ -6,9 +6,7 @@ package org.mockito.invocation;
 
 import org.mockito.NotExtensible;
 
-/**
- * Describes the location of something in the source code.
- */
+/** Describes the location of something in the source code. */
 @NotExtensible
 public interface Location {
 

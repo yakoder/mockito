@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import java.util.*;
-
 import org.junit.Assume;
 import org.junit.Test;
 import org.mockito.invocation.Invocation;
@@ -66,25 +65,25 @@ public class ReturnsEmptyValuesTest extends TestBase {
         d.compareTo(new Date());
         Invocation compareTo = this.getLastInvocation();
 
-        //when
+        // when
         Object result = values.answer(compareTo);
 
-        //then
+        // then
         assertTrue(result != (Object) 0);
     }
 
     @SuppressWarnings("SelfComparison")
     @Test
     public void should_return_zero_if_mock_is_compared_to_itself() {
-        //given
+        // given
         Date d = mock(Date.class);
         d.compareTo(d);
         Invocation compareTo = this.getLastInvocation();
 
-        //when
+        // when
         Object result = values.answer(compareTo);
 
-        //then
+        // then
         assertEquals(0, result);
     }
 
@@ -95,7 +94,8 @@ public class ReturnsEmptyValuesTest extends TestBase {
 
     @Test
     public void should_return_empty_OptionalDouble() throws Exception {
-        verify_empty_Optional_is_returned("java.util.stream.DoubleStream", "java.util.OptionalDouble");
+        verify_empty_Optional_is_returned(
+                "java.util.stream.DoubleStream", "java.util.OptionalDouble");
     }
 
     @Test
@@ -108,10 +108,11 @@ public class ReturnsEmptyValuesTest extends TestBase {
         verify_empty_Optional_is_returned("java.util.stream.LongStream", "java.util.OptionalLong");
     }
 
-    private void verify_empty_Optional_is_returned(String streamFqcn, String optionalFqcn) throws Exception {
+    private void verify_empty_Optional_is_returned(String streamFqcn, String optionalFqcn)
+            throws Exception {
         Class<?> streamType = getClassOrSkipTest(streamFqcn);
 
-        //given
+        // given
         Object stream = mock(streamType);
         Object optional = streamType.getMethod("findAny").invoke(stream);
         assertNotNull(optional);
@@ -119,10 +120,10 @@ public class ReturnsEmptyValuesTest extends TestBase {
 
         Invocation findAny = this.getLastInvocation();
 
-        //when
+        // when
         Object result = values.answer(findAny);
 
-        //then
+        // then
         assertEquals(optional, result);
     }
 
@@ -158,9 +159,7 @@ public class ReturnsEmptyValuesTest extends TestBase {
         assertEquals("count of empty " + streamFqcn, 0L, count);
     }
 
-    /**
-     * Tries to load the given class. If the class is not found, the complete test is skipped.
-     */
+    /** Tries to load the given class. If the class is not found, the complete test is skipped. */
     private Class<?> getClassOrSkipTest(String className) {
         try {
             return Class.forName(className);
@@ -169,5 +168,4 @@ public class ReturnsEmptyValuesTest extends TestBase {
             return null;
         }
     }
-
 }

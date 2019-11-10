@@ -7,7 +7,6 @@ package org.mockito.exceptions.base;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-
 import org.junit.Test;
 import org.mockito.internal.configuration.ConfigurationAccess;
 
@@ -19,11 +18,14 @@ public class MockitoSerializationIssueTest {
         ConfigurationAccess.getConfig().overrideCleansStackTrace(true);
 
         // when
-        MockitoSerializationIssue issue = new MockitoSerializationIssue("msg", new Exception("cause"));
+        MockitoSerializationIssue issue =
+                new MockitoSerializationIssue("msg", new Exception("cause"));
 
         // then
-        assertThat(Arrays.toString(issue.getUnfilteredStackTrace())).contains("MockitoSerializationIssueTest");
-        assertThat(Arrays.toString(issue.getStackTrace())).doesNotContain("MockitoSerializationIssueTest");
+        assertThat(Arrays.toString(issue.getUnfilteredStackTrace()))
+                .contains("MockitoSerializationIssueTest");
+        assertThat(Arrays.toString(issue.getStackTrace()))
+                .doesNotContain("MockitoSerializationIssueTest");
     }
 
     @Test
@@ -32,10 +34,13 @@ public class MockitoSerializationIssueTest {
         ConfigurationAccess.getConfig().overrideCleansStackTrace(false);
 
         // when
-        MockitoSerializationIssue issue = new MockitoSerializationIssue("msg", new Exception("cause"));
+        MockitoSerializationIssue issue =
+                new MockitoSerializationIssue("msg", new Exception("cause"));
 
         // then
-        assertThat(Arrays.toString(issue.getUnfilteredStackTrace())).contains("MockitoSerializationIssueTest");
-        assertThat(Arrays.toString(issue.getStackTrace())).contains("MockitoSerializationIssueTest");
+        assertThat(Arrays.toString(issue.getUnfilteredStackTrace()))
+                .contains("MockitoSerializationIssueTest");
+        assertThat(Arrays.toString(issue.getStackTrace()))
+                .contains("MockitoSerializationIssueTest");
     }
 }

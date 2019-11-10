@@ -5,13 +5,10 @@
 package org.mockito.internal.stubbing;
 
 import java.util.Comparator;
-
 import org.mockito.internal.invocation.InvocationComparator;
 import org.mockito.stubbing.Stubbing;
 
-/**
- * Compares stubbings based on {@link InvocationComparator}
- */
+/** Compares stubbings based on {@link InvocationComparator} */
 public class StubbingComparator implements Comparator<Stubbing> {
 
     private final InvocationComparator invocationComparator = new InvocationComparator();

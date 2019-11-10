@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.mockito.exceptions.stacktrace.StackTraceCleaner;
 import org.mockito.internal.configuration.plugins.Plugins;
 
@@ -17,7 +16,8 @@ public class StackTraceFilter implements Serializable {
     static final long serialVersionUID = -5499819791513105700L;
 
     private static final StackTraceCleaner CLEANER =
-            Plugins.getStackTraceCleanerProvider().getStackTraceCleaner(new DefaultStackTraceCleaner());
+            Plugins.getStackTraceCleanerProvider()
+                    .getStackTraceCleaner(new DefaultStackTraceCleaner());
 
     private static Object JAVA_LANG_ACCESS;
     private static Method GET_STACK_TRACE_ELEMENT;
@@ -25,12 +25,12 @@ public class StackTraceFilter implements Serializable {
     static {
         try {
             JAVA_LANG_ACCESS =
-                Class.forName("sun.misc.SharedSecrets")
-                    .getMethod("getJavaLangAccess")
-                    .invoke(null);
+                    Class.forName("sun.misc.SharedSecrets")
+                            .getMethod("getJavaLangAccess")
+                            .invoke(null);
             GET_STACK_TRACE_ELEMENT =
-                Class.forName("sun.misc.JavaLangAccess")
-                    .getMethod("getStackTraceElement", Throwable.class, int.class);
+                    Class.forName("sun.misc.JavaLangAccess")
+                            .getMethod("getStackTraceElement", Throwable.class, int.class);
         } catch (Exception ignored) {
             // Use the slow computational path for filtering stacktraces if fast path does not exist
             // in JVM
@@ -38,14 +38,13 @@ public class StackTraceFilter implements Serializable {
     }
 
     /**
-     * Example how the filter works (+/- means good/bad):
-     * [a+, b+, c-, d+, e+, f-, g+] -> [a+, b+, d+, e+, g+]
-     * Basically removes all bad from the middle.
-     * <strike>If any good are in the middle of bad those are also removed.</strike>
+     * Example how the filter works (+/- means good/bad): [a+, b+, c-, d+, e+, f-, g+] -> [a+, b+,
+     * d+, e+, g+] Basically removes all bad from the middle. <strike>If any good are in the middle
+     * of bad those are also removed.</strike>
      */
     public StackTraceElement[] filter(StackTraceElement[] target, boolean keepTop) {
-        //TODO: profile
-        //TODO: investigate "keepTop" commit history - no effect!
+        // TODO: profile
+        // TODO: investigate "keepTop" commit history - no effect!
         final List<StackTraceElement> filtered = new ArrayList<StackTraceElement>();
         for (StackTraceElement element : target) {
             if (CLEANER.isIn(element)) {
@@ -85,8 +84,8 @@ public class StackTraceFilter implements Serializable {
             while (true) {
                 try {
                     StackTraceElement stackTraceElement =
-                        (StackTraceElement)
-                            GET_STACK_TRACE_ELEMENT.invoke(JAVA_LANG_ACCESS, target, i);
+                            (StackTraceElement)
+                                    GET_STACK_TRACE_ELEMENT.invoke(JAVA_LANG_ACCESS, target, i);
 
                     if (CLEANER.isIn(stackTraceElement)) {
                         if (shouldSkip) {
@@ -118,8 +117,8 @@ public class StackTraceFilter implements Serializable {
     }
 
     /**
-     * Finds the source file of the target stack trace.
-     * Returns the default value if source file cannot be found.
+     * Finds the source file of the target stack trace. Returns the default value if source file
+     * cannot be found.
      */
     public String findSourceFile(StackTraceElement[] target, String defaultValue) {
         for (StackTraceElement e : target) {

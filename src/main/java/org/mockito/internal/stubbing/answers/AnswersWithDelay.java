@@ -6,7 +6,6 @@ package org.mockito.internal.stubbing.answers;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
-
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.mockito.stubbing.ValidableAnswer;
@@ -14,8 +13,8 @@ import org.mockito.stubbing.ValidableAnswer;
 /**
  * Returns as the provided answer would return, after delaying the specified amount.
  *
- * <p>The <code>sleepyTime</code> specifies how long, in milliseconds, to pause before
- * returning the provided <code>answer</code>.</p>
+ * <p>The <code>sleepyTime</code> specifies how long, in milliseconds, to pause before returning the
+ * provided <code>answer</code>.
  *
  * @since 2.8.44
  * @see org.mockito.AdditionalAnswers

@@ -8,13 +8,12 @@ import static org.mockito.internal.util.reflection.FieldSetter.setField;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-
 import org.mockito.internal.util.Checks;
 
 /**
  * Represents an accessible instance field.
  *
- * Contains the instance reference on which the field can be read adn write.
+ * <p>Contains the instance reference on which the field can be read adn write.
  */
 public class InstanceField {
     private final Field field;
@@ -25,7 +24,7 @@ public class InstanceField {
      * Create a new InstanceField.
      *
      * @param field The field that should be accessed, note that no checks are performed to ensure
-     *              the field belong to this instance class.
+     *     the field belong to this instance class.
      * @param instance The instance from which the field shall be accessed.
      */
     public InstanceField(Field field, Object instance) {
@@ -50,7 +49,7 @@ public class InstanceField {
      * @see FieldSetter
      */
     public void set(Object value) {
-        setField(instance, field,value);
+        setField(instance, field, value);
     }
 
     /**
@@ -66,7 +65,8 @@ public class InstanceField {
      * Check if the field is annotated by the given annotation.
      *
      * @param annotationClass The annotation type to check.
-     * @return <code>true</code> if the field is annotated by this annotation, else <code>false</code>.
+     * @return <code>true</code> if the field is annotated by this annotation, else <code>false
+     *     </code>.
      */
     public boolean isAnnotatedBy(Class<? extends Annotation> annotationClass) {
         return field.isAnnotationPresent(annotationClass);

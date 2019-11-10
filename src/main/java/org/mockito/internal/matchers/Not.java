@@ -5,10 +5,9 @@
 package org.mockito.internal.matchers;
 
 import java.io.Serializable;
-
 import org.mockito.ArgumentMatcher;
 
-@SuppressWarnings({ "unchecked", "serial","rawtypes" })
+@SuppressWarnings({"unchecked", "serial", "rawtypes"})
 public class Not implements ArgumentMatcher<Object>, Serializable {
 
     private final ArgumentMatcher matcher;

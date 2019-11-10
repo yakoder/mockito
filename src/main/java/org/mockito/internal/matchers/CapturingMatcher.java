@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import org.mockito.ArgumentMatcher;
 
 @SuppressWarnings("unchecked")
-public class CapturingMatcher<T> implements ArgumentMatcher<T>, CapturesArguments, VarargMatcher, Serializable {
+public class CapturingMatcher<T>
+        implements ArgumentMatcher<T>, CapturesArguments, VarargMatcher, Serializable {
 
     private final List<Object> arguments = new ArrayList<Object>();
 

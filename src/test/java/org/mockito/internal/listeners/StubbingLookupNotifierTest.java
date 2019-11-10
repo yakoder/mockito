@@ -13,7 +13,6 @@ import static org.mockito.internal.listeners.StubbingLookupNotifier.notifyStubbe
 
 import java.util.Collection;
 import java.util.List;
-
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
@@ -61,10 +60,10 @@ public class StubbingLookupNotifierTest extends TestBase {
 
         @Override
         public boolean matches(StubbingLookupNotifier.Event argument) {
-            return invocation == argument.getInvocation() &&
-                stubbingFound == argument.getStubbingFound() &&
-                allStubbings == argument.getAllStubbings() &&
-                creationSettings == argument.getMockSettings();
+            return invocation == argument.getInvocation()
+                    && stubbingFound == argument.getStubbingFound()
+                    && allStubbings == argument.getAllStubbings()
+                    && creationSettings == argument.getMockSettings();
         }
     }
 }

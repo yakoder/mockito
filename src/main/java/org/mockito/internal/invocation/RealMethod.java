@@ -6,19 +6,17 @@ package org.mockito.internal.invocation;
 
 import java.io.Serializable;
 import java.util.concurrent.Callable;
-
 import org.mockito.internal.exceptions.stacktrace.ConditionalStackTraceFilter;
 import org.mockito.invocation.InvocationFactory;
 import org.mockito.invocation.InvocationOnMock;
 
 /**
- * Interface that wraps a 'real' method of the mock object.
- * Needed for test spies or {@link InvocationOnMock#callRealMethod()}.
+ * Interface that wraps a 'real' method of the mock object. Needed for test spies or {@link
+ * InvocationOnMock#callRealMethod()}.
  */
 public interface RealMethod extends Serializable {
 
     enum IsIllegal implements RealMethod {
-
         INSTANCE;
 
         @Override
@@ -34,12 +32,13 @@ public interface RealMethod extends Serializable {
 
     class FromCallable extends FromBehavior implements RealMethod {
         public FromCallable(final Callable<?> callable) {
-            super(new InvocationFactory.RealMethodBehavior() {
-                @Override
-                public Object call() throws Throwable {
-                    return callable.call();
-                }
-            });
+            super(
+                    new InvocationFactory.RealMethodBehavior() {
+                        @Override
+                        public Object call() throws Throwable {
+                            return callable.call();
+                        }
+                    });
         }
     }
 

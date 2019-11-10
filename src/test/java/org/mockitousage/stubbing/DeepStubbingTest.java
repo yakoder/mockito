@@ -17,14 +17,11 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.List;
 import java.util.Locale;
-
 import javax.net.SocketFactory;
-
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.exceptions.verification.TooManyActualInvocations;
 import org.mockitoutil.TestBase;
-
 
 public class DeepStubbingTest extends TestBase {
 
@@ -108,9 +105,7 @@ public class DeepStubbingTest extends TestBase {
         assertSame(out, socket.getOutputStream());
     }
 
-    /**
-     * Test that deep stubbing works for one intermediate level
-     */
+    /** Test that deep stubbing works for one intermediate level */
     @Test
     public void oneLevelDeep() throws Exception {
         OutputStream out = new ByteArrayOutputStream();
@@ -121,9 +116,7 @@ public class DeepStubbingTest extends TestBase {
         assertSame(out, socketFactory.createSocket().getOutputStream());
     }
 
-    /**
-     * Test that stubbing of two mocks stubs don't interfere
-     */
+    /** Test that stubbing of two mocks stubs don't interfere */
     @Test
     public void interactions() throws Exception {
         OutputStream out1 = new ByteArrayOutputStream();
@@ -139,9 +132,7 @@ public class DeepStubbingTest extends TestBase {
         assertSame(out2, sf2.createSocket().getOutputStream());
     }
 
-    /**
-     * Test that stubbing of methods of different arguments don't interfere
-     */
+    /** Test that stubbing of methods of different arguments don't interfere */
     @Test
     public void withArguments() throws Exception {
         OutputStream out1 = new ByteArrayOutputStream();
@@ -158,14 +149,12 @@ public class DeepStubbingTest extends TestBase {
         assertSame(out3, sf.createSocket("stackoverflow.com", 80).getOutputStream());
     }
 
-    /**
-     * Test that deep stubbing work with argument patterns
-     */
+    /** Test that deep stubbing work with argument patterns */
     @Test
     public void withAnyPatternArguments() throws Exception {
         OutputStream out = new ByteArrayOutputStream();
 
-        //TODO: should not use javax in case it changes
+        // TODO: should not use javax in case it changes
         SocketFactory sf = mock(SocketFactory.class, RETURNS_DEEP_STUBS);
         when(sf.createSocket(anyString(), anyInt()).getOutputStream()).thenReturn(out);
 
@@ -173,9 +162,7 @@ public class DeepStubbingTest extends TestBase {
         assertSame(out, sf.createSocket("stackoverflow.com", 8080).getOutputStream());
     }
 
-    /**
-     * Test that deep stubbing work with argument patterns
-     */
+    /** Test that deep stubbing work with argument patterns */
     @Test
     public void withComplexPatternArguments() throws Exception {
         OutputStream out1 = new ByteArrayOutputStream();
@@ -191,9 +178,7 @@ public class DeepStubbingTest extends TestBase {
         assertSame(out1, sf.createSocket("stackoverflow.com", 80).getOutputStream());
     }
 
-    /**
-     * Test that deep stubbing work with primitive expected values
-     */
+    /** Test that deep stubbing work with primitive expected values */
     @Test
     public void withSimplePrimitive() throws Exception {
         int a = 32;
@@ -204,10 +189,7 @@ public class DeepStubbingTest extends TestBase {
         assertEquals(a, sf.createSocket().getPort());
     }
 
-    /**
-     * Test that deep stubbing work with primitive expected values with
-     * pattern method arguments
-     */
+    /** Test that deep stubbing work with primitive expected values with pattern method arguments */
     @Test
     public void withPatternPrimitive() throws Exception {
         int a = 12, b = 23, c = 34;
@@ -226,32 +208,32 @@ public class DeepStubbingTest extends TestBase {
 
     @Test
     public void shouldStubbingBasicallyWorkFine() {
-        //given
+        // given
         given(person.getAddress().getStreet().getName()).willReturn("Norymberska");
 
-        //when
+        // when
         String street = person.getAddress().getStreet().getName();
 
-        //then
+        // then
         assertEquals("Norymberska", street);
     }
 
     @Test
     public void shouldVerificationBasicallyWorkFine() {
-        //given
+        // given
         person.getAddress().getStreet().getName();
 
-        //then
+        // then
         verify(person.getAddress().getStreet()).getName();
     }
 
     @Test
     public void verification_work_with_argument_Matchers_in_nested_calls() {
-        //given
+        // given
         person.getAddress("111 Mock Lane").getStreet();
         person.getAddress("111 Mock Lane").getStreet(Locale.ITALIAN).getName();
 
-        //then
+        // then
         verify(person.getAddress(anyString())).getStreet();
         verify(person.getAddress(anyString()).getStreet(Locale.CHINESE), never()).getName();
         verify(person.getAddress(anyString()).getStreet(eq(Locale.ITALIAN))).getName();
@@ -263,11 +245,21 @@ public class DeepStubbingTest extends TestBase {
 
         person.getAddress("the docks").getStreet().getName();
 
-        assertSame(person.getAddress("the docks").getStreet(), person.getAddress(anyString()).getStreet());
-        assertSame(person.getAddress(anyString()).getStreet(), person.getAddress(anyString()).getStreet());
-        assertSame(person.getAddress("the docks").getStreet(), person.getAddress("the docks").getStreet());
-        assertSame(person.getAddress(anyString()).getStreet(), person.getAddress("the docks").getStreet());
-        assertSame(person.getAddress("111 Mock Lane").getStreet(), person.getAddress("the docks").getStreet());
+        assertSame(
+                person.getAddress("the docks").getStreet(),
+                person.getAddress(anyString()).getStreet());
+        assertSame(
+                person.getAddress(anyString()).getStreet(),
+                person.getAddress(anyString()).getStreet());
+        assertSame(
+                person.getAddress("the docks").getStreet(),
+                person.getAddress("the docks").getStreet());
+        assertSame(
+                person.getAddress(anyString()).getStreet(),
+                person.getAddress("the docks").getStreet());
+        assertSame(
+                person.getAddress("111 Mock Lane").getStreet(),
+                person.getAddress("the docks").getStreet());
     }
 
     @Test
@@ -284,7 +276,6 @@ public class DeepStubbingTest extends TestBase {
         verify(person.getAddress("the docks").getStreet(Locale.ITALIAN), atMostOnce()).getName();
     }
 
-
     @Test
     public void inOrder_only_work_on_the_very_last_mock_but_it_works() {
         when(person.getAddress(anyString()).getStreet().getName()).thenReturn("deep");
@@ -296,14 +287,15 @@ public class DeepStubbingTest extends TestBase {
         person.getAddress("the docks").getStreet(Locale.ITALIAN).getName();
         person.getAddress("the docks").getStreet(Locale.CHINESE).getName();
 
-        InOrder inOrder = inOrder(
-                person.getAddress("the docks").getStreet(),
-                person.getAddress("the docks").getStreet(Locale.CHINESE),
-                person.getAddress("the docks").getStreet(Locale.ITALIAN)
-        );
+        InOrder inOrder =
+                inOrder(
+                        person.getAddress("the docks").getStreet(),
+                        person.getAddress("the docks").getStreet(Locale.CHINESE),
+                        person.getAddress("the docks").getStreet(Locale.ITALIAN));
         inOrder.verify(person.getAddress("the docks").getStreet(), times(1)).getName();
         inOrder.verify(person.getAddress("the docks").getStreet()).getLongName();
-        inOrder.verify(person.getAddress("the docks").getStreet(Locale.ITALIAN), atLeast(1)).getName();
+        inOrder.verify(person.getAddress("the docks").getStreet(Locale.ITALIAN), atLeast(1))
+                .getName();
         inOrder.verify(person.getAddress("the docks").getStreet(Locale.CHINESE)).getName();
     }
 
@@ -322,19 +314,17 @@ public class DeepStubbingTest extends TestBase {
             verify(person.getAddress("the docks"), times(1)).getStreet();
             fail();
         } catch (TooManyActualInvocations e) {
-            assertThat(e.getMessage())
-                    .contains("Wanted 1 time")
-                    .contains("But was 3 times");
+            assertThat(e.getMessage()).contains("Wanted 1 time").contains("But was 3 times");
         }
     }
 
     @Test
     public void shouldFailGracefullyWhenClassIsFinal() {
-        //when
+        // when
         FinalClass value = new FinalClass();
         given(person.getFinalClass()).willReturn(value);
 
-        //then
+        // then
         assertEquals(value, person.getFinalClass());
     }
 
@@ -353,5 +343,4 @@ public class DeepStubbingTest extends TestBase {
 
         assertThat(mock.reverse().finalMethod()).isEqualTo(5L);
     }
-
 }

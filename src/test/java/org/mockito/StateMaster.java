@@ -19,9 +19,7 @@ public class StateMaster {
         mockingProgress().validateState();
     }
 
-    /**
-     * Clears Mockito listeners added by {@link MockitoFramework#addListener(MockitoListener)}
-     */
+    /** Clears Mockito listeners added by {@link MockitoFramework#addListener(MockitoListener)} */
     public void clearMockitoListeners() {
         mockingProgress().clearListeners();
     }

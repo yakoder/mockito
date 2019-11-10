@@ -5,7 +5,6 @@
 package org.mockito.internal.progress;
 
 import java.util.Set;
-
 import org.mockito.listeners.MockitoListener;
 import org.mockito.listeners.VerificationListener;
 import org.mockito.mock.MockCreationSettings;
@@ -34,8 +33,8 @@ public interface MockingProgress {
     void reset();
 
     /**
-     * Removes ongoing stubbing so that in case the framework is misused
-     * state validation errors are more accurate
+     * Removes ongoing stubbing so that in case the framework is misused state validation errors are
+     * more accurate
      */
     void resetOngoingStubbing();
 
@@ -51,8 +50,6 @@ public interface MockingProgress {
 
     VerificationMode maybeVerifyLazily(VerificationMode mode);
 
-    /**
-     * Removes all listeners added via {@link #addListener(MockitoListener)}.
-     */
+    /** Removes all listeners added via {@link #addListener(MockitoListener)}. */
     void clearListeners();
 }

@@ -5,7 +5,6 @@
 package org.mockito.internal.matchers;
 
 import java.io.Serializable;
-
 import org.mockito.ArgumentMatcher;
 
 public class StartsWith implements ArgumentMatcher<String>, Serializable {

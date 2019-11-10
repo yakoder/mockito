@@ -6,9 +6,7 @@ package org.mockito.internal.exceptions.stacktrace;
 
 import org.mockito.exceptions.stacktrace.StackTraceCleaner;
 
-/**
- * This predicate is used to filter "good" {@link StackTraceElement}. Good
- */
+/** This predicate is used to filter "good" {@link StackTraceElement}. Good */
 public class DefaultStackTraceCleaner implements StackTraceCleaner {
 
     @Override
@@ -23,7 +21,8 @@ public class DefaultStackTraceCleaner implements StackTraceCleaner {
     }
 
     private static boolean isMockDispatcher(String className) {
-        return (className.contains("$$EnhancerByMockitoWithCGLIB$$") || className.contains("$MockitoMock$"));
+        return (className.contains("$$EnhancerByMockitoWithCGLIB$$")
+                || className.contains("$MockitoMock$"));
     }
 
     private static boolean isFromMockito(String className) {
@@ -36,7 +35,7 @@ public class DefaultStackTraceCleaner implements StackTraceCleaner {
 
     private static boolean isFromMockitoRunner(String className) {
         return className.startsWith("org.mockito.internal.runners.")
-               || className.startsWith("org.mockito.runners.")
-               || className.startsWith("org.mockito.junit.");
+                || className.startsWith("org.mockito.runners.")
+                || className.startsWith("org.mockito.junit.");
     }
 }

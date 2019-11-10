@@ -7,7 +7,6 @@ package org.mockito.internal.debugging;
 import static java.util.Arrays.asList;
 
 import java.util.List;
-
 import org.mockito.MockitoDebugger;
 import org.mockito.internal.invocation.UnusedStubsFinder;
 import org.mockito.internal.invocation.finder.AllInvocationsFinder;
@@ -17,17 +16,15 @@ public class MockitoDebuggerImpl implements MockitoDebugger {
 
     private final UnusedStubsFinder unusedStubsFinder = new UnusedStubsFinder();
 
-    /**
-     * TODO: when MockitoDebugger is deleted, delete this implementation, too
-     */
+    /** TODO: when MockitoDebugger is deleted, delete this implementation, too */
     @Deprecated
-    public String printInvocations(Object ... mocks) {
+    public String printInvocations(Object... mocks) {
         String out = "";
         List<Invocation> invocations = AllInvocationsFinder.find(asList(mocks));
         out += line("********************************");
         out += line("*** Mockito interactions log ***");
         out += line("********************************");
-        for(Invocation i:invocations) {
+        for (Invocation i : invocations) {
             out += line(i.toString());
             out += line(" invoked: " + i.getLocation());
             if (i.stubInfo() != null) {
@@ -43,7 +40,7 @@ public class MockitoDebuggerImpl implements MockitoDebugger {
         out += line("***       Unused stubs       ***");
         out += line("********************************");
 
-        for(Invocation i:invocations) {
+        for (Invocation i : invocations) {
             out += line(i.toString());
             out += line(" stubbed: " + i.getLocation());
         }

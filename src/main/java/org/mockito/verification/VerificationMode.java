@@ -9,8 +9,8 @@ import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.internal.verification.api.VerificationData;
 
 /**
- * Allows verifying that certain behavior happened at least once / exact number
- * of times / never. E.g:
+ * Allows verifying that certain behavior happened at least once / exact number of times / never.
+ * E.g:
  *
  * <pre class="code"><code class="java">
  * verify(mock, times(5)).someMethod(&quot;was called five times&quot;);
@@ -26,18 +26,17 @@ import org.mockito.internal.verification.api.VerificationData;
  * </code></pre>
  *
  * <b>times(1) is the default</b> and can be omitted
- * <p>
- * See examples in javadoc for {@link Mockito#verify(Object, VerificationMode)}
+ *
+ * <p>See examples in javadoc for {@link Mockito#verify(Object, VerificationMode)}
  */
 public interface VerificationMode {
 
-    /**
-     * Performs the verification
-     */
+    /** Performs the verification */
     void verify(VerificationData data);
 
     /**
      * Description will be prepended to the assertion error if verification fails.
+     *
      * @param description The custom failure message
      * @return VerificationMode
      * @since 2.1.0

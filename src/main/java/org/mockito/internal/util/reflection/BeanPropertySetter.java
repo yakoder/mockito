@@ -9,9 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
-/**
- * This utility class will call the setter of the property to inject a new value.
- */
+/** This utility class will call the setter of the property to inject a new value. */
 public class BeanPropertySetter {
 
     private static final String SET_PREFIX = "set";
@@ -22,11 +20,14 @@ public class BeanPropertySetter {
 
     /**
      * New BeanPropertySetter
+     *
      * @param target The target on which the setter must be invoked
      * @param propertyField The field that should be accessed with the setter
-     * @param reportNoSetterFound Allow the set method to raise an Exception if the setter cannot be found
+     * @param reportNoSetterFound Allow the set method to raise an Exception if the setter cannot be
+     *     found
      */
-    public BeanPropertySetter(final Object target, final Field propertyField, boolean reportNoSetterFound) {
+    public BeanPropertySetter(
+            final Object target, final Field propertyField, boolean reportNoSetterFound) {
         this.field = propertyField;
         this.target = target;
         this.reportNoSetterFound = reportNoSetterFound;
@@ -34,6 +35,7 @@ public class BeanPropertySetter {
 
     /**
      * New BeanPropertySetter that don't report failure
+     *
      * @param target The target on which the setter must be invoked
      * @param propertyField The propertyField that must be accessed through a setter
      */
@@ -43,10 +45,11 @@ public class BeanPropertySetter {
 
     /**
      * Set the value to the property represented by this {@link BeanPropertySetter}
+     *
      * @param value the new value to pass to the property setter
      * @return <code>true</code> if the value has been injected, <code>false</code> otherwise
-     * @throws RuntimeException Can be thrown if the setter threw an exception, if the setter is not accessible
-     *          or, if <code>reportNoSetterFound</code> and setter could not be found.
+     * @throws RuntimeException Can be thrown if the setter threw an exception, if the setter is not
+     *     accessible or, if <code>reportNoSetterFound</code> and setter could not be found.
      */
     public boolean set(final Object value) {
 
@@ -59,13 +62,31 @@ public class BeanPropertySetter {
             writeMethod.invoke(target, value);
             return true;
         } catch (InvocationTargetException e) {
-            throw new RuntimeException("Setter '" + writeMethod + "' of '" + target + "' with value '" + value + "' threw exception : '" + e.getTargetException() + "'", e);
+            throw new RuntimeException(
+                    "Setter '"
+                            + writeMethod
+                            + "' of '"
+                            + target
+                            + "' with value '"
+                            + value
+                            + "' threw exception : '"
+                            + e.getTargetException()
+                            + "'",
+                    e);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Access not authorized on field '" + field + "' of object '" + target + "' with value: '" + value + "'", e);
+            throw new RuntimeException(
+                    "Access not authorized on field '"
+                            + field
+                            + "' of object '"
+                            + target
+                            + "' with value: '"
+                            + value
+                            + "'",
+                    e);
         } catch (NoSuchMethodException e) {
             reportNoSetterFound();
         } finally {
-            if(writeMethod != null) {
+            if (writeMethod != null) {
                 changer.safelyDisableAccess(writeMethod);
             }
         }
@@ -77,7 +98,7 @@ public class BeanPropertySetter {
     /**
      * Retrieve the setter name from the field name.
      *
-     * <p>Implementation is based on the code of {@link java.beans.Introspector}.</p>
+     * <p>Implementation is based on the code of {@link java.beans.Introspector}.
      *
      * @param fieldName the Field name
      * @return Setter name.
@@ -90,9 +111,13 @@ public class BeanPropertySetter {
     }
 
     private void reportNoSetterFound() {
-        if(reportNoSetterFound) {
-            throw new RuntimeException("Problems setting value on object: [" + target + "] for property : [" + field.getName() + "], setter not found");
+        if (reportNoSetterFound) {
+            throw new RuntimeException(
+                    "Problems setting value on object: ["
+                            + target
+                            + "] for property : ["
+                            + field.getName()
+                            + "], setter not found");
         }
     }
-
 }

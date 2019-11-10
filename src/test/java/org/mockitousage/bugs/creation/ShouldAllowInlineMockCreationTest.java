@@ -10,12 +10,11 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Set;
-
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockitoutil.TestBase;
 
-//see issue 191
+// see issue 191
 public class ShouldAllowInlineMockCreationTest extends TestBase {
 
     @Mock List list;

@@ -6,7 +6,6 @@ package org.mockito.internal.creation;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-
 import org.mockito.internal.invocation.MockitoMethod;
 
 public class DelegatingMethod implements MockitoMethod {
@@ -49,8 +48,9 @@ public class DelegatingMethod implements MockitoMethod {
     }
 
     /**
-     * @return True if the input object is a DelegatingMethod which has an internal Method which is equal to the internal Method of this DelegatingMethod,
-     * or if the input object is a Method which is equal to the internal Method of this DelegatingMethod.
+     * @return True if the input object is a DelegatingMethod which has an internal Method which is
+     *     equal to the internal Method of this DelegatingMethod, or if the input object is a Method
+     *     which is equal to the internal Method of this DelegatingMethod.
      */
     @Override
     public boolean equals(Object o) {

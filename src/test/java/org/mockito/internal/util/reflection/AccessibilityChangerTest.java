@@ -8,7 +8,6 @@ import static org.mockitoutil.VmArgAssumptions.assumeVmArgPresent;
 
 import java.lang.reflect.Field;
 import java.util.Observable;
-
 import org.junit.Test;
 
 public class AccessibilityChangerTest {
@@ -29,9 +28,7 @@ public class AccessibilityChangerTest {
         new AccessibilityChanger().safelyDisableAccess(field("whatever"));
     }
 
-
     private Field field(String fieldName) throws NoSuchFieldException {
         return this.getClass().getDeclaredField(fieldName);
     }
-
 }

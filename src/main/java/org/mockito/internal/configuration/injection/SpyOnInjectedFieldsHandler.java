@@ -9,7 +9,6 @@ import static org.mockito.internal.util.reflection.FieldSetter.setField;
 
 import java.lang.reflect.Field;
 import java.util.Set;
-
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.exceptions.base.MockitoException;
@@ -19,10 +18,8 @@ import org.mockito.internal.util.reflection.FieldReader;
 /**
  * Handler for field annotated with &#64;InjectMocks and &#64;Spy.
  *
- * <p>
- * The handler assumes that field initialization AND injection already happened.
- * So if the field is still null, then nothing will happen there.
- * </p>
+ * <p>The handler assumes that field initialization AND injection already happened. So if the field
+ * is still null, then nothing will happen there.
  */
 public class SpyOnInjectedFieldsHandler extends MockInjectionStrategy {
 
@@ -31,7 +28,7 @@ public class SpyOnInjectedFieldsHandler extends MockInjectionStrategy {
         FieldReader fieldReader = new FieldReader(fieldOwner, field);
 
         // TODO refoctor : code duplicated in SpyAnnotationEngine
-        if(!fieldReader.isNull() && field.isAnnotationPresent(Spy.class)) {
+        if (!fieldReader.isNull() && field.isAnnotationPresent(Spy.class)) {
             try {
                 Object instance = fieldReader.read();
                 if (MockUtil.isMock(instance)) {
@@ -39,10 +36,13 @@ public class SpyOnInjectedFieldsHandler extends MockInjectionStrategy {
                     // B. protect against multiple use of MockitoAnnotations.initMocks()
                     Mockito.reset(instance);
                 } else {
-                    Object mock = Mockito.mock(instance.getClass(), withSettings()
-                        .spiedInstance(instance)
-                        .defaultAnswer(Mockito.CALLS_REAL_METHODS)
-                        .name(field.getName()));
+                    Object mock =
+                            Mockito.mock(
+                                    instance.getClass(),
+                                    withSettings()
+                                            .spiedInstance(instance)
+                                            .defaultAnswer(Mockito.CALLS_REAL_METHODS)
+                                            .name(field.getName()));
                     setField(fieldOwner, field, mock);
                 }
             } catch (Exception e) {

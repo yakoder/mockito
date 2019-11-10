@@ -8,7 +8,6 @@ import static org.mockito.internal.exceptions.Reporter.cannotVerifyToString;
 import static org.mockito.internal.util.ObjectMethodsGuru.isToStringMethod;
 
 import java.util.List;
-
 import org.mockito.internal.invocation.InvocationMatcher;
 import org.mockito.internal.stubbing.InvocationContainerImpl;
 import org.mockito.internal.verification.api.VerificationData;

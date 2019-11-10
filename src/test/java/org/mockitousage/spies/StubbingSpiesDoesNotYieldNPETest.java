@@ -9,7 +9,6 @@ import static org.mockito.Mockito.spy;
 
 import java.util.Collection;
 import java.util.Map;
-
 import org.junit.Test;
 import org.mockitoutil.TestBase;
 

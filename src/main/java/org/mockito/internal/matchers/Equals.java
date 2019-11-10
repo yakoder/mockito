@@ -5,7 +5,6 @@
 package org.mockito.internal.matchers;
 
 import java.io.Serializable;
-
 import org.mockito.ArgumentMatcher;
 import org.mockito.internal.matchers.text.ValuePrinter;
 
@@ -39,7 +38,8 @@ public class Equals implements ArgumentMatcher<Object>, ContainsExtraTypeInfo, S
             return false;
         }
         Equals other = (Equals) o;
-        return this.wanted == null && other.wanted == null || this.wanted != null && this.wanted.equals(other.wanted);
+        return this.wanted == null && other.wanted == null
+                || this.wanted != null && this.wanted.equals(other.wanted);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Equals implements ArgumentMatcher<Object>, ContainsExtraTypeInfo, S
     }
 
     public String toStringWithType() {
-        return "("+ wanted.getClass().getSimpleName() +") " + describe(wanted);
+        return "(" + wanted.getClass().getSimpleName() + ") " + describe(wanted);
     }
 
     public boolean typeMatches(Object target) {

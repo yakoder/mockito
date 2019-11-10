@@ -5,7 +5,6 @@
 package org.mockito.internal.invocation.finder;
 
 import java.util.*;
-
 import org.mockito.internal.invocation.InvocationComparator;
 import org.mockito.internal.stubbing.StubbingComparator;
 import org.mockito.internal.util.DefaultMockingDetails;
@@ -25,7 +24,8 @@ public class AllInvocationsFinder {
     public static List<Invocation> find(Iterable<?> mocks) {
         Set<Invocation> invocationsInOrder = new TreeSet<Invocation>(new InvocationComparator());
         for (Object mock : mocks) {
-            Collection<Invocation> fromSingleMock = new DefaultMockingDetails(mock).getInvocations();
+            Collection<Invocation> fromSingleMock =
+                    new DefaultMockingDetails(mock).getInvocations();
             invocationsInOrder.addAll(fromSingleMock);
         }
 
@@ -41,7 +41,8 @@ public class AllInvocationsFinder {
     public static Set<Stubbing> findStubbings(Iterable<?> mocks) {
         Set<Stubbing> stubbings = new TreeSet<Stubbing>(new StubbingComparator());
         for (Object mock : mocks) {
-            Collection<? extends Stubbing> fromSingleMock = new DefaultMockingDetails(mock).getStubbings();
+            Collection<? extends Stubbing> fromSingleMock =
+                    new DefaultMockingDetails(mock).getStubbings();
             stubbings.addAll(fromSingleMock);
         }
 

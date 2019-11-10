@@ -6,17 +6,17 @@ package org.mockito.internal.configuration;
 
 import java.lang.reflect.Field;
 import java.util.Set;
-
 import org.mockito.internal.configuration.injection.MockInjection;
 
 /**
  * Inject mock/spies dependencies for fields annotated with &#064;InjectMocks
- * <p/>
- * See {@link org.mockito.MockitoAnnotations}
+ *
+ * <p>See {@link org.mockito.MockitoAnnotations}
  */
 public class DefaultInjectionEngine {
 
-    public void injectMocksOnFields(Set<Field> needingInjection, Set<Object> mocks, Object testClassInstance) {
+    public void injectMocksOnFields(
+            Set<Field> needingInjection, Set<Object> mocks, Object testClassInstance) {
         MockInjection.onFields(needingInjection, testClassInstance)
                 .withMocks(mocks)
                 .tryConstructorInjection()
@@ -24,5 +24,4 @@ public class DefaultInjectionEngine {
                 .handleSpyAnnotation()
                 .apply();
     }
-
 }

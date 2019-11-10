@@ -16,16 +16,12 @@ import java.util.Set;
 /**
  * Internal injection configuration utility.
  *
- * <p>
- * Allow the user of this class to configure the way the injection of mocks will happen.
- * </p>
- *
+ * <p>Allow the user of this class to configure the way the injection of mocks will happen.
  */
 public class MockInjection {
 
     /**
      * Create a new configuration setup for a field
-     *
      *
      * @param field Field needing mock injection
      * @param ofInstance Instance owning the <code>field</code>
@@ -38,7 +34,6 @@ public class MockInjection {
     /**
      * Create a new configuration setup for fields
      *
-     *
      * @param fields Fields needing mock injection
      * @param ofInstance Instance owning the <code>field</code>
      * @return New configuration builder
@@ -47,9 +42,7 @@ public class MockInjection {
         return new OngoingMockInjection(fields, ofInstance);
     }
 
-    /**
-     * Ongoing configuration of the mock injector.
-     */
+    /** Ongoing configuration of the mock injector. */
     public static class OngoingMockInjection {
         private final Set<Field> fields = new HashSet<Field>();
         private final Set<Object> mocks = newMockSafeHashSet();

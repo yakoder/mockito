@@ -5,7 +5,6 @@
 package org.mockito.internal.debugging;
 
 import java.io.Serializable;
-
 import org.mockito.internal.exceptions.stacktrace.StackTraceFilter;
 import org.mockito.invocation.Location;
 
@@ -30,7 +29,8 @@ public class LocationImpl implements Location, Serializable {
         this(stackTraceFilter, new Throwable(), false);
     }
 
-    private LocationImpl(StackTraceFilter stackTraceFilter, Throwable stackTraceHolder, boolean isInline) {
+    private LocationImpl(
+            StackTraceFilter stackTraceFilter, Throwable stackTraceHolder, boolean isInline) {
         computeStackTraceInformation(stackTraceFilter, stackTraceHolder, isInline);
     }
 
@@ -45,7 +45,7 @@ public class LocationImpl implements Location, Serializable {
      * mocks.
      */
     private void computeStackTraceInformation(
-        StackTraceFilter stackTraceFilter, Throwable stackTraceHolder, boolean isInline) {
+            StackTraceFilter stackTraceFilter, Throwable stackTraceHolder, boolean isInline) {
         StackTraceElement filtered = stackTraceFilter.filterFirst(stackTraceHolder, isInline);
 
         // there are corner cases where exception can have a null or empty stack trace

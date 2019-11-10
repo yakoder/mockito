@@ -15,9 +15,7 @@ import org.mockito.junit.VerificationCollector;
 import org.mockito.verification.VerificationMode;
 import org.mockito.verification.VerificationStrategy;
 
-/**
- * Mockito implementation of VerificationCollector.
- */
+/** Mockito implementation of VerificationCollector. */
 public class VerificationCollectorImpl implements VerificationCollector {
 
     private StringBuilder builder;
@@ -36,16 +34,20 @@ public class VerificationCollectorImpl implements VerificationCollector {
                     base.evaluate();
                     VerificationCollectorImpl.this.collectAndReport();
                 } finally {
-                    // If base.evaluate() throws an error, we must explicitly reset the VerificationStrategy
+                    // If base.evaluate() throws an error, we must explicitly reset the
+                    // VerificationStrategy
                     // to prevent subsequent tests to be assert lazily
-                    mockingProgress().setVerificationStrategy(MockingProgressImpl.getDefaultVerificationStrategy());
+                    mockingProgress()
+                            .setVerificationStrategy(
+                                    MockingProgressImpl.getDefaultVerificationStrategy());
                 }
             }
         };
     }
 
     public void collectAndReport() throws MockitoAssertionError {
-        mockingProgress().setVerificationStrategy(MockingProgressImpl.getDefaultVerificationStrategy());
+        mockingProgress()
+                .setVerificationStrategy(MockingProgressImpl.getDefaultVerificationStrategy());
 
         if (this.numberOfFailures > 0) {
             String error = this.builder.toString();
@@ -57,25 +59,29 @@ public class VerificationCollectorImpl implements VerificationCollector {
     }
 
     public VerificationCollector assertLazily() {
-        mockingProgress().setVerificationStrategy(new VerificationStrategy() {
-            public VerificationMode maybeVerifyLazily(VerificationMode mode) {
-                return new VerificationWrapper(mode);
-            }
-        });
+        mockingProgress()
+                .setVerificationStrategy(
+                        new VerificationStrategy() {
+                            public VerificationMode maybeVerifyLazily(VerificationMode mode) {
+                                return new VerificationWrapper(mode);
+                            }
+                        });
         return this;
     }
 
     private void resetBuilder() {
-        this.builder = new StringBuilder()
-                .append("There were multiple verification failures:");
+        this.builder = new StringBuilder().append("There were multiple verification failures:");
         this.numberOfFailures = 0;
     }
 
     private void append(String message) {
         this.numberOfFailures++;
-        this.builder.append('\n')
-                .append(this.numberOfFailures).append(". ")
-                .append(message.trim()).append('\n');
+        this.builder
+                .append('\n')
+                .append(this.numberOfFailures)
+                .append(". ")
+                .append(message.trim())
+                .append('\n');
     }
 
     private class VerificationWrapper implements VerificationMode {
@@ -98,5 +104,4 @@ public class VerificationCollectorImpl implements VerificationCollector {
             throw new IllegalStateException("Should not fail in this mode");
         }
     }
-
 }

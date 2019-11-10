@@ -8,16 +8,13 @@ import static org.mockito.internal.exceptions.Reporter.cannotStubWithNullThrowab
 import static org.mockito.internal.exceptions.Reporter.checkedExceptionInvalid;
 
 import java.io.Serializable;
-
 import org.mockito.internal.exceptions.stacktrace.ConditionalStackTraceFilter;
 import org.mockito.internal.util.MockUtil;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.mockito.stubbing.ValidableAnswer;
 
-/**
- * An answer that always throws the same throwable.
- */
+/** An answer that always throws the same throwable. */
 public class ThrowsException implements Answer<Object>, ValidableAnswer, Serializable {
 
     private static final long serialVersionUID = 1128820328555183980L;
@@ -25,9 +22,8 @@ public class ThrowsException implements Answer<Object>, ValidableAnswer, Seriali
     private final ConditionalStackTraceFilter filter = new ConditionalStackTraceFilter();
 
     /**
-     * Creates a new answer always throwing the given throwable. If it is null,
-     * {@linkplain ValidableAnswer#validateFor(InvocationOnMock) answer validation}
-     * will fail.
+     * Creates a new answer always throwing the given throwable. If it is null, {@linkplain
+     * ValidableAnswer#validateFor(InvocationOnMock) answer validation} will fail.
      */
     public ThrowsException(Throwable throwable) {
         this.throwable = throwable;
@@ -35,8 +31,8 @@ public class ThrowsException implements Answer<Object>, ValidableAnswer, Seriali
 
     public Object answer(InvocationOnMock invocation) throws Throwable {
         if (throwable == null) {
-            throw new IllegalStateException("throwable is null: " +
-                "you shall not call #answer if #validateFor fails!");
+            throw new IllegalStateException(
+                    "throwable is null: " + "you shall not call #answer if #validateFor fails!");
         }
         if (MockUtil.isMock(throwable)) {
             throw throwable;
@@ -44,7 +40,7 @@ public class ThrowsException implements Answer<Object>, ValidableAnswer, Seriali
         Throwable t = throwable.fillInStackTrace();
 
         if (t == null) {
-            //Custom exceptions sometimes return null, see #866
+            // Custom exceptions sometimes return null, see #866
             throw throwable;
         }
         filter.filter(t);

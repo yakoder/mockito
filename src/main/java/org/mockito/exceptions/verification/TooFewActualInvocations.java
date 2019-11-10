@@ -4,9 +4,7 @@
  */
 package org.mockito.exceptions.verification;
 
-/**
- * @since 2.27.5
- */
+/** @since 2.27.5 */
 public class TooFewActualInvocations extends TooLittleActualInvocations {
 
     private static final long serialVersionUID = 1L;

@@ -9,8 +9,9 @@ import org.mockito.internal.verification.api.VerificationData;
 import org.mockito.verification.VerificationMode;
 
 /**
- * Description verification mode wraps an existing verification mode and prepends
- * a custom message to the assertion error if verification fails.
+ * Description verification mode wraps an existing verification mode and prepends a custom message
+ * to the assertion error if verification fails.
+ *
  * @author Geoff.Schoeman
  * @since 2.1.0
  */
@@ -21,6 +22,7 @@ public class Description implements VerificationMode {
 
     /**
      * Constructs a verification mode which wraps the given verification mode.
+     *
      * @param verification The implementation to use for verification
      * @param description The failure message to prepend if verification fails
      */
@@ -30,8 +32,9 @@ public class Description implements VerificationMode {
     }
 
     /**
-     * Performs verification using the wrapped verification mode implementation.
-     * Prepends the custom failure message if verification fails.
+     * Performs verification using the wrapped verification mode implementation. Prepends the custom
+     * failure message if verification fails.
+     *
      * @param data the data to be verified
      */
     @Override

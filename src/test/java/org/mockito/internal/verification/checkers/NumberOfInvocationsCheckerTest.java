@@ -6,11 +6,9 @@ package org.mockito.internal.verification.checkers;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -36,19 +34,17 @@ public class NumberOfInvocationsCheckerTest {
 
     private List<Invocation> invocations;
 
-    @Mock
-    private IMethods mock;
+    @Mock private IMethods mock;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+    @Rule public ExpectedException exception = ExpectedException.none();
 
-    @Rule
-    public TestName testName = new TestName();
+    @Rule public TestName testName = new TestName();
 
     @Test
     public void shouldReportTooFewActual() throws Exception {
         wanted = buildSimpleMethod().toInvocationMatcher();
-        invocations = asList(buildSimpleMethod().toInvocation(), buildSimpleMethod().toInvocation());
+        invocations =
+                asList(buildSimpleMethod().toInvocation(), buildSimpleMethod().toInvocation());
 
         exception.expect(TooFewActualInvocations.class);
         exception.expectMessage("mock.simpleMethod()");
@@ -61,7 +57,8 @@ public class NumberOfInvocationsCheckerTest {
     @Test
     public void shouldReportAllInvocationsStackTrace() throws Exception {
         wanted = buildSimpleMethod().toInvocationMatcher();
-        invocations = asList(buildSimpleMethod().toInvocation(), buildSimpleMethod().toInvocation());
+        invocations =
+                asList(buildSimpleMethod().toInvocation(), buildSimpleMethod().toInvocation());
 
         exception.expect(TooFewActualInvocations.class);
         exception.expectMessage("mock.simpleMethod()");
@@ -177,6 +174,5 @@ public class NumberOfInvocationsCheckerTest {
         public void describeTo(Description description) {
             description.appendText("containing '" + expected + "' exactly " + amount + " times");
         }
-
     }
 }

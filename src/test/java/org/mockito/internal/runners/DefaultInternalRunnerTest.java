@@ -23,16 +23,16 @@ public class DefaultInternalRunnerTest {
 
     private final RunListener runListener = mock(RunListener.class);
     private final MockitoTestListener mockitoTestListener = mock(MockitoTestListener.class);
-    private final Supplier<MockitoTestListener> supplier = new Supplier<MockitoTestListener>() {
-        public MockitoTestListener get() {
-            return mockitoTestListener;
-        }
-    };
+    private final Supplier<MockitoTestListener> supplier =
+            new Supplier<MockitoTestListener>() {
+                public MockitoTestListener get() {
+                    return mockitoTestListener;
+                }
+            };
 
     @Test
     public void does_not_fail_when_tests_succeeds() throws Exception {
-        new DefaultInternalRunner(SuccessTest.class, supplier)
-            .run(newNotifier(runListener));
+        new DefaultInternalRunner(SuccessTest.class, supplier).run(newNotifier(runListener));
 
         verify(runListener, never()).testFailure(any(Failure.class));
         verify(runListener, times(1)).testFinished(any(Description.class));
@@ -42,7 +42,7 @@ public class DefaultInternalRunnerTest {
     @Test
     public void does_not_fail_second_test_when_first_test_fail() throws Exception {
         new DefaultInternalRunner(TestFailOnInitialization.class, supplier)
-            .run(newNotifier(runListener));
+                .run(newNotifier(runListener));
 
         verify(runListener, times(1)).testFailure(any(Failure.class));
         verify(runListener, times(1)).testFinished(any(Description.class));
@@ -50,8 +50,7 @@ public class DefaultInternalRunnerTest {
 
         reset(runListener, mockitoTestListener);
 
-        new DefaultInternalRunner(SuccessTest.class, supplier)
-            .run(newNotifier(runListener));
+        new DefaultInternalRunner(SuccessTest.class, supplier).run(newNotifier(runListener));
 
         verify(runListener, never()).testFailure(any(Failure.class));
         verify(runListener, times(1)).testFinished(any(Description.class));
@@ -74,8 +73,7 @@ public class DefaultInternalRunnerTest {
 
     public static final class TestFailOnInitialization {
 
-        @Mock
-        private System system;
+        @Mock private System system;
 
         @Test
         public void this_test_is_supposed_to_fail() {

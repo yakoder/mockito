@@ -7,9 +7,7 @@ package org.mockitousage.bugs;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-/**
- * Verifies #688.
- */
+/** Verifies #688. */
 public class EnabledMockingInterfaceCloneMethodTest {
 
     @Test

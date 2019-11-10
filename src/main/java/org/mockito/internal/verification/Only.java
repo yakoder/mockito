@@ -11,7 +11,6 @@ import static org.mockito.internal.invocation.InvocationsFinder.findFirstUnverif
 import static org.mockito.internal.invocation.InvocationsFinder.findInvocations;
 
 import java.util.List;
-
 import org.mockito.internal.verification.api.VerificationData;
 import org.mockito.invocation.Invocation;
 import org.mockito.invocation.MatchableInvocation;
@@ -23,7 +22,7 @@ public class Only implements VerificationMode {
     public void verify(VerificationData data) {
         MatchableInvocation target = data.getTarget();
         List<Invocation> invocations = data.getAllInvocations();
-        List<Invocation> chunk = findInvocations(invocations,target);
+        List<Invocation> chunk = findInvocations(invocations, target);
         if (invocations.size() != 1 && !chunk.isEmpty()) {
             Invocation unverified = findFirstUnverified(invocations);
             throw noMoreInteractionsWanted(unverified, (List) invocations);

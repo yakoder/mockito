@@ -5,7 +5,6 @@
 package org.mockito.internal.exceptions.stacktrace;
 
 import java.io.Serializable;
-
 import org.mockito.configuration.IMockitoConfiguration;
 import org.mockito.internal.configuration.GlobalConfiguration;
 

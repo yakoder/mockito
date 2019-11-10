@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
 import java.util.Date;
-
 import org.junit.Test;
 import org.mockito.exceptions.base.MockitoException;
 import org.mockito.internal.invocation.InvocationBuilder;
@@ -16,17 +15,26 @@ import org.mockito.internal.invocation.InvocationBuilder;
 public class AnswersWithDelayTest {
     @Test
     public void should_return_value() throws Throwable {
-        assertThat(new AnswersWithDelay(1, new Returns("value")).answer(new InvocationBuilder().method("oneArg").arg("A").toInvocation())).isEqualTo("value");
+        assertThat(
+                        new AnswersWithDelay(1, new Returns("value"))
+                                .answer(
+                                        new InvocationBuilder()
+                                                .method("oneArg")
+                                                .arg("A")
+                                                .toInvocation()))
+                .isEqualTo("value");
     }
 
     @Test(expected = MockitoException.class)
     public void should_fail_when_contained_answer_should_fail() throws Throwable {
-        new AnswersWithDelay(1, new Returns("one")).validateFor(new InvocationBuilder().method("voidMethod").toInvocation());
+        new AnswersWithDelay(1, new Returns("one"))
+                .validateFor(new InvocationBuilder().method("voidMethod").toInvocation());
     }
 
     @Test
     public void should_succeed_when_contained_answer_should_succeed() throws Throwable {
-        new AnswersWithDelay(1, new Returns("one")).validateFor(new InvocationBuilder().simpleMethod().toInvocation());
+        new AnswersWithDelay(1, new Returns("one"))
+                .validateFor(new InvocationBuilder().simpleMethod().toInvocation());
     }
 
     @Test

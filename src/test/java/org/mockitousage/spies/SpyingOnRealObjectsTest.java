@@ -12,7 +12,6 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -48,9 +47,7 @@ public class SpyingOnRealObjectsTest extends TestBase {
     @Test
     public void shouldStub() {
         spy.add("one");
-        when(spy.get(0))
-            .thenReturn("1")
-            .thenReturn("1 again");
+        when(spy.get(0)).thenReturn("1").thenReturn("1 again");
 
         assertEquals("1", spy.get(0));
         assertEquals("1 again", spy.get(0));
@@ -70,26 +67,22 @@ public class SpyingOnRealObjectsTest extends TestBase {
 
     @Test
     public void shouldStubVoid() {
-        doNothing()
-        .doThrow(new RuntimeException())
-        .when(spy)
-        .clear();
+        doNothing().doThrow(new RuntimeException()).when(spy).clear();
 
         spy.add("one");
         spy.clear();
         try {
             spy.clear();
             fail();
-        } catch (RuntimeException e) {}
+        } catch (RuntimeException e) {
+        }
 
         assertEquals(1, spy.size());
     }
 
     @Test
     public void shouldStubWithDoReturnAndVerify() {
-        doReturn("foo")
-        .doReturn("bar")
-        .when(spy).get(0);
+        doReturn("foo").doReturn("bar").when(spy).get(0);
 
         assertEquals("foo", spy.get(0));
         assertEquals("bar", spy.get(0));
@@ -120,7 +113,8 @@ public class SpyingOnRealObjectsTest extends TestBase {
         try {
             inOrder.verify(spy).add("one");
             fail();
-        } catch (VerificationInOrderFailure f) {}
+        } catch (VerificationInOrderFailure f) {
+        }
     }
 
     @Test
@@ -140,7 +134,8 @@ public class SpyingOnRealObjectsTest extends TestBase {
         try {
             verify(spy, times(3)).add("one");
             fail();
-        } catch (TooFewActualInvocations e) {}
+        } catch (TooFewActualInvocations e) {
+        }
     }
 
     @Test
@@ -152,13 +147,14 @@ public class SpyingOnRealObjectsTest extends TestBase {
         try {
             verifyNoMoreInteractions(spy);
             fail();
-        } catch (NoInteractionsWanted e) {}
+        } catch (NoInteractionsWanted e) {
+        }
     }
 
     @Test
     public void shouldToString() {
         spy.add("foo");
-        assertEquals("[foo]" , spy.toString());
+        assertEquals("[foo]", spy.toString());
     }
 
     interface Foo {
@@ -167,14 +163,16 @@ public class SpyingOnRealObjectsTest extends TestBase {
 
     @Test
     public void shouldAllowSpyingAnonymousClasses() {
-        //when
-        Foo spy = spy(new Foo() {
-            public String print() {
-                return "foo";
-            }
-        });
+        // when
+        Foo spy =
+                spy(
+                        new Foo() {
+                            public String print() {
+                                return "foo";
+                            }
+                        });
 
-        //then
+        // then
         assertEquals("foo", spy.print());
     }
 
@@ -183,10 +181,14 @@ public class SpyingOnRealObjectsTest extends TestBase {
         List<String> real = Arrays.asList("first", "second");
         try {
             List<String> spy = spy(real);
-            assumeTrue("Using inline mocks, it is possible to spy on private types", spy.getClass() != real.getClass());
+            assumeTrue(
+                    "Using inline mocks, it is possible to spy on private types",
+                    spy.getClass() != real.getClass());
             fail();
         } catch (MockitoException e) {
-            assertThat(e).hasMessageContaining("Most likely it is due to mocking a private class that is not visible to Mockito");
+            assertThat(e)
+                    .hasMessageContaining(
+                            "Most likely it is due to mocking a private class that is not visible to Mockito");
         }
     }
 }

@@ -5,7 +5,6 @@
 package org.mockitousage.verification;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.after;
@@ -33,9 +32,7 @@ public class VerificationWithAfterAndCaptorTest {
 
     private Stopwatch watch = createNotStarted();
 
-    /**
-     * Test for issue #345.
-     */
+    /** Test for issue #345. */
     @Test
     public void shouldReturnListOfArgumentsWithSameSizeAsGivenInAtMostVerification() {
         // given
@@ -62,7 +59,7 @@ public class VerificationWithAfterAndCaptorTest {
         // when
         exerciseMockNTimes(n);
 
-        //Then
+        // Then
         verify(mock, after(200).times(n)).oneArg((char) captor.capture());
         assertEquals(n, captor.getAllValues().size());
         assertEquals('0', (char) captor.getAllValues().get(0));
@@ -79,7 +76,7 @@ public class VerificationWithAfterAndCaptorTest {
         // when
         exerciseMockNTimes(n);
 
-        //Then
+        // Then
         verify(mock, after(200).atLeast(n)).oneArg((char) captor.capture());
         assertEquals(n, captor.getAllValues().size());
         assertEquals('0', (char) captor.getAllValues().get(0));

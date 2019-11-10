@@ -9,7 +9,6 @@ import static org.mockito.Mockito.mock;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-
 import org.assertj.core.api.Condition;
 import org.junit.After;
 import org.junit.Before;
@@ -26,14 +25,12 @@ import org.mockito.internal.invocation.mockref.MockStrongReference;
 import org.mockito.invocation.Invocation;
 
 /**
- * the easiest way to make sure that tests clean up invalid state is to require
- * valid state for all tests.
+ * the easiest way to make sure that tests clean up invalid state is to require valid state for all
+ * tests.
  */
 public class TestBase {
 
-    /**
-     * Condition to be used with AssertJ
-     */
+    /** Condition to be used with AssertJ */
     public static Condition<Throwable> hasMessageContaining(final String substring) {
         return new Condition<Throwable>() {
             @Override
@@ -48,10 +45,11 @@ public class TestBase {
         ConfigurationAccess.getConfig().overrideCleansStackTrace(false);
         ConfigurationAccess.getConfig().overrideDefaultAnswer(null);
         StateMaster state = new StateMaster();
-        //catch any invalid state left over after test case run
-        //this way we can catch early if some Mockito operations leave weird state afterwards
+        // catch any invalid state left over after test case run
+        // this way we can catch early if some Mockito operations leave weird state afterwards
         state.validate();
-        //reset the state, especially, reset any ongoing stubbing for correct error messages of tests that assert unhappy paths
+        // reset the state, especially, reset any ongoing stubbing for correct error messages of
+        // tests that assert unhappy paths
         state.reset();
     }
 
@@ -72,14 +70,19 @@ public class TestBase {
         return new MockitoCore().getLastInvocation();
     }
 
-    protected static Invocation invocationOf(Class<?> type, String methodName, Object ... args) throws NoSuchMethodException {
+    protected static Invocation invocationOf(Class<?> type, String methodName, Object... args)
+            throws NoSuchMethodException {
         Class<?>[] types = new Class<?>[args.length];
         for (int i = 0; i < args.length; i++) {
             types[i] = args[i].getClass();
         }
-        return new InterceptedInvocation(new MockStrongReference<Object>(mock(type), false),
-            new SerializableMethod(type.getMethod(methodName, types)), args, InterceptedInvocation.NO_OP,
-            new LocationImpl(), 1);
+        return new InterceptedInvocation(
+                new MockStrongReference<Object>(mock(type), false),
+                new SerializableMethod(type.getMethod(methodName, types)),
+                args,
+                InterceptedInvocation.NO_OP,
+                new LocationImpl(),
+                1);
     }
 
     protected static Invocation invocationAt(String location) {
@@ -95,25 +98,26 @@ public class TestBase {
         e.printStackTrace(new PrintStream(out));
         try {
             out.close();
-        } catch (IOException ex) {}
+        } catch (IOException ex) {
+        }
         return out.toString();
     }
 
     /**
-     * Filters out unwanted line numbers from provided stack trace String.
-     * This is useful for writing assertions for exception messages that contain line numbers.
+     * Filters out unwanted line numbers from provided stack trace String. This is useful for
+     * writing assertions for exception messages that contain line numbers.
      *
-     * For example it turns:
-     * blah blah (UnusedStubsExceptionMessageTest.java:27)
-     * into:
-     * blah blah (UnusedStubsExceptionMessageTest.java:0)
+     * <p>For example it turns: blah blah (UnusedStubsExceptionMessageTest.java:27) into: blah blah
+     * (UnusedStubsExceptionMessageTest.java:0)
      */
     public static String filterLineNo(String stackTrace) {
         return stackTrace.replaceAll("(\\((\\w+\\.java):(\\d)+\\))", "($2:0)");
     }
 
     /**
-     * Filters out hashCode from the text. Useful for writing assertions that contain the String representation of mock objects
+     * Filters out hashCode from the text. Useful for writing assertions that contain the String
+     * representation of mock objects
+     *
      * @param text to filter
      * @return filtered text
      */

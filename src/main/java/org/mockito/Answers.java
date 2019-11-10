@@ -15,20 +15,25 @@ import org.mockito.stubbing.Answer;
 
 /**
  * Enumeration of pre-configured mock answers
- * <p>
- * You can use it to pass extra parameters to &#064;Mock annotation, see more info here: {@link Mock}
- * <p>
- * Example:
+ *
+ * <p>You can use it to pass extra parameters to &#064;Mock annotation, see more info here: {@link
+ * Mock}
+ *
+ * <p>Example:
+ *
  * <pre class="code"><code class="java">
  *   &#064;Mock(answer = RETURNS_DEEP_STUBS) UserProvider userProvider;
  * </code></pre>
- * <b>This is not the full list</b> of Answers available in Mockito. Some interesting answers can be found in org.mockito.stubbing.answers package.
+ *
+ * <b>This is not the full list</b> of Answers available in Mockito. Some interesting answers can be
+ * found in org.mockito.stubbing.answers package.
  */
-public enum Answers implements Answer<Object>{
+public enum Answers implements Answer<Object> {
     /**
      * The default configured answer of every mock.
      *
-     * <p>Please see the {@link org.mockito.Mockito#RETURNS_DEFAULTS} documentation for more details.</p>
+     * <p>Please see the {@link org.mockito.Mockito#RETURNS_DEFAULTS} documentation for more
+     * details.
      *
      * @see org.mockito.Mockito#RETURNS_DEFAULTS
      */
@@ -37,7 +42,8 @@ public enum Answers implements Answer<Object>{
     /**
      * An answer that returns smart-nulls.
      *
-     * <p>Please see the {@link org.mockito.Mockito#RETURNS_SMART_NULLS} documentation for more details.</p>
+     * <p>Please see the {@link org.mockito.Mockito#RETURNS_SMART_NULLS} documentation for more
+     * details.
      *
      * @see org.mockito.Mockito#RETURNS_SMART_NULLS
      */
@@ -46,17 +52,17 @@ public enum Answers implements Answer<Object>{
     /**
      * An answer that returns <strong>mocks</strong> (not stubs).
      *
-     * <p>Please see the {@link org.mockito.Mockito#RETURNS_MOCKS} documentation for more details.</p>
+     * <p>Please see the {@link org.mockito.Mockito#RETURNS_MOCKS} documentation for more details.
      *
      * @see org.mockito.Mockito#RETURNS_MOCKS
      */
     RETURNS_MOCKS(new ReturnsMocks()),
 
-
     /**
      * An answer that returns <strong>deep stubs</strong> (not mocks).
      *
-     * <p>Please see the {@link org.mockito.Mockito#RETURNS_DEEP_STUBS} documentation for more details.</p>
+     * <p>Please see the {@link org.mockito.Mockito#RETURNS_DEEP_STUBS} documentation for more
+     * details.
      *
      * @see org.mockito.Mockito#RETURNS_DEEP_STUBS
      */
@@ -65,7 +71,8 @@ public enum Answers implements Answer<Object>{
     /**
      * An answer that calls the real methods (used for partial mocks).
      *
-     * <p>Please see the {@link org.mockito.Mockito#CALLS_REAL_METHODS} documentation for more details.</p>
+     * <p>Please see the {@link org.mockito.Mockito#CALLS_REAL_METHODS} documentation for more
+     * details.
      *
      * @see org.mockito.Mockito#CALLS_REAL_METHODS
      */
@@ -74,12 +81,11 @@ public enum Answers implements Answer<Object>{
     /**
      * An answer that tries to return itself. This is useful for mocking {@code Builders}.
      *
-     * <p>Please see the {@link org.mockito.Mockito#RETURNS_SELF} documentation for more details.</p>
+     * <p>Please see the {@link org.mockito.Mockito#RETURNS_SELF} documentation for more details.
      *
      * @see org.mockito.Mockito#RETURNS_SELF
      */
-    RETURNS_SELF(new TriesToReturnSelf())
-    ;
+    RETURNS_SELF(new TriesToReturnSelf());
 
     private final Answer<Object> implementation;
 
@@ -88,8 +94,10 @@ public enum Answers implements Answer<Object>{
     }
 
     /**
-     * @deprecated as of 2.1.0 Use the enum-constant directly, instead of this getter. This method will be removed in a future release<br>
-     * E.g. instead of <code>Answers.CALLS_REAL_METHODS.get()</code> use <code>Answers.CALLS_REAL_METHODS</code> .
+     * @deprecated as of 2.1.0 Use the enum-constant directly, instead of this getter. This method
+     *     will be removed in a future release<br>
+     *     E.g. instead of <code>Answers.CALLS_REAL_METHODS.get()</code> use <code>
+     *     Answers.CALLS_REAL_METHODS</code> .
      */
     @Deprecated
     public Answer<Object> get() {

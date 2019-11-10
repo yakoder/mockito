@@ -6,7 +6,6 @@ package org.mockito.mock;
 
 import java.util.List;
 import java.util.Set;
-
 import org.mockito.Incubating;
 import org.mockito.MockSettings;
 import org.mockito.NotExtensible;
@@ -16,77 +15,63 @@ import org.mockito.listeners.VerificationStartedListener;
 import org.mockito.quality.Strictness;
 import org.mockito.stubbing.Answer;
 
-/**
- * Informs about the mock settings. An immutable view of {@link org.mockito.MockSettings}.
- */
+/** Informs about the mock settings. An immutable view of {@link org.mockito.MockSettings}. */
 @NotExtensible
 public interface MockCreationSettings<T> {
 
-    /**
-     * Mocked type. An interface or class the mock should implement / extend.
-     */
+    /** Mocked type. An interface or class the mock should implement / extend. */
     Class<T> getTypeToMock();
 
-    /**
-     * the extra interfaces the mock object should implement.
-     */
+    /** the extra interfaces the mock object should implement. */
     Set<Class<?>> getExtraInterfaces();
 
     /**
-     * the name of this mock, as printed on verification errors; see {@link org.mockito.MockSettings#name}.
+     * the name of this mock, as printed on verification errors; see {@link
+     * org.mockito.MockSettings#name}.
      */
     MockName getMockName();
 
-    /**
-     * the default answer for this mock, see {@link org.mockito.MockSettings#defaultAnswer}.
-     */
+    /** the default answer for this mock, see {@link org.mockito.MockSettings#defaultAnswer}. */
     Answer<?> getDefaultAnswer();
 
-    /**
-     * the spied instance - needed for spies.
-     */
+    /** the spied instance - needed for spies. */
     Object getSpiedInstance();
 
-    /**
-     * if the mock is serializable, see {@link org.mockito.MockSettings#serializable}.
-     */
+    /** if the mock is serializable, see {@link org.mockito.MockSettings#serializable}. */
     boolean isSerializable();
 
-    /**
-     * @return the serializable mode of this mock
-     */
+    /** @return the serializable mode of this mock */
     SerializableMode getSerializableMode();
 
     /**
-     * Whether the mock is only for stubbing, i.e. does not remember
-     * parameters on its invocation and therefore cannot
-     * be used for verification
+     * Whether the mock is only for stubbing, i.e. does not remember parameters on its invocation
+     * and therefore cannot be used for verification
      */
     boolean isStubOnly();
 
-    /**
-     * Whether the mock should not make a best effort to preserve annotations.
-     */
+    /** Whether the mock should not make a best effort to preserve annotations. */
     boolean isStripAnnotations();
 
     /**
-     * Returns {@link StubbingLookupListener} instances attached to this mock via {@link MockSettings#stubbingLookupListeners(StubbingLookupListener...)}.
-     * The resulting list is mutable, you can add/remove listeners even after the mock was created.
-     * <p>
-     * For more details see {@link StubbingLookupListener}.
+     * Returns {@link StubbingLookupListener} instances attached to this mock via {@link
+     * MockSettings#stubbingLookupListeners(StubbingLookupListener...)}. The resulting list is
+     * mutable, you can add/remove listeners even after the mock was created.
+     *
+     * <p>For more details see {@link StubbingLookupListener}.
      *
      * @since 2.24.6
      */
     List<StubbingLookupListener> getStubbingLookupListeners();
 
     /**
-     * {@link InvocationListener} instances attached to this mock, see {@link org.mockito.MockSettings#invocationListeners(InvocationListener...)}.
+     * {@link InvocationListener} instances attached to this mock, see {@link
+     * org.mockito.MockSettings#invocationListeners(InvocationListener...)}.
      */
     List<InvocationListener> getInvocationListeners();
 
     /**
-     * {@link VerificationStartedListener} instances attached to this mock,
-     * see {@link org.mockito.MockSettings#verificationStartedListeners(VerificationStartedListener...)}
+     * {@link VerificationStartedListener} instances attached to this mock, see {@link
+     * org.mockito.MockSettings#verificationStartedListeners(VerificationStartedListener...)}
      *
      * @since 2.11.0
      */
@@ -102,12 +87,11 @@ public interface MockCreationSettings<T> {
     boolean isUsingConstructor();
 
     /**
-     * Used when arguments should be passed to the mocked object's constructor, regardless of whether these
-     * arguments are supplied directly, or whether they include the outer instance.
+     * Used when arguments should be passed to the mocked object's constructor, regardless of
+     * whether these arguments are supplied directly, or whether they include the outer instance.
      *
-     * @return An array of arguments that are passed to the mocked object's constructor. If
-     * {@link #getOuterClassInstance()} is available, it is prepended to the passed arguments.
-     *
+     * @return An array of arguments that are passed to the mocked object's constructor. If {@link
+     *     #getOuterClassInstance()} is available, it is prepended to the passed arguments.
      * @since 2.7.14
      */
     @Incubating
@@ -123,8 +107,9 @@ public interface MockCreationSettings<T> {
     Object getOuterClassInstance();
 
     /**
-     * Informs if the mock was created with "lenient" strictness, e.g. having {@link Strictness#LENIENT} characteristic.
-     * For more information about using mocks with lenient strictness, see {@link MockSettings#lenient()}.
+     * Informs if the mock was created with "lenient" strictness, e.g. having {@link
+     * Strictness#LENIENT} characteristic. For more information about using mocks with lenient
+     * strictness, see {@link MockSettings#lenient()}.
      *
      * @since 2.20.0
      */

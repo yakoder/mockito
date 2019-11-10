@@ -5,10 +5,9 @@
 package org.mockito.internal.matchers;
 
 import java.io.Serializable;
-
 import org.mockito.ArgumentMatcher;
 
-@SuppressWarnings({ "unchecked", "serial","rawtypes" })
+@SuppressWarnings({"unchecked", "serial", "rawtypes"})
 public class Or implements ArgumentMatcher<Object>, Serializable {
     private final ArgumentMatcher m1;
     private final ArgumentMatcher m2;
@@ -23,6 +22,6 @@ public class Or implements ArgumentMatcher<Object>, Serializable {
     }
 
     public String toString() {
-        return "or("+m1+", "+m2+")";
+        return "or(" + m1 + ", " + m2 + ")";
     }
 }

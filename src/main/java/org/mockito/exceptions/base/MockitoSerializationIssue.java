@@ -5,17 +5,15 @@
 package org.mockito.exceptions.base;
 
 import java.io.ObjectStreamException;
-
 import org.mockito.internal.exceptions.stacktrace.ConditionalStackTraceFilter;
 
 /**
  * Raised by mockito to emit an error either due to Mockito, or due to the User.
  *
- * <p>
- *     The stack trace is filtered from mockito calls if you are using {@link #getStackTrace()}.
- *     For debugging purpose though you can still access the full stacktrace using {@link #getUnfilteredStackTrace()}.
- *     However note that other calls related to the stackTrace will refer to the filter stacktrace.
- * </p>
+ * <p>The stack trace is filtered from mockito calls if you are using {@link #getStackTrace()}. For
+ * debugging purpose though you can still access the full stacktrace using {@link
+ * #getUnfilteredStackTrace()}. However note that other calls related to the stackTrace will refer
+ * to the filter stacktrace.
  *
  * @since 1.10.0
  */

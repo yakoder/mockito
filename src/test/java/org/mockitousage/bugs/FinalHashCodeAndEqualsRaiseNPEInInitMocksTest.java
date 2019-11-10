@@ -5,7 +5,6 @@
 package org.mockitousage.bugs;
 
 import java.nio.charset.Charset;
-
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -27,7 +26,6 @@ public class FinalHashCodeAndEqualsRaiseNPEInInitMocksTest {
     }
 
     private static class ConstructorCharsetHolder {
-        public ConstructorCharsetHolder(Charset charset) {
-        }
+        public ConstructorCharsetHolder(Charset charset) {}
     }
 }

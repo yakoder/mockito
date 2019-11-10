@@ -5,12 +5,10 @@
 package org.mockito.internal.debugging;
 
 import static java.util.Arrays.asList;
-
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
-
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.internal.invocation.InvocationBuilder;
@@ -30,7 +28,8 @@ public class WarningsFinderTest extends TestBase {
         Invocation unusedStub = new InvocationBuilder().simpleMethod().toInvocation();
 
         // when
-        WarningsFinder finder = new WarningsFinder(asList(unusedStub), Arrays.<InvocationMatcher>asList());
+        WarningsFinder finder =
+                new WarningsFinder(asList(unusedStub), Arrays.<InvocationMatcher>asList());
         finder.find(listener);
 
         // then
@@ -40,10 +39,14 @@ public class WarningsFinderTest extends TestBase {
     @Test
     public void shouldPrintUnstubbedInvocation() {
         // given
-        InvocationMatcher unstubbedInvocation = new InvocationBuilder().differentMethod().toInvocationMatcher();
+        InvocationMatcher unstubbedInvocation =
+                new InvocationBuilder().differentMethod().toInvocationMatcher();
 
         // when
-        WarningsFinder finder = new WarningsFinder(Arrays.<Invocation>asList(), Arrays.<InvocationMatcher>asList(unstubbedInvocation));
+        WarningsFinder finder =
+                new WarningsFinder(
+                        Arrays.<Invocation>asList(),
+                        Arrays.<InvocationMatcher>asList(unstubbedInvocation));
         finder.find(listener);
 
         // then
@@ -54,10 +57,14 @@ public class WarningsFinderTest extends TestBase {
     public void shouldPrintStubWasUsedWithDifferentArgs() {
         // given
         Invocation stub = new InvocationBuilder().arg("foo").mock(mock).toInvocation();
-        InvocationMatcher wrongArg = new InvocationBuilder().arg("bar").mock(mock).toInvocationMatcher();
+        InvocationMatcher wrongArg =
+                new InvocationBuilder().arg("bar").mock(mock).toInvocationMatcher();
 
         // when
-        WarningsFinder finder = new WarningsFinder(Arrays.<Invocation> asList(stub), Arrays.<InvocationMatcher> asList(wrongArg));
+        WarningsFinder finder =
+                new WarningsFinder(
+                        Arrays.<Invocation>asList(stub),
+                        Arrays.<InvocationMatcher>asList(wrongArg));
         finder.find(listener);
 
         // then

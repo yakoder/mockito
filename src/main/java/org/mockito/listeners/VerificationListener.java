@@ -9,14 +9,15 @@ import org.mockito.verification.VerificationEvent;
 
 /**
  * This listener can be notified of verify invocations on a mock.
- * <p>
- * For this to happen, it must be registered using {@link org.mockito.internal.progress.MockingProgress#addListener(MockitoListener)}.
+ *
+ * <p>For this to happen, it must be registered using {@link
+ * org.mockito.internal.progress.MockingProgress#addListener(MockitoListener)}.
  */
 @Incubating
 public interface VerificationListener extends MockitoListener {
     /**
-     * Called after a verification happened.
-     * This includes verifications that fail due to the verification mode failing.
+     * Called after a verification happened. This includes verifications that fail due to the
+     * verification mode failing.
      *
      * @param verificationEvent the event that occurred.
      */

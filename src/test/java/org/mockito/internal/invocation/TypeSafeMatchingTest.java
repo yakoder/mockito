@@ -9,7 +9,6 @@ import static org.mockito.internal.invocation.TypeSafeMatching.matchesTypeSafe;
 
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
@@ -25,11 +24,9 @@ public class TypeSafeMatchingTest {
 
     private static final Object NOT_A_COMPARABLE = new Object();
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Mock
-    public IMethods mock;
+    @Mock public IMethods mock;
 
     /**
      * Should not throw an {@link NullPointerException}
@@ -40,39 +37,30 @@ public class TypeSafeMatchingTest {
     public void compareNullArgument() {
         boolean match = matchesTypeSafe().apply(new LessOrEqual<Integer>(5), null);
         assertThat(match).isFalse();
-
     }
 
-    /**
-     * Should not throw an {@link ClassCastException}
-     */
+    /** Should not throw an {@link ClassCastException} */
     @Test
     public void compareToNonCompareable() {
         boolean match = matchesTypeSafe().apply(new LessOrEqual<Integer>(5), NOT_A_COMPARABLE);
         assertThat(match).isFalse();
     }
 
-    /**
-     * Should not throw an {@link ClassCastException}
-     */
+    /** Should not throw an {@link ClassCastException} */
     @Test
     public void compareToNull() {
         boolean match = matchesTypeSafe().apply(new LessOrEqual<Integer>(null), null);
         assertThat(match).isFalse();
     }
 
-    /**
-     * Should not throw an {@link ClassCastException}
-     */
+    /** Should not throw an {@link ClassCastException} */
     @Test
     public void compareToNull2() {
         boolean match = matchesTypeSafe().apply(Null.NULL, null);
         assertThat(match).isTrue();
     }
 
-    /**
-     * Should not throw an {@link ClassCastException}
-     */
+    /** Should not throw an {@link ClassCastException} */
     @Test
     public void compareToStringVsInt() {
         boolean match = matchesTypeSafe().apply(new StartsWith("Hello"), 123);
@@ -102,7 +90,6 @@ public class TypeSafeMatchingTest {
             public boolean matches(Integer arg, Void v) {
                 throw new UnsupportedOperationException();
             }
-
         }
 
         boolean match = matchesTypeSafe().apply(new TestMatcher(), 123);
@@ -111,8 +98,7 @@ public class TypeSafeMatchingTest {
 
     @Test
     public void matchesWithSubTypeExtendingGenericClass() {
-        abstract class GenericMatcher<T> implements ArgumentMatcher<T> {
-        }
+        abstract class GenericMatcher<T> implements ArgumentMatcher<T> {}
         class TestMatcher extends GenericMatcher<Integer> {
             @Override
             public boolean matches(Integer argument) {
@@ -127,8 +113,7 @@ public class TypeSafeMatchingTest {
     public void dontMatchesWithSubTypeExtendingGenericClass() {
         final AtomicBoolean wasCalled = new AtomicBoolean();
 
-        abstract class GenericMatcher<T> implements ArgumentMatcher<T> {
-        }
+        abstract class GenericMatcher<T> implements ArgumentMatcher<T> {}
         class TestMatcher extends GenericMatcher<Integer> {
             @Override
             public boolean matches(Integer argument) {

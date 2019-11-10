@@ -21,19 +21,13 @@ import org.mockitoutil.TestBase;
 /**
  * invalid state happens if:
  *
- *    -unfinished stubbing
- *    -unfinished doReturn()
- *    -stubbing without actual method call
- *    -verify without actual method call
+ * <p>-unfinished stubbing -unfinished doReturn() -stubbing without actual method call -verify
+ * without actual method call
  *
- * we should aim to detect invalid state in following scenarios:
+ * <p>we should aim to detect invalid state in following scenarios:
  *
- *    -on method call on mock
- *    -on verify
- *    -on verifyZeroInteractions
- *    -on verifyNoMoreInteractions
- *    -on verify in order
- *    -on stub
+ * <p>-on method call on mock -on verify -on verifyZeroInteractions -on verifyNoMoreInteractions -on
+ * verify in order -on stub
  */
 @SuppressWarnings({"unchecked", "deprecation"})
 public class InvalidStateDetectionTest extends TestBase {
@@ -154,13 +148,15 @@ public class InvalidStateDetectionTest extends TestBase {
         try {
             doThrow(new RuntimeException()).when(mock).oneArg(true);
             fail();
-        } catch (UnfinishedStubbingException e) {}
+        } catch (UnfinishedStubbingException e) {
+        }
 
         doThrow(new RuntimeException()).when(mock).oneArg(true);
         try {
             mock.oneArg(true);
             fail();
-        } catch (RuntimeException e) {}
+        } catch (RuntimeException e) {
+        }
     }
 
     @SuppressWarnings({"CheckReturnValue", "MockitoUsage"})
@@ -172,7 +168,8 @@ public class InvalidStateDetectionTest extends TestBase {
         try {
             verify(mock).simpleMethod();
             fail();
-        } catch (UnfinishedVerificationException e) {}
+        } catch (UnfinishedVerificationException e) {
+        }
 
         verify(mock).simpleMethod();
     }
@@ -257,7 +254,7 @@ public class InvalidStateDetectionTest extends TestBase {
         } catch (Exception e) {
             assertEquals(expected, e.getClass());
         }
-        //Make sure state is cleaned up
+        // Make sure state is cleaned up
         new StateMaster().validate();
     }
 }

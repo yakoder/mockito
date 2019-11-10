@@ -7,7 +7,6 @@ package org.mockitousage.bugs.injection;
 import static org.junit.Assert.assertNotSame;
 
 import java.util.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,12 +29,10 @@ public class ShouldNotTryToInjectInFinalOrStaticFieldsTest {
     @InjectMocks private ExampleService exampleService = new ExampleService();
 
     @Test
-    public void dont_fail_with_CONSTANTS() throws Exception {
-    }
+    public void dont_fail_with_CONSTANTS() throws Exception {}
 
     @Test
     public void dont_inject_in_final() {
         assertNotSame(unrelatedSet, exampleService.aSet);
     }
-
 }

@@ -9,11 +9,9 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockitoutil.TestBase;
-
 
 public class SerializableMethodTest extends TestBase {
 
@@ -70,6 +68,6 @@ public class SerializableMethodTest extends TestBase {
         assertFalse(new SerializableMethod(testBaseToStringMethod).equals(method));
     }
 
-    //TODO: add tests for generated equals() method
+    // TODO: add tests for generated equals() method
 
 }

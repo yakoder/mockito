@@ -25,14 +25,12 @@ import org.mockito.stubbing.VoidAnswer6;
  * @since 2.1.0
  */
 public class AnswerFunctionalInterfaces {
-    /**
-     * Hide constructor to avoid instantiation of class with only static methods
-     */
-    private AnswerFunctionalInterfaces() {
-    }
+    /** Hide constructor to avoid instantiation of class with only static methods */
+    private AnswerFunctionalInterfaces() {}
 
     /**
      * Construct an answer from a two parameter answer interface
+     *
      * @param answer answer interface
      * @param <T> return type
      * @param <A> input parameter 1 type
@@ -42,13 +40,14 @@ public class AnswerFunctionalInterfaces {
         return new Answer<T>() {
             @SuppressWarnings("unchecked")
             public T answer(InvocationOnMock invocation) throws Throwable {
-                return answer.answer((A)invocation.getArgument(0));
+                return answer.answer((A) invocation.getArgument(0));
             }
         };
     }
 
     /**
      * Construct an answer from a two parameter answer interface
+     *
      * @param answer answer interface
      * @param <A> input parameter 1 type
      * @return a new answer object
@@ -57,7 +56,7 @@ public class AnswerFunctionalInterfaces {
         return new Answer<Void>() {
             @SuppressWarnings("unchecked")
             public Void answer(InvocationOnMock invocation) throws Throwable {
-                answer.answer((A)invocation.getArgument(0));
+                answer.answer((A) invocation.getArgument(0));
                 return null;
             }
         };
@@ -65,6 +64,7 @@ public class AnswerFunctionalInterfaces {
 
     /**
      * Construct an answer from a two parameter answer interface
+     *
      * @param answer answer interface
      * @param <T> return type
      * @param <A> input parameter 1 type
@@ -75,15 +75,14 @@ public class AnswerFunctionalInterfaces {
         return new Answer<T>() {
             @SuppressWarnings("unchecked")
             public T answer(InvocationOnMock invocation) throws Throwable {
-                return answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1));
+                return answer.answer((A) invocation.getArgument(0), (B) invocation.getArgument(1));
             }
         };
     }
 
     /**
      * Construct an answer from a two parameter answer interface
+     *
      * @param answer answer interface
      * @param <A> input parameter 1 type
      * @param <B> input parameter 2 type
@@ -93,9 +92,7 @@ public class AnswerFunctionalInterfaces {
         return new Answer<Void>() {
             @SuppressWarnings("unchecked")
             public Void answer(InvocationOnMock invocation) throws Throwable {
-                answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1));
+                answer.answer((A) invocation.getArgument(0), (B) invocation.getArgument(1));
                 return null;
             }
         };
@@ -103,6 +100,7 @@ public class AnswerFunctionalInterfaces {
 
     /**
      * Construct an answer from a three parameter answer interface
+     *
      * @param answer answer interface
      * @param <T> return type
      * @param <A> input parameter 1 type
@@ -115,15 +113,16 @@ public class AnswerFunctionalInterfaces {
             @SuppressWarnings("unchecked")
             public T answer(InvocationOnMock invocation) throws Throwable {
                 return answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1),
-                        (C)invocation.getArgument(2));
+                        (A) invocation.getArgument(0),
+                        (B) invocation.getArgument(1),
+                        (C) invocation.getArgument(2));
             }
         };
     }
 
     /**
      * Construct an answer from a three parameter answer interface
+     *
      * @param answer answer interface
      * @param <A> input parameter 1 type
      * @param <B> input parameter 2 type
@@ -135,9 +134,9 @@ public class AnswerFunctionalInterfaces {
             @SuppressWarnings("unchecked")
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1),
-                        (C)invocation.getArgument(2));
+                        (A) invocation.getArgument(0),
+                        (B) invocation.getArgument(1),
+                        (C) invocation.getArgument(2));
                 return null;
             }
         };
@@ -145,6 +144,7 @@ public class AnswerFunctionalInterfaces {
 
     /**
      * Construct an answer from a four parameter answer interface
+     *
      * @param answer answer interface
      * @param <T> return type
      * @param <A> input parameter 1 type
@@ -158,16 +158,17 @@ public class AnswerFunctionalInterfaces {
             @SuppressWarnings("unchecked")
             public T answer(InvocationOnMock invocation) throws Throwable {
                 return answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1),
-                        (C)invocation.getArgument(2),
-                        (D)invocation.getArgument(3));
+                        (A) invocation.getArgument(0),
+                        (B) invocation.getArgument(1),
+                        (C) invocation.getArgument(2),
+                        (D) invocation.getArgument(3));
             }
         };
     }
 
     /**
      * Construct an answer from a four parameter answer interface
+     *
      * @param answer answer interface
      * @param <A> input parameter 1 type
      * @param <B> input parameter 2 type
@@ -180,10 +181,10 @@ public class AnswerFunctionalInterfaces {
             @SuppressWarnings("unchecked")
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1),
-                        (C)invocation.getArgument(2),
-                        (D)invocation.getArgument(3));
+                        (A) invocation.getArgument(0),
+                        (B) invocation.getArgument(1),
+                        (C) invocation.getArgument(2),
+                        (D) invocation.getArgument(3));
                 return null;
             }
         };
@@ -191,6 +192,7 @@ public class AnswerFunctionalInterfaces {
 
     /**
      * Construct an answer from a five parameter answer interface
+     *
      * @param answer answer interface
      * @param <T> return type
      * @param <A> input parameter 1 type
@@ -205,17 +207,18 @@ public class AnswerFunctionalInterfaces {
             @SuppressWarnings("unchecked")
             public T answer(InvocationOnMock invocation) throws Throwable {
                 return answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1),
-                        (C)invocation.getArgument(2),
-                        (D)invocation.getArgument(3),
-                        (E)invocation.getArgument(4));
+                        (A) invocation.getArgument(0),
+                        (B) invocation.getArgument(1),
+                        (C) invocation.getArgument(2),
+                        (D) invocation.getArgument(3),
+                        (E) invocation.getArgument(4));
             }
         };
     }
 
     /**
      * Construct an answer from a five parameter answer interface
+     *
      * @param answer answer interface
      * @param <A> input parameter 1 type
      * @param <B> input parameter 2 type
@@ -229,11 +232,11 @@ public class AnswerFunctionalInterfaces {
             @SuppressWarnings("unchecked")
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1),
-                        (C)invocation.getArgument(2),
-                        (D)invocation.getArgument(3),
-                        (E)invocation.getArgument(4));
+                        (A) invocation.getArgument(0),
+                        (B) invocation.getArgument(1),
+                        (C) invocation.getArgument(2),
+                        (D) invocation.getArgument(3),
+                        (E) invocation.getArgument(4));
                 return null;
             }
         };
@@ -252,24 +255,25 @@ public class AnswerFunctionalInterfaces {
      * @param <F> input parameter 6 type
      * @return a new answer object
      */
-    public static <T, A, B, C, D, E, F> Answer<T> toAnswer(final Answer6<T, A, B, C, D, E, F> answer) {
+    public static <T, A, B, C, D, E, F> Answer<T> toAnswer(
+            final Answer6<T, A, B, C, D, E, F> answer) {
         return new Answer<T>() {
             @SuppressWarnings("unchecked")
             public T answer(InvocationOnMock invocation) throws Throwable {
                 return answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1),
-                        (C)invocation.getArgument(2),
-                        (D)invocation.getArgument(3),
-                        (E)invocation.getArgument(4),
-                        (F)invocation.getArgument(5));
+                        (A) invocation.getArgument(0),
+                        (B) invocation.getArgument(1),
+                        (C) invocation.getArgument(2),
+                        (D) invocation.getArgument(3),
+                        (E) invocation.getArgument(4),
+                        (F) invocation.getArgument(5));
             }
         };
     }
 
     /**
      * Construct an answer from a five parameter answer interface
-
+     *
      * @param answer answer interface
      * @param <A> input parameter 1 type
      * @param <B> input parameter 2 type
@@ -279,17 +283,18 @@ public class AnswerFunctionalInterfaces {
      * @param <F> input parameter 6 type
      * @return a new answer object
      */
-    public static <A, B, C, D, E, F> Answer<Void> toAnswer(final VoidAnswer6<A, B, C, D, E, F> answer) {
+    public static <A, B, C, D, E, F> Answer<Void> toAnswer(
+            final VoidAnswer6<A, B, C, D, E, F> answer) {
         return new Answer<Void>() {
             @SuppressWarnings("unchecked")
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 answer.answer(
-                        (A)invocation.getArgument(0),
-                        (B)invocation.getArgument(1),
-                        (C)invocation.getArgument(2),
-                        (D)invocation.getArgument(3),
-                        (E)invocation.getArgument(4),
-                        (F)invocation.getArgument(5));
+                        (A) invocation.getArgument(0),
+                        (B) invocation.getArgument(1),
+                        (C) invocation.getArgument(2),
+                        (D) invocation.getArgument(3),
+                        (E) invocation.getArgument(4),
+                        (F) invocation.getArgument(5));
                 return null;
             }
         };

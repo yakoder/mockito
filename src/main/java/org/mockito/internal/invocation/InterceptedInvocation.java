@@ -10,7 +10,6 @@ import static org.mockito.internal.invocation.ArgumentsProcessor.argumentsToMatc
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-
 import org.mockito.ArgumentMatcher;
 import org.mockito.internal.exceptions.VerificationAwareInvocation;
 import org.mockito.internal.invocation.mockref.MockReference;
@@ -36,12 +35,13 @@ public class InterceptedInvocation implements Invocation, VerificationAwareInvoc
     private boolean isIgnoredForVerification;
     private StubInfo stubInfo;
 
-    public InterceptedInvocation(MockReference<Object> mockRef,
-                                 MockitoMethod mockitoMethod,
-                                 Object[] arguments,
-                                 RealMethod realMethod,
-                                 Location location,
-                                 int sequenceNumber) {
+    public InterceptedInvocation(
+            MockReference<Object> mockRef,
+            MockitoMethod mockitoMethod,
+            Object[] arguments,
+            RealMethod realMethod,
+            Location location,
+            int sequenceNumber) {
         this.mockRef = mockRef;
         this.mockitoMethod = mockitoMethod;
         this.arguments = ArgumentsProcessor.expandArgs(mockitoMethod, arguments);
@@ -154,7 +154,8 @@ public class InterceptedInvocation implements Invocation, VerificationAwareInvoc
 
     @Override
     public int hashCode() {
-        //TODO SF we need to provide hash code implementation so that there are no unexpected, slight perf issues
+        // TODO SF we need to provide hash code implementation so that there are no unexpected,
+        // slight perf issues
         return 1;
     }
 
@@ -177,13 +178,14 @@ public class InterceptedInvocation implements Invocation, VerificationAwareInvoc
         return new PrintSettings().print(getArgumentsAsMatchers(), this);
     }
 
-    public final static RealMethod NO_OP = new RealMethod() {
-        public boolean isInvokable() {
-            return false;
-        }
-        public Object invoke() throws Throwable {
-            return null;
-        }
-    };
+    public static final RealMethod NO_OP =
+            new RealMethod() {
+                public boolean isInvokable() {
+                    return false;
+                }
 
+                public Object invoke() throws Throwable {
+                    return null;
+                }
+            };
 }

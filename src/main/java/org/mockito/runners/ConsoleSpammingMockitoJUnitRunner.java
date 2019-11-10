@@ -5,7 +5,6 @@
 package org.mockito.runners;
 
 import java.lang.reflect.InvocationTargetException;
-
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
 import org.junit.runner.manipulation.Filter;
@@ -22,9 +21,8 @@ import org.mockito.plugins.MockitoLogger;
 
 /**
  * @deprecated as of 2.1.0. Use the {@link org.mockito.junit.MockitoJUnitRunner} runner instead
- * which contains support for detecting unused stubs.
- * <p>
- * If you still prefer using this runner, tell us why (create ticket in our issue tracker).
+ *     which contains support for detecting unused stubs.
+ *     <p>If you still prefer using this runner, tell us why (create ticket in our issue tracker).
  */
 @Deprecated
 public class ConsoleSpammingMockitoJUnitRunner extends Runner implements Filterable {
@@ -43,18 +41,20 @@ public class ConsoleSpammingMockitoJUnitRunner extends Runner implements Filtera
 
     @Override
     public void run(RunNotifier notifier) {
-        RunListener listener = new RunListener() {
-            WarningsCollector warningsCollector;
+        RunListener listener =
+                new RunListener() {
+                    WarningsCollector warningsCollector;
 
-            @Override
-            public void testStarted(Description description) throws Exception {
-                warningsCollector = new WarningsCollector();
-            }
+                    @Override
+                    public void testStarted(Description description) throws Exception {
+                        warningsCollector = new WarningsCollector();
+                    }
 
-            @Override public void testFailure(Failure failure) throws Exception {
-                logger.log(warningsCollector.getWarnings());
-            }
-        };
+                    @Override
+                    public void testFailure(Failure failure) throws Exception {
+                        logger.log(warningsCollector.getWarnings());
+                    }
+                };
 
         notifier.addListener(listener);
 
@@ -67,7 +67,7 @@ public class ConsoleSpammingMockitoJUnitRunner extends Runner implements Filtera
     }
 
     public void filter(Filter filter) throws NoTestsRemainException {
-        //filter is required because without it UnrootedTests show up in Eclipse
+        // filter is required because without it UnrootedTests show up in Eclipse
         runner.filter(filter);
     }
 }
